@@ -1,5 +1,4 @@
 # Avia Tickets
-==============
 Homework for the second quarter at Geek University.
 
 Basic features
