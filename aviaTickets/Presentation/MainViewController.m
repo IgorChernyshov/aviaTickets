@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "DataManager.h"
 
 @interface MainViewController ()
 
@@ -17,25 +18,41 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  // Set view's background color
+  [[DataManager sharedInstance] loadData];
+  
+  self.view.backgroundColor = UIColor.grayColor;
+  self.activityIndicator = [self createActivityIndicator];
+  [self.view addSubview:_activityIndicator];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(dataLoaded)
+                                               name:kDataManagerLoadDataDidComplete
+                                             object:nil];
+}
+
+- (UIActivityIndicatorView *)createActivityIndicator
+{
+  UIActivityIndicatorView *loadingDataActivityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+  loadingDataActivityIndicatorView.frame = self.view.bounds;
+  [loadingDataActivityIndicatorView startAnimating];
+  return loadingDataActivityIndicatorView;
+}
+
+- (void)dataLoaded
+{
   UIColor *lightBlueColor = [UIColor colorWithRed:97.0/255.0
                                             green:215.0/255.0
                                              blue:255.0/255.0
                                             alpha:1];
   self.view.backgroundColor = lightBlueColor;
-  
-  // Create a label
-  UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-  welcomeLabel.font = [UIFont fontWithName:@"Avenir Next" size:17];
-  welcomeLabel.font = [UIFont systemFontOfSize:24 weight:UIFontWeightBold];
-  welcomeLabel.text = @"Welcome to Avia Tickets!";
-  welcomeLabel.textColor = UIColor.whiteColor;
-  [welcomeLabel sizeToFit];
-  CGRect temporaryRect = welcomeLabel.frame;
-  temporaryRect.origin = CGPointMake(CGRectGetWidth(self.view.frame) / 2 - CGRectGetWidth(temporaryRect) / 2, CGRectGetHeight(self.view.frame) / 2 - CGRectGetHeight(temporaryRect) / 2);
-  welcomeLabel.frame = temporaryRect;
-  [self.view addSubview:welcomeLabel];
+  [self.activityIndicator removeFromSuperview];
 }
 
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:kDataManagerLoadDataDidComplete
+                                                object:nil];
+}
 
 @end
