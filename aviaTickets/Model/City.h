@@ -8,8 +8,6 @@
 
 #import <MapKit/MapKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface City : NSObject
 
 @property (nonatomic, strong) NSString *name;
@@ -22,5 +20,3 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
 @end
-
-NS_ASSUME_NONNULL_END

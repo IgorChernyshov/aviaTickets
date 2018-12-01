@@ -15,6 +15,7 @@
 		9CAA7EB321B30B75006D9F8B /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EB221B30B75006D9F8B /* Country.m */; };
 		9CAA7EB621B30CD1006D9F8B /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EB521B30CD1006D9F8B /* City.m */; };
 		9CAA7EB921B30CDA006D9F8B /* Airport.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EB821B30CDA006D9F8B /* Airport.m */; };
+		9CAA7EBD21B314C7006D9F8B /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EBC21B314C7006D9F8B /* DataManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,8 @@
 		9CAA7EB521B30CD1006D9F8B /* City.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
 		9CAA7EB721B30CD9006D9F8B /* Airport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Airport.h; sourceTree = "<group>"; };
 		9CAA7EB821B30CDA006D9F8B /* Airport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Airport.m; sourceTree = "<group>"; };
+		9CAA7EBB21B314C7006D9F8B /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		9CAA7EBC21B314C7006D9F8B /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				9CAA7EAD21B30AF7006D9F8B /* App */,
+				9CAA7EBA21B3149D006D9F8B /* Helpers */,
 				9CAA7EAE21B30AFF006D9F8B /* Model */,
 				9CAA7EAF21B30B0B006D9F8B /* Presentation */,
 				9CAA7EB021B30B16006D9F8B /* Resources */,
@@ -88,12 +92,12 @@
 		9CAA7EAE21B30AFF006D9F8B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9CAA7EB121B30B75006D9F8B /* Country.h */,
-				9CAA7EB221B30B75006D9F8B /* Country.m */,
-				9CAA7EB421B30CD1006D9F8B /* City.h */,
-				9CAA7EB521B30CD1006D9F8B /* City.m */,
 				9CAA7EB721B30CD9006D9F8B /* Airport.h */,
 				9CAA7EB821B30CDA006D9F8B /* Airport.m */,
+				9CAA7EB421B30CD1006D9F8B /* City.h */,
+				9CAA7EB521B30CD1006D9F8B /* City.m */,
+				9CAA7EB121B30B75006D9F8B /* Country.h */,
+				9CAA7EB221B30B75006D9F8B /* Country.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -113,6 +117,15 @@
 				9CAA7EA021B2A9DD006D9F8B /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		9CAA7EBA21B3149D006D9F8B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				9CAA7EBB21B314C7006D9F8B /* DataManager.h */,
+				9CAA7EBC21B314C7006D9F8B /* DataManager.m */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,6 +199,7 @@
 			files = (
 				9CAA7EB621B30CD1006D9F8B /* City.m in Sources */,
 				9CAA7EB321B30B75006D9F8B /* Country.m in Sources */,
+				9CAA7EBD21B314C7006D9F8B /* DataManager.m in Sources */,
 				9CAA7E9C21B2A9DC006D9F8B /* MainViewController.m in Sources */,
 				9CAA7EB921B30CDA006D9F8B /* Airport.m in Sources */,
 				9CAA7EA721B2A9DD006D9F8B /* main.m in Sources */,
