@@ -18,12 +18,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
-  CGRect windowFrame = [UIScreen mainScreen].bounds;
+  CGRect windowFrame = [[UIScreen mainScreen] bounds];
   self.window = [[UIWindow alloc] initWithFrame:windowFrame];
   
   MainViewController *mainViewController = [MainViewController new];
-  self.window.rootViewController = mainViewController;
-  
+  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
+  self.window.rootViewController = navigationController;
   [self.window makeKeyAndVisible];
   
   return YES;

@@ -12,6 +12,9 @@
 		9CAA7EA121B2A9DD006D9F8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CAA7EA021B2A9DD006D9F8B /* Assets.xcassets */; };
 		9CAA7EA421B2A9DD006D9F8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CAA7EA221B2A9DD006D9F8B /* LaunchScreen.storyboard */; };
 		9CAA7EA721B2A9DD006D9F8B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EA621B2A9DD006D9F8B /* main.m */; };
+		9CAA7EB321B30B75006D9F8B /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EB221B30B75006D9F8B /* Country.m */; };
+		9CAA7EB621B30CD1006D9F8B /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EB521B30CD1006D9F8B /* City.m */; };
+		9CAA7EB921B30CDA006D9F8B /* Airport.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EB821B30CDA006D9F8B /* Airport.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,12 @@
 		9CAA7EA321B2A9DD006D9F8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9CAA7EA521B2A9DD006D9F8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CAA7EA621B2A9DD006D9F8B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9CAA7EB121B30B75006D9F8B /* Country.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Country.h; sourceTree = "<group>"; };
+		9CAA7EB221B30B75006D9F8B /* Country.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Country.m; sourceTree = "<group>"; };
+		9CAA7EB421B30CD1006D9F8B /* City.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
+		9CAA7EB521B30CD1006D9F8B /* City.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
+		9CAA7EB721B30CD9006D9F8B /* Airport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Airport.h; sourceTree = "<group>"; };
+		9CAA7EB821B30CDA006D9F8B /* Airport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Airport.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,16 +65,54 @@
 		9CAA7E9621B2A9DC006D9F8B /* aviaTickets */ = {
 			isa = PBXGroup;
 			children = (
+				9CAA7EAD21B30AF7006D9F8B /* App */,
+				9CAA7EAE21B30AFF006D9F8B /* Model */,
+				9CAA7EAF21B30B0B006D9F8B /* Presentation */,
+				9CAA7EB021B30B16006D9F8B /* Resources */,
+			);
+			path = aviaTickets;
+			sourceTree = "<group>";
+		};
+		9CAA7EAD21B30AF7006D9F8B /* App */ = {
+			isa = PBXGroup;
+			children = (
 				9CAA7E9721B2A9DC006D9F8B /* AppDelegate.h */,
 				9CAA7E9821B2A9DC006D9F8B /* AppDelegate.m */,
-				9CAA7E9A21B2A9DC006D9F8B /* MainViewController.h */,
-				9CAA7E9B21B2A9DC006D9F8B /* MainViewController.m */,
-				9CAA7EA021B2A9DD006D9F8B /* Assets.xcassets */,
 				9CAA7EA221B2A9DD006D9F8B /* LaunchScreen.storyboard */,
 				9CAA7EA521B2A9DD006D9F8B /* Info.plist */,
 				9CAA7EA621B2A9DD006D9F8B /* main.m */,
 			);
-			path = aviaTickets;
+			path = App;
+			sourceTree = "<group>";
+		};
+		9CAA7EAE21B30AFF006D9F8B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9CAA7EB121B30B75006D9F8B /* Country.h */,
+				9CAA7EB221B30B75006D9F8B /* Country.m */,
+				9CAA7EB421B30CD1006D9F8B /* City.h */,
+				9CAA7EB521B30CD1006D9F8B /* City.m */,
+				9CAA7EB721B30CD9006D9F8B /* Airport.h */,
+				9CAA7EB821B30CDA006D9F8B /* Airport.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9CAA7EAF21B30B0B006D9F8B /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				9CAA7E9A21B2A9DC006D9F8B /* MainViewController.h */,
+				9CAA7E9B21B2A9DC006D9F8B /* MainViewController.m */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		9CAA7EB021B30B16006D9F8B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9CAA7EA021B2A9DD006D9F8B /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +184,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CAA7EB621B30CD1006D9F8B /* City.m in Sources */,
+				9CAA7EB321B30B75006D9F8B /* Country.m in Sources */,
 				9CAA7E9C21B2A9DC006D9F8B /* MainViewController.m in Sources */,
+				9CAA7EB921B30CDA006D9F8B /* Airport.m in Sources */,
 				9CAA7EA721B2A9DD006D9F8B /* main.m in Sources */,
 				9CAA7E9921B2A9DC006D9F8B /* AppDelegate.m in Sources */,
 			);
@@ -275,7 +325,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73YFFUD89Y;
-				INFOPLIST_FILE = aviaTickets/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/aviaTickets/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -292,7 +342,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 73YFFUD89Y;
-				INFOPLIST_FILE = aviaTickets/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/aviaTickets/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
