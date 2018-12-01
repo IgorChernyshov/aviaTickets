@@ -12,8 +12,20 @@
 
 #define kDataManagerLoadDataDidComplete @"DataManagerLoadDataDidComplete"
 
+typedef enum DataSourceType {
+  DataSourceTypeAirport,
+  DataSourceTypeCity,
+  DataSourceTypeCountry
+} DataSourceType;
+
 @interface DataManager : NSObject
 
++ (instancetype)sharedInstance;
 
+- (void)loadData;
+
+@property (nonatomic, strong, readonly) NSArray *airports;
+@property (nonatomic, strong, readonly) NSArray *cities;
+@property (nonatomic, strong, readonly) NSArray *countries;
 
 @end
