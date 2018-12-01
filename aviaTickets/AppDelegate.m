@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MainViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,7 +21,7 @@
   CGRect windowFrame = [UIScreen mainScreen].bounds;
   self.window = [[UIWindow alloc] initWithFrame:windowFrame];
   
-  UIViewController *mainViewController = [UIViewController new];
+  MainViewController *mainViewController = [MainViewController new];
   self.window.rootViewController = mainViewController;
   
   [self.window makeKeyAndVisible];

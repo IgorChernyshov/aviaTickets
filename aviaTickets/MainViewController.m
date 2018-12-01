@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  // Set view background color to light blue
+  // Set view's background color
   UIColor *lightBlueColor = [UIColor colorWithRed:97.0/255.0
                                             green:215.0/255.0
                                              blue:255.0/255.0
