@@ -11,6 +11,8 @@
 
 @interface MainViewController ()
 
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+
 @end
 
 @implementation MainViewController
@@ -44,7 +46,20 @@
                                             green:215.0/255.0
                                              blue:255.0/255.0
                                             alpha:1];
-  self.view.backgroundColor = lightBlueColor;
+  
+  UIColor *customBlueColor = [UIColor colorWithRed:72.0/255.0
+                                             green:150.0/255.0
+                                              blue:236.0/255.0
+                                             alpha:1];
+  
+  CAGradientLayer *gradient = [CAGradientLayer layer];
+  gradient.frame = self.view.bounds;
+  gradient.startPoint = CGPointMake(0.0, 0.0);
+  gradient.endPoint = CGPointMake(1.0, 1.0);
+  gradient.colors = @[(id)customBlueColor.CGColor,
+                      (id)lightBlueColor.CGColor];
+  [self.view.layer addSublayer:gradient];
+  
   [self.activityIndicator removeFromSuperview];
 }
 

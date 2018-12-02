@@ -10,7 +10,5 @@
 
 @interface MainViewController : UIViewController
 
-@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
-
 @end
 
