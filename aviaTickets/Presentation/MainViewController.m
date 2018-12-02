@@ -47,8 +47,10 @@
 
 - (void)dataLoaded
 {
-  // Refresh UI to indicate that app is ready
-  // Create a gradient
+  // Indicate that app is ready
+  [self.activityIndicator removeFromSuperview];
+  self.navigationItem.title = @"Tickets search";
+  // Create a gradient background
   UIColor *lightBlueColor = [UIColor colorWithRed:97.0/255.0
                                             green:215.0/255.0
                                              blue:255.0/255.0
@@ -65,8 +67,40 @@
                       (id)lightBlueColor.CGColor];
   [self.view.layer addSublayer:gradient];
   
-  [self.activityIndicator removeFromSuperview];
-  self.navigationItem.title = @"Поиск билетов";
+  // Create control components
+  // Segmented Control "One way - Round trip tickets"
+  CGFloat segmentedControlHeight = 30.0;
+  CGFloat segmentedControlWidth = 200.0;
+  CGFloat topbarHeight = ([UIApplication sharedApplication].statusBarFrame.size.height +
+                          (self.navigationController.navigationBar.frame.size.height));
+  CGRect segmentedControlFrame = CGRectMake([UIScreen mainScreen].bounds.size.width / 2 - segmentedControlWidth / 2,
+                                            topbarHeight + segmentedControlHeight / 2,
+                                            segmentedControlWidth,
+                                            segmentedControlHeight);
+  UISegmentedControl *ticketsTypeSegmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Round trip", @"One way"]];
+  ticketsTypeSegmentedControl.frame = segmentedControlFrame;
+  ticketsTypeSegmentedControl.tintColor = [UIColor whiteColor];
+  ticketsTypeSegmentedControl.selectedSegmentIndex = 0;
+  [self.view addSubview:ticketsTypeSegmentedControl];
+  
+  // Create a stack view for components
+//  UIStackView *stackView = [UIStackView new];
+//
+//  stackView.axis = UILayoutConstraintAxisVertical;
+//  stackView.distribution = UIStackViewDistributionEqualSpacing;
+//  stackView.alignment = UIStackViewAlignmentCenter;
+//  stackView.spacing = 16;
+//
+//  [stackView addArrangedSubview:view1];
+//  [stackView addArrangedSubview:view2];
+//  [stackView addArrangedSubview:view3];
+//
+//  stackView.translatesAutoresizingMaskIntoConstraints = false;
+//  [self.view addSubview:stackView];
+  
+  //Layout for Stack View
+//  [stackView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = true;
+//  [stackView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor].active = true;
 }
 
 - (void)dealloc
