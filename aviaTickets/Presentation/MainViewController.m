@@ -123,8 +123,10 @@
   
   UIButton *startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   CGRect startSearchButtonFrame = startSearchButton.frame;
-  startSearchButtonFrame.origin = CGPointMake(halfScreenWidth - startSearchButton.frame.size.width / 2,
-                                                     numberOfPassengersButtonFrame.origin.y + numberOfPassengersButtonFrame.size.height + startSearchButton.frame.size.height / 2 + 8);
+  startSearchButtonFrame = CGRectMake(halfScreenWidth - startSearchButton.frame.size.width / 2,
+                                      numberOfPassengersButtonFrame.origin.y + numberOfPassengersButtonFrame.size.height + startSearchButton.frame.size.height / 2 + 8,
+                                      startSearchButtonFrame.size.width,
+                                      startSearchButtonFrame.size.height + 8);
   startSearchButton.frame = startSearchButtonFrame;
   [startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
   startSearchButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:17];
