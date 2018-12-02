@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "MainViewButton.h"
 #import "DataManager.h"
 
 @interface MainViewController ()
@@ -71,9 +72,10 @@
   // Segmented Control "One way - Round trip tickets"
   CGFloat segmentedControlHeight = 30.0;
   CGFloat segmentedControlWidth = 200.0;
+  CGFloat halfScreenWidth = [UIScreen mainScreen].bounds.size.width / 2;
   CGFloat topbarHeight = ([UIApplication sharedApplication].statusBarFrame.size.height +
                           (self.navigationController.navigationBar.frame.size.height));
-  CGRect segmentedControlFrame = CGRectMake([UIScreen mainScreen].bounds.size.width / 2 - segmentedControlWidth / 2,
+  CGRect segmentedControlFrame = CGRectMake(halfScreenWidth - segmentedControlWidth / 2,
                                             topbarHeight + segmentedControlHeight / 2,
                                             segmentedControlWidth,
                                             segmentedControlHeight);
@@ -83,24 +85,59 @@
   ticketsTypeSegmentedControl.selectedSegmentIndex = 0;
   [self.view addSubview:ticketsTypeSegmentedControl];
   
-  // Create a stack view for components
-//  UIStackView *stackView = [UIStackView new];
-//
-//  stackView.axis = UILayoutConstraintAxisVertical;
-//  stackView.distribution = UIStackViewDistributionEqualSpacing;
-//  stackView.alignment = UIStackViewAlignmentCenter;
-//  stackView.spacing = 16;
-//
-//  [stackView addArrangedSubview:view1];
-//  [stackView addArrangedSubview:view2];
-//  [stackView addArrangedSubview:view3];
-//
-//  stackView.translatesAutoresizingMaskIntoConstraints = false;
-//  [self.view addSubview:stackView];
+  // Create buttons
+  UIButton *departureAirportButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  CGRect departureAirportButtonFrame = departureAirportButton.frame;
+  departureAirportButtonFrame.origin = CGPointMake(halfScreenWidth - departureAirportButton.frame.size.width / 2,
+                                    segmentedControlFrame.origin.y + segmentedControlFrame.size.height + departureAirportButton.frame.size.height / 2 + 16);
+  departureAirportButton.frame = departureAirportButtonFrame;
+  [departureAirportButton setTitle:@"Departure airport" forState:UIControlStateNormal];
   
-  //Layout for Stack View
-//  [stackView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor].active = true;
-//  [stackView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor].active = true;
+  UIButton *destinationAirportButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  CGRect destinationAirportButtonFrame = destinationAirportButton.frame;
+  destinationAirportButtonFrame.origin = CGPointMake(halfScreenWidth - destinationAirportButton.frame.size.width / 2,
+                                                   departureAirportButtonFrame.origin.y + departureAirportButtonFrame.size.height + 8);
+  destinationAirportButton.frame = destinationAirportButtonFrame;
+  [destinationAirportButton setTitle:@"Destination airport" forState:UIControlStateNormal];
+  
+  UIButton *departureDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  CGRect departureDateButtonFrame = departureDateButton.frame;
+  departureDateButtonFrame.origin = CGPointMake(halfScreenWidth - departureDateButton.frame.size.width / 2,
+                                                     destinationAirportButtonFrame.origin.y + destinationAirportButtonFrame.size.height + departureDateButton.frame.size.height / 2 + 8);
+  departureDateButton.frame = departureDateButtonFrame;
+  [departureDateButton setTitle:@"Departure date" forState:UIControlStateNormal];
+  
+  UIButton *returnDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  CGRect returnDateButtonFrame = returnDateButton.frame;
+  returnDateButtonFrame.origin = CGPointMake(halfScreenWidth - returnDateButton.frame.size.width / 2,
+                                                departureDateButtonFrame.origin.y + departureDateButtonFrame.size.height + 8);
+  returnDateButton.frame = returnDateButtonFrame;
+  [returnDateButton setTitle:@"Return date" forState:UIControlStateNormal];
+  
+  UIButton *numberOfPassengersButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  CGRect numberOfPassengersButtonFrame = numberOfPassengersButton.frame;
+  numberOfPassengersButtonFrame.origin = CGPointMake(halfScreenWidth - numberOfPassengersButton.frame.size.width / 2,
+                                             returnDateButtonFrame.origin.y + returnDateButtonFrame.size.height + numberOfPassengersButton.frame.size.height / 2 + 8);
+  numberOfPassengersButton.frame = numberOfPassengersButtonFrame;
+  [numberOfPassengersButton setTitle:@"Number of passengers" forState:UIControlStateNormal];
+  
+  UIButton *startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  CGRect startSearchButtonFrame = startSearchButton.frame;
+  startSearchButtonFrame.origin = CGPointMake(halfScreenWidth - startSearchButton.frame.size.width / 2,
+                                                     numberOfPassengersButtonFrame.origin.y + numberOfPassengersButtonFrame.size.height + startSearchButton.frame.size.height / 2 + 8);
+  startSearchButton.frame = startSearchButtonFrame;
+  [startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
+  startSearchButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:17];
+  startSearchButton.backgroundColor = [UIColor orangeColor];
+  [startSearchButton setTintColor:[UIColor whiteColor]];
+  
+  // Place buttons
+  [self.view addSubview:departureAirportButton];
+  [self.view addSubview:destinationAirportButton];
+  [self.view addSubview:departureDateButton];
+  [self.view addSubview:returnDateButton];
+  [self.view addSubview:numberOfPassengersButton];
+  [self.view addSubview:startSearchButton];
 }
 
 - (void)dealloc
