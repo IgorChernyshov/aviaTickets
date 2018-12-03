@@ -137,6 +137,11 @@
   startSearchButton.backgroundColor = [UIColor orangeColor];
   [startSearchButton setTintColor:[UIColor whiteColor]];
   
+  // Assign actions to buttons
+  [startSearchButton addTarget:self
+                        action:@selector(startSearchButtonWasPressed)
+              forControlEvents:UIControlEventTouchUpInside];
+  
   // Place buttons
   [self.view addSubview:departureAirportButton];
   [self.view addSubview:destinationAirportButton];
@@ -144,6 +149,12 @@
   [self.view addSubview:returnDateButton];
   [self.view addSubview:numberOfPassengersButton];
   [self.view addSubview:startSearchButton];
+}
+
+- (void)startSearchButtonWasPressed
+{
+  SearchResultsViewController *searchResultsViewController = [[SearchResultsViewController alloc] initWithNibName:nil bundle:nil];
+  [self.navigationController pushViewController:searchResultsViewController animated:YES];
 }
 
 - (void)dealloc
