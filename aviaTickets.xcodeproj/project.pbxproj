@@ -20,6 +20,7 @@
 		9CAA7EC221B31E94006D9F8B /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CAA7EC021B31E94006D9F8B /* cities.json */; };
 		9CAA7EC321B31E94006D9F8B /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CAA7EC121B31E94006D9F8B /* countries.json */; };
 		9CDFBB6F21B405BA001EB427 /* MainViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFBB6E21B405BA001EB427 /* MainViewButton.m */; };
+		9CDFBB7221B51FFF001EB427 /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFBB7121B51FFF001EB427 /* SearchResultsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,8 @@
 		9CAA7EC121B31E94006D9F8B /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		9CDFBB6D21B405BA001EB427 /* MainViewButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewButton.h; sourceTree = "<group>"; };
 		9CDFBB6E21B405BA001EB427 /* MainViewButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewButton.m; sourceTree = "<group>"; };
+		9CDFBB7021B51FFF001EB427 /* SearchResultsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultsViewController.h; sourceTree = "<group>"; };
+		9CDFBB7121B51FFF001EB427 /* SearchResultsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchResultsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,10 +117,12 @@
 		9CAA7EAF21B30B0B006D9F8B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				9CAA7E9A21B2A9DC006D9F8B /* MainViewController.h */,
-				9CAA7E9B21B2A9DC006D9F8B /* MainViewController.m */,
 				9CDFBB6D21B405BA001EB427 /* MainViewButton.h */,
 				9CDFBB6E21B405BA001EB427 /* MainViewButton.m */,
+				9CAA7E9A21B2A9DC006D9F8B /* MainViewController.h */,
+				9CAA7E9B21B2A9DC006D9F8B /* MainViewController.m */,
+				9CDFBB7021B51FFF001EB427 /* SearchResultsViewController.h */,
+				9CDFBB7121B51FFF001EB427 /* SearchResultsViewController.m */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -214,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CDFBB7221B51FFF001EB427 /* SearchResultsViewController.m in Sources */,
 				9CAA7EB621B30CD1006D9F8B /* City.m in Sources */,
 				9CAA7EB321B30B75006D9F8B /* Country.m in Sources */,
 				9CAA7EBD21B314C7006D9F8B /* DataManager.m in Sources */,

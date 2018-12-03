@@ -6,9 +6,13 @@
 //  Copyright © 2018 Igor Chernyshov. All rights reserved.
 //
 
+// Import view controllers
 #import "MainViewController.h"
-#import "MainViewButton.h"
+#import "SearchResultsViewController.h"
+// Import helpers
 #import "DataManager.h"
+// Import custom view elements
+#import "MainViewButton.h"
 
 @interface MainViewController ()
 
