@@ -19,8 +19,8 @@
 
 @interface MainViewController () <SelectPlaceViewControllerDelegate>
 
-@property (nonatomic, strong) UIButton *departureButton;
-@property (nonatomic, strong) UIButton *arrivalButton;
+@property (nonatomic, strong) MainViewButton *departureFromButton;
+@property (nonatomic, strong) MainViewButton *arriveToButton;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic) SearchRequest searchRequest;
 
@@ -85,53 +85,53 @@
                           (self.navigationController.navigationBar.frame.size.height));
   
   // Create buttons
-  UIButton *departureAirportButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  CGRect departureAirportButtonFrame = departureAirportButton.frame;
-  departureAirportButtonFrame.origin = CGPointMake(halfScreenWidth - departureAirportButton.frame.size.width / 2,
-                                    topbarHeight + departureAirportButton.frame.size.height / 2);
-  departureAirportButton.frame = departureAirportButtonFrame;
-  [departureAirportButton setTitle:@"Depart from" forState:UIControlStateNormal];
+  _departureFromButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  [_departureFromButton setTitle:@"Depart from" forState:UIControlStateNormal];
+  CGRect departureFromButtonFrame = _departureFromButton.frame;
+  departureFromButtonFrame.origin = CGPointMake(halfScreenWidth - _departureFromButton.frame.size.width / 2,
+                                    topbarHeight + _departureFromButton.frame.size.height / 2);
+  _departureFromButton.frame = departureFromButtonFrame;
   
-  UIButton *destinationAirportButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  CGRect destinationAirportButtonFrame = destinationAirportButton.frame;
-  destinationAirportButtonFrame.origin = CGPointMake(halfScreenWidth - destinationAirportButton.frame.size.width / 2,
-                                                   departureAirportButtonFrame.origin.y + departureAirportButtonFrame.size.height + 8);
-  destinationAirportButton.frame = destinationAirportButtonFrame;
-  [destinationAirportButton setTitle:@"Arrive to" forState:UIControlStateNormal];
+  _arriveToButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  [_arriveToButton setTitle:@"Arrive to" forState:UIControlStateNormal];
+  CGRect arriveToButtonFrame = _arriveToButton.frame;
+  arriveToButtonFrame.origin = CGPointMake(halfScreenWidth - _arriveToButton.frame.size.width / 2,
+                                                   departureFromButtonFrame.origin.y + departureFromButtonFrame.size.height + 8);
+  _arriveToButton.frame = arriveToButtonFrame;
   
-  UIButton *departureDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  MainViewButton *departureDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  [departureDateButton setTitle:@"Departure date" forState:UIControlStateNormal];
   CGRect departureDateButtonFrame = departureDateButton.frame;
   departureDateButtonFrame.origin = CGPointMake(halfScreenWidth - departureDateButton.frame.size.width / 2,
-                                                     destinationAirportButtonFrame.origin.y + destinationAirportButtonFrame.size.height + departureDateButton.frame.size.height / 2 + 8);
+                                                     arriveToButtonFrame.origin.y + arriveToButtonFrame.size.height + departureDateButton.frame.size.height / 2 + 8);
   departureDateButton.frame = departureDateButtonFrame;
-  [departureDateButton setTitle:@"Departure date" forState:UIControlStateNormal];
   
-  UIButton *returnDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  MainViewButton *returnDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+    [returnDateButton setTitle:@"Return date" forState:UIControlStateNormal];
   CGRect returnDateButtonFrame = returnDateButton.frame;
   returnDateButtonFrame.origin = CGPointMake(halfScreenWidth - returnDateButton.frame.size.width / 2,
                                                 departureDateButtonFrame.origin.y + departureDateButtonFrame.size.height + 8);
   returnDateButton.frame = returnDateButtonFrame;
-  [returnDateButton setTitle:@"Return date" forState:UIControlStateNormal];
   
-  UIButton *numberOfPassengersButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  MainViewButton *numberOfPassengersButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  [numberOfPassengersButton setTitle:@"Number of passengers" forState:UIControlStateNormal];
   CGRect numberOfPassengersButtonFrame = numberOfPassengersButton.frame;
   numberOfPassengersButtonFrame.origin = CGPointMake(halfScreenWidth - numberOfPassengersButton.frame.size.width / 2,
                                              returnDateButtonFrame.origin.y + returnDateButtonFrame.size.height + numberOfPassengersButton.frame.size.height / 2 + 8);
   numberOfPassengersButton.frame = numberOfPassengersButtonFrame;
-  [numberOfPassengersButton setTitle:@"Number of passengers" forState:UIControlStateNormal];
   
-  UIButton *startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  MainViewButton *startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  startSearchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+  [startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
+  startSearchButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:17];
+  startSearchButton.backgroundColor = [UIColor orangeColor];
+  [startSearchButton setTintColor:[UIColor whiteColor]];
   CGRect startSearchButtonFrame = startSearchButton.frame;
   startSearchButtonFrame = CGRectMake(halfScreenWidth - startSearchButton.frame.size.width / 2,
                                       numberOfPassengersButtonFrame.origin.y + numberOfPassengersButtonFrame.size.height + startSearchButton.frame.size.height / 2 + 8,
                                       startSearchButtonFrame.size.width,
                                       startSearchButtonFrame.size.height + 8);
   startSearchButton.frame = startSearchButtonFrame;
-  startSearchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-  [startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
-  startSearchButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:17];
-  startSearchButton.backgroundColor = [UIColor orangeColor];
-  [startSearchButton setTintColor:[UIColor whiteColor]];
   
   // Assign actions to buttons
   [startSearchButton addTarget:self
@@ -139,8 +139,8 @@
               forControlEvents:UIControlEventTouchUpInside];
   
   // Place buttons
-  [self.view addSubview:departureAirportButton];
-  [self.view addSubview:destinationAirportButton];
+  [self.view addSubview:_departureFromButton];
+  [self.view addSubview:_arriveToButton];
   [self.view addSubview:departureDateButton];
   [self.view addSubview:returnDateButton];
   [self.view addSubview:numberOfPassengersButton];
