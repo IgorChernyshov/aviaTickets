@@ -88,19 +88,18 @@
     City *city = [_dataSourceArray objectAtIndex:indexPath.row];
     cell.textLabel.text = city.name;
     cell.detailTextLabel.text = city.code;
-  } else if (_segmentedControl.selectedSegmentIndex == 0) {
+  } else if (_segmentedControl.selectedSegmentIndex == 1) {
     Airport *airport = [_dataSourceArray objectAtIndex:indexPath.row];
     cell.textLabel.text = airport.name;
     cell.detailTextLabel.text = airport.code;
   }
-  
   return cell;
 }
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  DataSourceType dataType = ((int)_segmentedControl.selectedSegmentIndex) + 1;
+  DataSourceType dataType = (int)_segmentedControl.selectedSegmentIndex;
   [self.delegate selectPlace:[_dataSourceArray objectAtIndex:indexPath.row] withType:_placeType andDataType:dataType];
   [self.navigationController popViewControllerAnimated:YES];
 }

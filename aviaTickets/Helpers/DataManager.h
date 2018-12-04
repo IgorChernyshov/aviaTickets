@@ -13,8 +13,8 @@
 #define kDataManagerLoadDataDidComplete @"DataManagerLoadDataDidComplete"
 
 typedef enum DataSourceType {
-  DataSourceTypeAirport,
   DataSourceTypeCity,
+  DataSourceTypeAirport,
   DataSourceTypeCountry
 } DataSourceType;
 
