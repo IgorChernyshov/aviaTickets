@@ -24,6 +24,8 @@
   currentFrame.size = CGSizeMake(300.0, 35.0);
   self.frame = currentFrame;
   
+  self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+  self.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
   self.titleLabel.font = [UIFont fontWithName:@"AvenirNext" size:17];
   [self setTintColor:[UIColor darkGrayColor]];
   self.backgroundColor = [UIColor whiteColor];
