@@ -9,14 +9,20 @@
 // Import view controllers
 #import "MainViewController.h"
 #import "SearchResultsViewController.h"
+#import "SelectPlaceViewController.h"
+
 // Import helpers
 #import "DataManager.h"
+
 // Import custom view elements
 #import "MainViewButton.h"
 
-@interface MainViewController ()
+@interface MainViewController () <SelectPlaceViewControllerDelegate>
 
+@property (nonatomic, strong) UIButton *departureButton;
+@property (nonatomic, strong) UIButton *arrivalButton;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic) SearchRequest searchRequest;
 
 @end
 
@@ -54,7 +60,8 @@
 {
   // Indicate that app is ready
   [self.activityIndicator removeFromSuperview];
-  self.navigationItem.title = @"Tickets search";
+  self.navigationController.navigationBar.prefersLargeTitles = YES;
+  self.title = @"Search tickets";
   // Create a gradient background
   UIColor *lightBlueColor = [UIColor colorWithRed:97.0/255.0
                                             green:215.0/255.0
@@ -73,27 +80,15 @@
   [self.view.layer addSublayer:gradient];
   
   // Create control components
-  // Segmented Control "One way - Round trip tickets"
-  CGFloat segmentedControlHeight = 30.0;
-  CGFloat segmentedControlWidth = 200.0;
   CGFloat halfScreenWidth = [UIScreen mainScreen].bounds.size.width / 2;
   CGFloat topbarHeight = ([UIApplication sharedApplication].statusBarFrame.size.height +
                           (self.navigationController.navigationBar.frame.size.height));
-  CGRect segmentedControlFrame = CGRectMake(halfScreenWidth - segmentedControlWidth / 2,
-                                            topbarHeight + segmentedControlHeight / 2,
-                                            segmentedControlWidth,
-                                            segmentedControlHeight);
-  UISegmentedControl *ticketsTypeSegmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Round trip", @"One way"]];
-  ticketsTypeSegmentedControl.frame = segmentedControlFrame;
-  ticketsTypeSegmentedControl.tintColor = [UIColor whiteColor];
-  ticketsTypeSegmentedControl.selectedSegmentIndex = 0;
-  [self.view addSubview:ticketsTypeSegmentedControl];
   
   // Create buttons
   UIButton *departureAirportButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   CGRect departureAirportButtonFrame = departureAirportButton.frame;
   departureAirportButtonFrame.origin = CGPointMake(halfScreenWidth - departureAirportButton.frame.size.width / 2,
-                                    segmentedControlFrame.origin.y + segmentedControlFrame.size.height + departureAirportButton.frame.size.height / 2 + 16);
+                                    topbarHeight + departureAirportButton.frame.size.height / 2);
   departureAirportButton.frame = departureAirportButtonFrame;
   [departureAirportButton setTitle:@"Depart from" forState:UIControlStateNormal];
   
@@ -132,6 +127,7 @@
                                       startSearchButtonFrame.size.width,
                                       startSearchButtonFrame.size.height + 8);
   startSearchButton.frame = startSearchButtonFrame;
+  startSearchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
   [startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
   startSearchButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:17];
   startSearchButton.backgroundColor = [UIColor orangeColor];
