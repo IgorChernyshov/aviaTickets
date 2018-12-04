@@ -5,4 +5,5 @@ Basic features
 ---------------------
 This project shows features learned during the second course "Objective-C development":
 
-+ Interface crated without xib's or Storyboards
++ Interface created programmatically without xib's or Storyboards
++ Uses delegates to send data between view controllers
