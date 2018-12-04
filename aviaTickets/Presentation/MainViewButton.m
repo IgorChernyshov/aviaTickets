@@ -16,7 +16,6 @@
   return button;
 }
 
-/// Because we can't override init on a uibutton, do init steps here.
 - (void)customizeButton {
   
   self.translatesAutoresizingMaskIntoConstraints = false;
@@ -32,11 +31,6 @@
   self.layer.cornerRadius = 5.0;
   self.clipsToBounds = true;
   
-}
-
-/// Make your button have a custom appearance when highlighted here.
-- (void)setHighlighted:(BOOL)highlighted {
-  [super setHighlighted:highlighted];
 }
 
 @end
