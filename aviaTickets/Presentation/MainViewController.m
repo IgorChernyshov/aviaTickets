@@ -95,7 +95,7 @@
   departureAirportButtonFrame.origin = CGPointMake(halfScreenWidth - departureAirportButton.frame.size.width / 2,
                                     segmentedControlFrame.origin.y + segmentedControlFrame.size.height + departureAirportButton.frame.size.height / 2 + 16);
   departureAirportButton.frame = departureAirportButtonFrame;
-  [departureAirportButton setTitle:@"Departure from" forState:UIControlStateNormal];
+  [departureAirportButton setTitle:@"Depart from" forState:UIControlStateNormal];
   
   UIButton *destinationAirportButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   CGRect destinationAirportButtonFrame = destinationAirportButton.frame;
