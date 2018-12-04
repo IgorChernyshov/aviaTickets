@@ -9,14 +9,20 @@
 // Import view controllers
 #import "MainViewController.h"
 #import "SearchResultsViewController.h"
+#import "SelectPlaceViewController.h"
+
 // Import helpers
 #import "DataManager.h"
+
 // Import custom view elements
 #import "MainViewButton.h"
 
-@interface MainViewController ()
+@interface MainViewController () <SelectPlaceViewControllerDelegate>
 
+@property (nonatomic, strong) MainViewButton *departFromButton;
+@property (nonatomic, strong) MainViewButton *arriveToButton;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic) SearchRequest searchRequest;
 
 @end
 
@@ -54,7 +60,8 @@
 {
   // Indicate that app is ready
   [self.activityIndicator removeFromSuperview];
-  self.navigationItem.title = @"Tickets search";
+  self.navigationController.navigationBar.prefersLargeTitles = YES;
+  self.title = @"Search tickets";
   // Create a gradient background
   UIColor *lightBlueColor = [UIColor colorWithRed:97.0/255.0
                                             green:215.0/255.0
@@ -73,69 +80,60 @@
   [self.view.layer addSublayer:gradient];
   
   // Create control components
-  // Segmented Control "One way - Round trip tickets"
-  CGFloat segmentedControlHeight = 30.0;
-  CGFloat segmentedControlWidth = 200.0;
   CGFloat halfScreenWidth = [UIScreen mainScreen].bounds.size.width / 2;
   CGFloat topbarHeight = ([UIApplication sharedApplication].statusBarFrame.size.height +
                           (self.navigationController.navigationBar.frame.size.height));
-  CGRect segmentedControlFrame = CGRectMake(halfScreenWidth - segmentedControlWidth / 2,
-                                            topbarHeight + segmentedControlHeight / 2,
-                                            segmentedControlWidth,
-                                            segmentedControlHeight);
-  UISegmentedControl *ticketsTypeSegmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Round trip", @"One way"]];
-  ticketsTypeSegmentedControl.frame = segmentedControlFrame;
-  ticketsTypeSegmentedControl.tintColor = [UIColor whiteColor];
-  ticketsTypeSegmentedControl.selectedSegmentIndex = 0;
-  [self.view addSubview:ticketsTypeSegmentedControl];
   
   // Create buttons
-  UIButton *departureAirportButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  CGRect departureAirportButtonFrame = departureAirportButton.frame;
-  departureAirportButtonFrame.origin = CGPointMake(halfScreenWidth - departureAirportButton.frame.size.width / 2,
-                                    segmentedControlFrame.origin.y + segmentedControlFrame.size.height + departureAirportButton.frame.size.height / 2 + 16);
-  departureAirportButton.frame = departureAirportButtonFrame;
-  [departureAirportButton setTitle:@"Departure airport" forState:UIControlStateNormal];
+  _departFromButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  [_departFromButton setTitle:@"Depart from" forState:UIControlStateNormal];
+  [_departFromButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+  CGRect departFromButtonFrame = _departFromButton.frame;
+  departFromButtonFrame.origin = CGPointMake(halfScreenWidth - _departFromButton.frame.size.width / 2,
+                                    topbarHeight + _departFromButton.frame.size.height / 2);
+  _departFromButton.frame = departFromButtonFrame;
   
-  UIButton *destinationAirportButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  CGRect destinationAirportButtonFrame = destinationAirportButton.frame;
-  destinationAirportButtonFrame.origin = CGPointMake(halfScreenWidth - destinationAirportButton.frame.size.width / 2,
-                                                   departureAirportButtonFrame.origin.y + departureAirportButtonFrame.size.height + 8);
-  destinationAirportButton.frame = destinationAirportButtonFrame;
-  [destinationAirportButton setTitle:@"Destination airport" forState:UIControlStateNormal];
+  _arriveToButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  [_arriveToButton setTitle:@"Arrive to" forState:UIControlStateNormal];
+  [_arriveToButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+  CGRect arriveToButtonFrame = _arriveToButton.frame;
+  arriveToButtonFrame.origin = CGPointMake(halfScreenWidth - _arriveToButton.frame.size.width / 2,
+                                                   departFromButtonFrame.origin.y + departFromButtonFrame.size.height + 8);
+  _arriveToButton.frame = arriveToButtonFrame;
   
-  UIButton *departureDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  MainViewButton *departureDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  [departureDateButton setTitle:@"Departure date" forState:UIControlStateNormal];
   CGRect departureDateButtonFrame = departureDateButton.frame;
   departureDateButtonFrame.origin = CGPointMake(halfScreenWidth - departureDateButton.frame.size.width / 2,
-                                                     destinationAirportButtonFrame.origin.y + destinationAirportButtonFrame.size.height + departureDateButton.frame.size.height / 2 + 8);
+                                                     arriveToButtonFrame.origin.y + arriveToButtonFrame.size.height + departureDateButton.frame.size.height / 2 + 8);
   departureDateButton.frame = departureDateButtonFrame;
-  [departureDateButton setTitle:@"Departure date" forState:UIControlStateNormal];
   
-  UIButton *returnDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  MainViewButton *returnDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+    [returnDateButton setTitle:@"Return date" forState:UIControlStateNormal];
   CGRect returnDateButtonFrame = returnDateButton.frame;
   returnDateButtonFrame.origin = CGPointMake(halfScreenWidth - returnDateButton.frame.size.width / 2,
                                                 departureDateButtonFrame.origin.y + departureDateButtonFrame.size.height + 8);
   returnDateButton.frame = returnDateButtonFrame;
-  [returnDateButton setTitle:@"Return date" forState:UIControlStateNormal];
   
-  UIButton *numberOfPassengersButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  MainViewButton *numberOfPassengersButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  [numberOfPassengersButton setTitle:@"Number of passengers" forState:UIControlStateNormal];
   CGRect numberOfPassengersButtonFrame = numberOfPassengersButton.frame;
   numberOfPassengersButtonFrame.origin = CGPointMake(halfScreenWidth - numberOfPassengersButton.frame.size.width / 2,
                                              returnDateButtonFrame.origin.y + returnDateButtonFrame.size.height + numberOfPassengersButton.frame.size.height / 2 + 8);
   numberOfPassengersButton.frame = numberOfPassengersButtonFrame;
-  [numberOfPassengersButton setTitle:@"Number of passengers" forState:UIControlStateNormal];
   
-  UIButton *startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  MainViewButton *startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  startSearchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+  [startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
+  startSearchButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:17];
+  startSearchButton.backgroundColor = [UIColor orangeColor];
+  [startSearchButton setTintColor:[UIColor whiteColor]];
   CGRect startSearchButtonFrame = startSearchButton.frame;
   startSearchButtonFrame = CGRectMake(halfScreenWidth - startSearchButton.frame.size.width / 2,
                                       numberOfPassengersButtonFrame.origin.y + numberOfPassengersButtonFrame.size.height + startSearchButton.frame.size.height / 2 + 8,
                                       startSearchButtonFrame.size.width,
                                       startSearchButtonFrame.size.height + 8);
   startSearchButton.frame = startSearchButtonFrame;
-  [startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
-  startSearchButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:17];
-  startSearchButton.backgroundColor = [UIColor orangeColor];
-  [startSearchButton setTintColor:[UIColor whiteColor]];
   
   // Assign actions to buttons
   [startSearchButton addTarget:self
@@ -143,12 +141,23 @@
               forControlEvents:UIControlEventTouchUpInside];
   
   // Place buttons
-  [self.view addSubview:departureAirportButton];
-  [self.view addSubview:destinationAirportButton];
+  [self.view addSubview:_departFromButton];
+  [self.view addSubview:_arriveToButton];
   [self.view addSubview:departureDateButton];
   [self.view addSubview:returnDateButton];
   [self.view addSubview:numberOfPassengersButton];
   [self.view addSubview:startSearchButton];
+}
+
+- (void)placeButtonDidTap:(MainViewButton *)sender {
+  SelectPlaceViewController *selectPlaceViewController;
+  if ([sender isEqual:_departFromButton]) {
+    selectPlaceViewController = [[SelectPlaceViewController alloc] initWithType:PlaceTypeDeparture];
+  } else {
+    selectPlaceViewController = [[SelectPlaceViewController alloc] initWithType:PlaceTypeArrival];
+  }
+  selectPlaceViewController.delegate = self;
+  [self.navigationController pushViewController:selectPlaceViewController animated:YES];
 }
 
 - (void)startSearchButtonWasPressed
@@ -162,6 +171,34 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:kDataManagerLoadDataDidComplete
                                                 object:nil];
+}
+
+#pragma mark - PlaceViewControllerDelegate
+
+- (void)selectPlace:(id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType
+{
+  [self setPlace:place withDataType:dataType andPlaceType:placeType forButton: (placeType == PlaceTypeDeparture) ? _departFromButton : _arriveToButton];
+}
+
+- (void)setPlace:(id)place withDataType:(DataSourceType)dataType andPlaceType:(PlaceType)placeType forButton:(MainViewButton *)button
+{
+  NSString *title;
+  NSString *iataCode;
+  if (dataType == DataSourceTypeCity) {
+    City *city = (City *)place;
+    title = city.name;
+    iataCode = city.code;
+  } else if (dataType == DataSourceTypeAirport) {
+    Airport *airport = (Airport *)place;
+    title = airport.name;
+    iataCode = airport.code;
+  }
+  if (placeType == PlaceTypeDeparture) {
+    _searchRequest.origin = iataCode;
+  } else {
+    _searchRequest.destination = iataCode;
+  }
+  [button setTitle:title forState:UIControlStateNormal];
 }
 
 @end
