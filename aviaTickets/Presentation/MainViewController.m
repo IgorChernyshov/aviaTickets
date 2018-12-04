@@ -19,7 +19,7 @@
 
 @interface MainViewController () <SelectPlaceViewControllerDelegate>
 
-@property (nonatomic, strong) MainViewButton *departureFromButton;
+@property (nonatomic, strong) MainViewButton *departFromButton;
 @property (nonatomic, strong) MainViewButton *arriveToButton;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic) SearchRequest searchRequest;
@@ -85,18 +85,20 @@
                           (self.navigationController.navigationBar.frame.size.height));
   
   // Create buttons
-  _departureFromButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  [_departureFromButton setTitle:@"Depart from" forState:UIControlStateNormal];
-  CGRect departureFromButtonFrame = _departureFromButton.frame;
-  departureFromButtonFrame.origin = CGPointMake(halfScreenWidth - _departureFromButton.frame.size.width / 2,
-                                    topbarHeight + _departureFromButton.frame.size.height / 2);
-  _departureFromButton.frame = departureFromButtonFrame;
+  _departFromButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  [_departFromButton setTitle:@"Depart from" forState:UIControlStateNormal];
+  [_departFromButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+  CGRect departFromButtonFrame = _departFromButton.frame;
+  departFromButtonFrame.origin = CGPointMake(halfScreenWidth - _departFromButton.frame.size.width / 2,
+                                    topbarHeight + _departFromButton.frame.size.height / 2);
+  _departFromButton.frame = departFromButtonFrame;
   
   _arriveToButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   [_arriveToButton setTitle:@"Arrive to" forState:UIControlStateNormal];
+  [_arriveToButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
   CGRect arriveToButtonFrame = _arriveToButton.frame;
   arriveToButtonFrame.origin = CGPointMake(halfScreenWidth - _arriveToButton.frame.size.width / 2,
-                                                   departureFromButtonFrame.origin.y + departureFromButtonFrame.size.height + 8);
+                                                   departFromButtonFrame.origin.y + departFromButtonFrame.size.height + 8);
   _arriveToButton.frame = arriveToButtonFrame;
   
   MainViewButton *departureDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
@@ -139,12 +141,23 @@
               forControlEvents:UIControlEventTouchUpInside];
   
   // Place buttons
-  [self.view addSubview:_departureFromButton];
+  [self.view addSubview:_departFromButton];
   [self.view addSubview:_arriveToButton];
   [self.view addSubview:departureDateButton];
   [self.view addSubview:returnDateButton];
   [self.view addSubview:numberOfPassengersButton];
   [self.view addSubview:startSearchButton];
+}
+
+- (void)placeButtonDidTap:(MainViewButton *)sender {
+  SelectPlaceViewController *selectPlaceViewController;
+  if ([sender isEqual:_departFromButton]) {
+    selectPlaceViewController = [[SelectPlaceViewController alloc] initWithType:PlaceTypeDeparture];
+  } else {
+    selectPlaceViewController = [[SelectPlaceViewController alloc] initWithType:PlaceTypeArrival];
+  }
+  selectPlaceViewController.delegate = self;
+  [self.navigationController pushViewController:selectPlaceViewController animated:YES];
 }
 
 - (void)startSearchButtonWasPressed
@@ -158,6 +171,34 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:kDataManagerLoadDataDidComplete
                                                 object:nil];
+}
+
+#pragma mark - PlaceViewControllerDelegate
+
+- (void)selectPlace:(id)place withType:(PlaceType)placeType andDataType:(DataSourceType)dataType
+{
+  [self setPlace:place withDataType:dataType andPlaceType:placeType forButton: (placeType == PlaceTypeDeparture) ? _departFromButton : _arriveToButton];
+}
+
+- (void)setPlace:(id)place withDataType:(DataSourceType)dataType andPlaceType:(PlaceType)placeType forButton:(MainViewButton *)button
+{
+  NSString *title;
+  NSString *iataCode;
+  if (dataType == DataSourceTypeCity) {
+    City *city = (City *)place;
+    title = city.name;
+    iataCode = city.code;
+  } else if (dataType == DataSourceTypeAirport) {
+    Airport *airport = (Airport *)place;
+    title = airport.name;
+    iataCode = airport.code;
+  }
+  if (placeType == PlaceTypeDeparture) {
+    _searchRequest.origin = iataCode;
+  } else {
+    _searchRequest.destination = iataCode;
+  }
+  [button setTitle:title forState:UIControlStateNormal];
 }
 
 @end
