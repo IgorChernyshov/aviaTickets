@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataManager.h"
 
 @interface PlaceTableViewCell : UITableViewCell
+
+- (instancetype)initWithCity:(City *)city;
+- (instancetype)initWithAirport:(Airport *)airport;
 
 @end
