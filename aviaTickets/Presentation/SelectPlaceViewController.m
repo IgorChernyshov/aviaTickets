@@ -34,19 +34,37 @@
 {
   [super viewDidLoad];
   
-  self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+  // Create a gradient background
+  UIColor *lightBlueColor = [UIColor colorWithRed:97.0/255.0
+                                            green:215.0/255.0
+                                             blue:255.0/255.0
+                                            alpha:1];
+  UIColor *customBlueColor = [UIColor colorWithRed:72.0/255.0
+                                             green:150.0/255.0
+                                              blue:236.0/255.0
+                                             alpha:1];
+  CAGradientLayer *gradient = [CAGradientLayer layer];
+  gradient.frame = self.view.bounds;
+  gradient.startPoint = CGPointMake(0.0, 0.0);
+  gradient.endPoint = CGPointMake(1.0, 1.0);
+  gradient.colors = @[(id)customBlueColor.CGColor,
+                      (id)lightBlueColor.CGColor];
+  [self.view.layer addSublayer:gradient];
   
   _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+  _tableView.backgroundColor = [UIColor clearColor];
   _tableView.delegate = self;
   _tableView.dataSource = self;
   [self.view addSubview:_tableView];
   
   _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Cities", @"Airports"]];
   [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
-  _segmentedControl.tintColor = [UIColor blackColor];
+  _segmentedControl.tintColor = customBlueColor;
   self.navigationItem.titleView = _segmentedControl;
   _segmentedControl.selectedSegmentIndex = 0;
   [self changeSource];
+  
+  self.navigationController.navigationBar.tintColor = customBlueColor;
   
   if (_placeType == PlaceTypeDeparture) {
     self.title = @"Depart from";
