@@ -34,13 +34,13 @@
   _nameLabel.frame = CGRectMake(16, 4, 300, 40);
   _nameLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:17];
   _nameLabel.textColor = [UIColor whiteColor];
-  [self addSubview:_nameLabel];
+  [self.contentView addSubview:_nameLabel];
   
   _codeLabel = [UILabel new];
   _codeLabel.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width - 60, 4, 50, 40);
   _codeLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:17];
   _codeLabel.textColor = [UIColor whiteColor];
-  [self addSubview:_codeLabel];
+  [self.contentView addSubview:_codeLabel];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
