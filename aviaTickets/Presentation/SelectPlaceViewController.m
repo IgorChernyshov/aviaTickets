@@ -100,12 +100,17 @@
 - (PlaceTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   PlaceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier];
+  if (cell == nil) {
+    cell = [[PlaceTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ReuseIdentifier];
+  }
   if (_segmentedControl.selectedSegmentIndex == 0) {
     City *city = [_dataSourceArray objectAtIndex:indexPath.row];
-    cell = [[PlaceTableViewCell alloc] initWithCity:city];
+    cell.nameLabel.text = city.name;
+    cell.codeLabel.text = city.code;
   } else if (_segmentedControl.selectedSegmentIndex == 1) {
     Airport *airport = [_dataSourceArray objectAtIndex:indexPath.row];
-    cell = [[PlaceTableViewCell alloc] initWithAirport:airport];
+    cell.nameLabel.text = airport.name;
+    cell.codeLabel.text = airport.code;
   }
   return cell;
 }

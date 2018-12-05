@@ -11,7 +11,9 @@
 
 @interface PlaceTableViewCell : UITableViewCell
 
-- (instancetype)initWithCity:(City *)city;
-- (instancetype)initWithAirport:(Airport *)airport;
+@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *codeLabel;
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
 @end
