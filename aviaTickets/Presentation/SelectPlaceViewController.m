@@ -57,6 +57,7 @@
   _tableView.separatorColor = [UIColor whiteColor];
   _tableView.delegate = self;
   _tableView.dataSource = self;
+  [_tableView registerClass:[PlaceTableViewCell class] forCellReuseIdentifier:ReuseIdentifier];
   [self.view addSubview:_tableView];
   
   _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Cities", @"Airports"]];
@@ -99,10 +100,7 @@
 
 - (PlaceTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  PlaceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier];
-  if (cell == nil) {
-    cell = [[PlaceTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ReuseIdentifier];
-  }
+  PlaceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
   if (_segmentedControl.selectedSegmentIndex == 0) {
     City *city = [_dataSourceArray objectAtIndex:indexPath.row];
     cell.nameLabel.text = city.name;
