@@ -57,6 +57,7 @@
   _tableView.separatorColor = [UIColor whiteColor];
   _tableView.delegate = self;
   _tableView.dataSource = self;
+  [_tableView registerClass:[PlaceTableViewCell class] forCellReuseIdentifier:ReuseIdentifier];
   [self.view addSubview:_tableView];
   
   _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Cities", @"Airports"]];
@@ -99,13 +100,15 @@
 
 - (PlaceTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  PlaceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier];
+  PlaceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
   if (_segmentedControl.selectedSegmentIndex == 0) {
     City *city = [_dataSourceArray objectAtIndex:indexPath.row];
-    cell = [[PlaceTableViewCell alloc] initWithCity:city];
+    cell.nameLabel.text = city.name;
+    cell.codeLabel.text = city.code;
   } else if (_segmentedControl.selectedSegmentIndex == 1) {
     Airport *airport = [_dataSourceArray objectAtIndex:indexPath.row];
-    cell = [[PlaceTableViewCell alloc] initWithAirport:airport];
+    cell.nameLabel.text = airport.name;
+    cell.codeLabel.text = airport.code;
   }
   return cell;
 }
@@ -116,6 +119,10 @@
   DataSourceType dataType = (int)_segmentedControl.selectedSegmentIndex;
   [self.delegate selectPlace:[_dataSourceArray objectAtIndex:indexPath.row] withType:_placeType andDataType:dataType];
   [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return 48.0 ;
 }
 
 @end
