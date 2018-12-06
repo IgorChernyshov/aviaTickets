@@ -17,6 +17,13 @@
 // Import custom view elements
 #import "MainViewButton.h"
 
+typedef struct SearchRequest {
+  __unsafe_unretained NSString *origin;
+  __unsafe_unretained NSString *destination;
+  __unsafe_unretained NSDate *departDate;
+  __unsafe_unretained NSDate *returnDate;
+} SearchRequest;
+
 @interface MainViewController () <SelectPlaceViewControllerDelegate>
 
 @property (nonatomic, strong) MainViewButton *departFromButton;
@@ -98,28 +105,28 @@
   [_arriveToButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
   CGRect arriveToButtonFrame = _arriveToButton.frame;
   arriveToButtonFrame.origin = CGPointMake(halfScreenWidth - _arriveToButton.frame.size.width / 2,
-                                                   departFromButtonFrame.origin.y + departFromButtonFrame.size.height + 8);
+                                                   CGRectGetMaxY(departFromButtonFrame) + 8);
   _arriveToButton.frame = arriveToButtonFrame;
   
   MainViewButton *departureDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   [departureDateButton setTitle:@"Departure date" forState:UIControlStateNormal];
   CGRect departureDateButtonFrame = departureDateButton.frame;
   departureDateButtonFrame.origin = CGPointMake(halfScreenWidth - departureDateButton.frame.size.width / 2,
-                                                     arriveToButtonFrame.origin.y + arriveToButtonFrame.size.height + departureDateButton.frame.size.height / 2 + 8);
+                                                     CGRectGetMaxY(arriveToButtonFrame) + departureDateButton.frame.size.height / 2 + 8);
   departureDateButton.frame = departureDateButtonFrame;
   
   MainViewButton *returnDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
     [returnDateButton setTitle:@"Return date" forState:UIControlStateNormal];
   CGRect returnDateButtonFrame = returnDateButton.frame;
   returnDateButtonFrame.origin = CGPointMake(halfScreenWidth - returnDateButton.frame.size.width / 2,
-                                                departureDateButtonFrame.origin.y + departureDateButtonFrame.size.height + 8);
+                                                CGRectGetMaxY(departureDateButtonFrame) + 8);
   returnDateButton.frame = returnDateButtonFrame;
   
   MainViewButton *numberOfPassengersButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   [numberOfPassengersButton setTitle:@"Number of passengers" forState:UIControlStateNormal];
   CGRect numberOfPassengersButtonFrame = numberOfPassengersButton.frame;
   numberOfPassengersButtonFrame.origin = CGPointMake(halfScreenWidth - numberOfPassengersButton.frame.size.width / 2,
-                                             returnDateButtonFrame.origin.y + returnDateButtonFrame.size.height + numberOfPassengersButton.frame.size.height / 2 + 8);
+                                             CGRectGetMaxY(returnDateButtonFrame) + numberOfPassengersButton.frame.size.height / 2 + 8);
   numberOfPassengersButton.frame = numberOfPassengersButtonFrame;
   
   MainViewButton *startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
@@ -130,7 +137,7 @@
   [startSearchButton setTintColor:[UIColor whiteColor]];
   CGRect startSearchButtonFrame = startSearchButton.frame;
   startSearchButtonFrame = CGRectMake(halfScreenWidth - startSearchButton.frame.size.width / 2,
-                                      numberOfPassengersButtonFrame.origin.y + numberOfPassengersButtonFrame.size.height + startSearchButton.frame.size.height / 2 + 8,
+                                      CGRectGetMaxY(numberOfPassengersButtonFrame) + startSearchButton.frame.size.height / 2 + 8,
                                       startSearchButtonFrame.size.width,
                                       startSearchButtonFrame.size.height + 8);
   startSearchButton.frame = startSearchButtonFrame;
