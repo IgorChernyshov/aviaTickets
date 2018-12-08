@@ -13,23 +13,22 @@
 
 // Import helpers
 #import "DataManager.h"
+#import "APIManager.h"
 
 // Import custom view elements
 #import "MainViewButton.h"
 
-typedef struct SearchRequest {
-  __unsafe_unretained NSString *origin;
-  __unsafe_unretained NSString *destination;
-  __unsafe_unretained NSDate *departDate;
-  __unsafe_unretained NSDate *returnDate;
-} SearchRequest;
 
 @interface MainViewController () <SelectPlaceViewControllerDelegate>
 
+@property (nonatomic, strong) UIView *locationButtonsView;
+@property (nonatomic, strong) UIView *datesButtonsView;
 @property (nonatomic, strong) MainViewButton *departFromButton;
 @property (nonatomic, strong) MainViewButton *arriveToButton;
+@property (nonatomic, strong) MainViewButton *departureDateButton;
+@property (nonatomic, strong) MainViewButton *returnDateButton;
+@property (nonatomic, strong) MainViewButton *startSearchButton;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
-@property (nonatomic) SearchRequest searchRequest;
 
 @end
 
@@ -45,12 +44,14 @@ typedef struct SearchRequest {
                                               green:215.0/255.0
                                                blue:255.0/255.0
                                               alpha:1];
+  self.navigationController.navigationBar.prefersLargeTitles = YES;
+  
   self.activityIndicator = [self createActivityIndicator];
   [self.view addSubview:_activityIndicator];
   
   // Create a notification subscription to know when data has been loaded
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(dataLoaded)
+                                           selector:@selector(initializeUI)
                                                name:kDataManagerLoadDataDidComplete
                                              object:nil];
 }
@@ -63,12 +64,14 @@ typedef struct SearchRequest {
   return loadingDataActivityIndicatorView;
 }
 
-- (void)dataLoaded
+- (void)initializeUI
 {
   // Indicate that app is ready
   [self.activityIndicator removeFromSuperview];
-  self.navigationController.navigationBar.prefersLargeTitles = YES;
+  
   self.title = @"Search tickets";
+  self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+  
   // Create a gradient background
   UIColor *lightBlueColor = [UIColor colorWithRed:97.0/255.0
                                             green:215.0/255.0
@@ -87,73 +90,91 @@ typedef struct SearchRequest {
   [self.view.layer addSublayer:gradient];
   
   // Create control components
-  CGFloat halfScreenWidth = [UIScreen mainScreen].bounds.size.width / 2;
   CGFloat topbarHeight = ([UIApplication sharedApplication].statusBarFrame.size.height +
                           (self.navigationController.navigationBar.frame.size.height));
   
-  // Create buttons
+  // Create a view and buttons that control locations
+  _locationButtonsView = [[UIView alloc] initWithFrame:CGRectMake(40.0, topbarHeight + 20.0, [UIScreen mainScreen].bounds.size.width - 80.0, 100.0)];
+  _locationButtonsView.backgroundColor = [UIColor whiteColor];
+  _locationButtonsView.layer.shadowColor = [[[UIColor blackColor] colorWithAlphaComponent:0.3] CGColor];
+  _locationButtonsView.layer.shadowOffset = CGSizeZero;
+  _locationButtonsView.layer.shadowRadius = 10.0;
+  _locationButtonsView.layer.shadowOpacity = 1.0;
+  _locationButtonsView.layer.cornerRadius = 6.0;
+  [self.view addSubview:_locationButtonsView];
+  
   _departFromButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   [_departFromButton setTitle:@"Depart from" forState:UIControlStateNormal];
   [_departFromButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
   CGRect departFromButtonFrame = _departFromButton.frame;
-  departFromButtonFrame.origin = CGPointMake(halfScreenWidth - _departFromButton.frame.size.width / 2,
-                                    topbarHeight + _departFromButton.frame.size.height / 2);
+  departFromButtonFrame.origin = CGPointMake(10.0, 10.0);
   _departFromButton.frame = departFromButtonFrame;
   
   _arriveToButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   [_arriveToButton setTitle:@"Arrive to" forState:UIControlStateNormal];
   [_arriveToButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
   CGRect arriveToButtonFrame = _arriveToButton.frame;
-  arriveToButtonFrame.origin = CGPointMake(halfScreenWidth - _arriveToButton.frame.size.width / 2,
-                                                   CGRectGetMaxY(departFromButtonFrame) + 8);
+  arriveToButtonFrame.origin = CGPointMake(10.0, CGRectGetMaxY(departFromButtonFrame) + 10.0);
   _arriveToButton.frame = arriveToButtonFrame;
   
-  MainViewButton *departureDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  [departureDateButton setTitle:@"Departure date" forState:UIControlStateNormal];
-  CGRect departureDateButtonFrame = departureDateButton.frame;
-  departureDateButtonFrame.origin = CGPointMake(halfScreenWidth - departureDateButton.frame.size.width / 2,
-                                                     CGRectGetMaxY(arriveToButtonFrame) + departureDateButton.frame.size.height / 2 + 8);
-  departureDateButton.frame = departureDateButtonFrame;
+  // Create a view and buttons that control dates
+  _datesButtonsView = [[UIView alloc] initWithFrame:CGRectMake(40.0, CGRectGetMaxY(_locationButtonsView.frame) + 20.0, [UIScreen mainScreen].bounds.size.width - 80.0, 100.0)];
+  _datesButtonsView.backgroundColor = [UIColor whiteColor];
+  _datesButtonsView.layer.shadowColor = [[[UIColor blackColor] colorWithAlphaComponent:0.3] CGColor];
+  _datesButtonsView.layer.shadowOffset = CGSizeZero;
+  _datesButtonsView.layer.shadowRadius = 10.0;
+  _datesButtonsView.layer.shadowOpacity = 1.0;
+  _datesButtonsView.layer.cornerRadius = 6.0;
+  [self.view addSubview:_datesButtonsView];
   
-  MainViewButton *returnDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-    [returnDateButton setTitle:@"Return date" forState:UIControlStateNormal];
-  CGRect returnDateButtonFrame = returnDateButton.frame;
-  returnDateButtonFrame.origin = CGPointMake(halfScreenWidth - returnDateButton.frame.size.width / 2,
-                                                CGRectGetMaxY(departureDateButtonFrame) + 8);
-  returnDateButton.frame = returnDateButtonFrame;
+  _departureDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  [_departureDateButton setTitle:@"Departure date" forState:UIControlStateNormal];
+  CGRect departureDateButtonFrame = _departureDateButton.frame;
+  departureDateButtonFrame.origin = CGPointMake(10.0, 10.0);
+  _departureDateButton.frame = departureDateButtonFrame;
+  
+  _returnDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  [_returnDateButton setTitle:@"Return date" forState:UIControlStateNormal];
+  CGRect returnDateButtonFrame = _returnDateButton.frame;
+  returnDateButtonFrame.origin = CGPointMake(10.0, CGRectGetMaxY(departureDateButtonFrame) + 10.0);
+  _returnDateButton.frame = returnDateButtonFrame;
   
   MainViewButton *numberOfPassengersButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   [numberOfPassengersButton setTitle:@"Number of passengers" forState:UIControlStateNormal];
-  CGRect numberOfPassengersButtonFrame = numberOfPassengersButton.frame;
-  numberOfPassengersButtonFrame.origin = CGPointMake(halfScreenWidth - numberOfPassengersButton.frame.size.width / 2,
-                                             CGRectGetMaxY(returnDateButtonFrame) + numberOfPassengersButton.frame.size.height / 2 + 8);
-  numberOfPassengersButton.frame = numberOfPassengersButtonFrame;
+  numberOfPassengersButton.frame = CGRectMake(40.0,
+                                              CGRectGetMaxY(_datesButtonsView.frame) + 20.0,
+                                              [UIScreen mainScreen].bounds.size.width - 80.0,
+                                              numberOfPassengersButton.frame.size.height + 8.0);
+  numberOfPassengersButton.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 20);
   
-  MainViewButton *startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  startSearchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-  [startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
-  startSearchButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:17];
-  startSearchButton.backgroundColor = [UIColor orangeColor];
-  [startSearchButton setTintColor:[UIColor whiteColor]];
-  CGRect startSearchButtonFrame = startSearchButton.frame;
-  startSearchButtonFrame = CGRectMake(halfScreenWidth - startSearchButton.frame.size.width / 2,
-                                      CGRectGetMaxY(numberOfPassengersButtonFrame) + startSearchButton.frame.size.height / 2 + 8,
-                                      startSearchButtonFrame.size.width,
-                                      startSearchButtonFrame.size.height + 8);
-  startSearchButton.frame = startSearchButtonFrame;
+  _startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
+  _startSearchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+  [_startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
+  _startSearchButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:17];
+  _startSearchButton.backgroundColor = [UIColor orangeColor];
+  [_startSearchButton setTintColor:[UIColor whiteColor]];
+  _startSearchButton.frame = CGRectMake(40.0,
+                                        CGRectGetMaxY(numberOfPassengersButton.frame) + 20.0,
+                                        [UIScreen mainScreen].bounds.size.width - 80.0,
+                                        _startSearchButton.frame.size.height + 8.0);
   
   // Assign actions to buttons
-  [startSearchButton addTarget:self
-                        action:@selector(startSearchButtonWasPressed)
-              forControlEvents:UIControlEventTouchUpInside];
+  [_startSearchButton addTarget:self
+                         action:@selector(startSearchButtonWasPressed)
+               forControlEvents:UIControlEventTouchUpInside];
   
   // Place buttons
-  [self.view addSubview:_departFromButton];
-  [self.view addSubview:_arriveToButton];
-  [self.view addSubview:departureDateButton];
-  [self.view addSubview:returnDateButton];
+  [_locationButtonsView addSubview:_departFromButton];
+  [_locationButtonsView addSubview:_arriveToButton];
+  [_datesButtonsView addSubview:_departureDateButton];
+  [_datesButtonsView addSubview:_returnDateButton];
   [self.view addSubview:numberOfPassengersButton];
-  [self.view addSubview:startSearchButton];
+  [self.view addSubview:_startSearchButton];
+  
+  // Request current user's location from APIManager
+  [[APIManager sharedInstance] cityForCurrentIP:^(City *city) {
+    [self setPlace:city withDataType:DataSourceTypeCity andPlaceType:PlaceTypeDeparture forButton:self->_departFromButton];
+  }];
 }
 
 - (void)placeButtonDidTap:(MainViewButton *)sender {
@@ -169,8 +190,18 @@ typedef struct SearchRequest {
 
 - (void)startSearchButtonWasPressed
 {
-  SearchResultsViewController *searchResultsViewController = [[SearchResultsViewController alloc] initWithNibName:nil bundle:nil];
-  [self.navigationController pushViewController:searchResultsViewController animated:YES];
+  if (![_departFromButton.titleLabel.text isEqual: @"Depart from"] && ![_arriveToButton.titleLabel.text isEqual: @"Arrive to"]) {
+    [[APIManager sharedInstance] ticketsWithRequest:_searchRequest withCompletion:^(NSArray *tickets) {
+      if (tickets.count > 0) {
+        SearchResultsViewController *searchResultsViewController = [[SearchResultsViewController alloc] initWithTickets:tickets];
+        [self.navigationController pushViewController:searchResultsViewController animated:YES];
+      } else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Whoops!" message:@"No tickets found with these parameters" preferredStyle: UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Close" style:(UIAlertActionStyleDefault) handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+      }
+    }];
+  }
 }
 
 - (void)dealloc
