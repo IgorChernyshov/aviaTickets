@@ -13,6 +13,7 @@
 
 // Import helpers
 #import "DataManager.h"
+#import "APIManager.h"
 
 // Import custom view elements
 #import "MainViewButton.h"
@@ -57,7 +58,7 @@ typedef struct SearchRequest {
   
   // Create a notification subscription to know when data has been loaded
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(dataLoaded)
+                                           selector:@selector(initializeUI)
                                                name:kDataManagerLoadDataDidComplete
                                              object:nil];
 }
@@ -70,7 +71,7 @@ typedef struct SearchRequest {
   return loadingDataActivityIndicatorView;
 }
 
-- (void)dataLoaded
+- (void)initializeUI
 {
   // Indicate that app is ready
   [self.activityIndicator removeFromSuperview];
@@ -174,6 +175,11 @@ typedef struct SearchRequest {
   [_datesButtonsView addSubview:_returnDateButton];
   [self.view addSubview:numberOfPassengersButton];
   [self.view addSubview:_startSearchButton];
+  
+  // Request current user's location from APIManager
+  [[APIManager sharedInstance] cityForCurrentIP:^(City *city) {
+    [self setPlace:city withDataType:DataSourceTypeCity andPlaceType:PlaceTypeDeparture forButton:self->_departFromButton];
+  }];
 }
 
 - (void)placeButtonDidTap:(MainViewButton *)sender {
