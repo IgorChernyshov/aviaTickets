@@ -8,7 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+typedef struct SearchRequest {
+  __unsafe_unretained NSString *origin;
+  __unsafe_unretained NSString *destination;
+  __unsafe_unretained NSDate *departDate;
+  __unsafe_unretained NSDate *returnDate;
+} SearchRequest;
+
 @interface MainViewController : UIViewController
+
+@property (nonatomic) SearchRequest searchRequest;
 
 @end
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9C65B30921BBA58C002C402C /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C65B30821BBA58C002C402C /* APIManager.m */; };
+		9C65B30C21BBEDF5002C402C /* Ticket.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C65B30B21BBEDF5002C402C /* Ticket.m */; };
 		9CAA7E9921B2A9DC006D9F8B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7E9821B2A9DC006D9F8B /* AppDelegate.m */; };
 		9CAA7E9C21B2A9DC006D9F8B /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7E9B21B2A9DC006D9F8B /* MainViewController.m */; };
 		9CAA7EA121B2A9DD006D9F8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CAA7EA021B2A9DD006D9F8B /* Assets.xcassets */; };
@@ -29,6 +30,8 @@
 /* Begin PBXFileReference section */
 		9C65B30721BBA58C002C402C /* APIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIManager.h; sourceTree = "<group>"; };
 		9C65B30821BBA58C002C402C /* APIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APIManager.m; sourceTree = "<group>"; };
+		9C65B30A21BBEDF5002C402C /* Ticket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ticket.h; sourceTree = "<group>"; };
+		9C65B30B21BBEDF5002C402C /* Ticket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ticket.m; sourceTree = "<group>"; };
 		9CAA7E9421B2A9DC006D9F8B /* aviaTickets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = aviaTickets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CAA7E9721B2A9DC006D9F8B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9CAA7E9821B2A9DC006D9F8B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -119,6 +122,8 @@
 				9CAA7EB521B30CD1006D9F8B /* City.m */,
 				9CAA7EB121B30B75006D9F8B /* Country.h */,
 				9CAA7EB221B30B75006D9F8B /* Country.m */,
+				9C65B30A21BBEDF5002C402C /* Ticket.h */,
+				9C65B30B21BBEDF5002C402C /* Ticket.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -240,6 +245,7 @@
 				9CAA7EBD21B314C7006D9F8B /* DataManager.m in Sources */,
 				9CDFBB7521B67BA9001EB427 /* SelectPlaceViewController.m in Sources */,
 				9CDFBB8321B78873001EB427 /* PlaceTableViewCell.m in Sources */,
+				9C65B30C21BBEDF5002C402C /* Ticket.m in Sources */,
 				9CAA7E9C21B2A9DC006D9F8B /* MainViewController.m in Sources */,
 				9CAA7EB921B30CDA006D9F8B /* Airport.m in Sources */,
 				9C65B30921BBA58C002C402C /* APIManager.m in Sources */,

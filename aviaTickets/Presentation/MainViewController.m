@@ -18,12 +18,6 @@
 // Import custom view elements
 #import "MainViewButton.h"
 
-typedef struct SearchRequest {
-  __unsafe_unretained NSString *origin;
-  __unsafe_unretained NSString *destination;
-  __unsafe_unretained NSDate *departDate;
-  __unsafe_unretained NSDate *returnDate;
-} SearchRequest;
 
 @interface MainViewController () <SelectPlaceViewControllerDelegate>
 
@@ -35,7 +29,6 @@ typedef struct SearchRequest {
 @property (nonatomic, strong) MainViewButton *returnDateButton;
 @property (nonatomic, strong) MainViewButton *startSearchButton;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
-@property (nonatomic) SearchRequest searchRequest;
 
 @end
 
