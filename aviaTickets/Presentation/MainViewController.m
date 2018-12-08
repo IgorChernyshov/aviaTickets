@@ -70,6 +70,8 @@
   [self.activityIndicator removeFromSuperview];
   
   self.title = @"Search tickets";
+  self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+  
   // Create a gradient background
   UIColor *lightBlueColor = [UIColor colorWithRed:97.0/255.0
                                             green:215.0/255.0
@@ -193,8 +195,8 @@
       SearchResultsViewController *searchResultsViewController = [[SearchResultsViewController alloc] initWithTickets:tickets];
       [self.navigationController pushViewController:searchResultsViewController animated:YES];
     } else {
-      UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Увы!" message:@"По данному направлению билетов не найдено" preferredStyle: UIAlertControllerStyleAlert];
-      [alertController addAction:[UIAlertAction actionWithTitle:@"Закрыть" style:(UIAlertActionStyleDefault) handler:nil]];
+      UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Whoops!" message:@"No tickets found with these parameters" preferredStyle: UIAlertControllerStyleAlert];
+      [alertController addAction:[UIAlertAction actionWithTitle:@"Close" style:(UIAlertActionStyleDefault) handler:nil]];
       [self presentViewController:alertController animated:YES completion:nil];
     }
   }];

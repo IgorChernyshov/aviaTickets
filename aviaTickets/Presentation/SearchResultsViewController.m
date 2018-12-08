@@ -13,13 +13,25 @@
 
 @interface SearchResultsViewController ()
 
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *tickets;
 
 @end
 
 @implementation SearchResultsViewController
 
-- (void)viewDidLoad {
+- (instancetype)initWithTickets:(NSArray *)tickets
+{
+  self = [super init];
+  if (self)
+  {
+    _tickets = tickets;
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
   [super viewDidLoad];
   
   self.title = @"Search results";
@@ -40,23 +52,20 @@
   gradient.colors = @[(id)customBlueColor.CGColor,
                       (id)lightBlueColor.CGColor];
   [self.view.layer addSublayer:gradient];
-}
-
-- (instancetype)initWithTickets:(NSArray *)tickets {
-  self = [super init];
-  if (self)
-  {
-    _tickets = tickets;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableView registerClass:[TicketTableViewCell class] forCellReuseIdentifier:TicketCellReuseIdentifier];
-  }
-  return self;
+  
+  _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+  _tableView.backgroundColor = [UIColor clearColor];
+  _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  _tableView.delegate = self;
+  _tableView.dataSource = self;
+  [_tableView registerClass:[TicketTableViewCell class] forCellReuseIdentifier:TicketCellReuseIdentifier];
+  [self.view addSubview:_tableView];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return _tickets.count;
+  return [_tickets count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SearchResultsViewController : UITableViewController
+@interface SearchResultsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 - (instancetype)initWithTickets:(NSArray *)tickets;
 
 @end
-

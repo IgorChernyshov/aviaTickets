@@ -20,35 +20,43 @@
 
 @implementation TicketTableViewCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
-    
-    self.contentView.layer.shadowColor = [[[UIColor blackColor] colorWithAlphaComponent:0.2] CGColor];
-    self.contentView.layer.shadowOffset = CGSizeMake(1.0, 1.0);
-    self.contentView.layer.shadowRadius = 10.0;
-    self.contentView.layer.shadowOpacity = 1.0;
-    self.contentView.layer.cornerRadius = 6.0;
-    self.contentView.backgroundColor = [UIColor whiteColor];
-    
-    _priceLabel = [[UILabel alloc] initWithFrame:self.bounds];
-    _priceLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:24.0];
-    [self.contentView addSubview:_priceLabel];
-    
-    _airlineLogoView = [[UIImageView alloc] initWithFrame:self.bounds];
-    _airlineLogoView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.contentView addSubview:_airlineLogoView];
-    
-    _placesLabel = [[UILabel alloc] initWithFrame:self.bounds];
-    _placesLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:15.0];
-    _placesLabel.textColor = [UIColor darkGrayColor];
-    [self.contentView addSubview:_placesLabel];
-    
-    _dateLabel = [[UILabel alloc] initWithFrame:self.bounds];
-    _dateLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:15.0];
-    [self.contentView addSubview:_dateLabel];
+    [self configureCell];
   }
   return self;
+}
+
+- (void)configureCell
+{
+  self.backgroundColor = [UIColor clearColor];
+  self.selectionStyle = UITableViewCellSelectionStyleNone;
+  
+  self.contentView.layer.shadowColor = [[[UIColor blackColor] colorWithAlphaComponent:0.2] CGColor];
+  self.contentView.layer.shadowOffset = CGSizeMake(1.0, 1.0);
+  self.contentView.layer.shadowRadius = 10.0;
+  self.contentView.layer.shadowOpacity = 1.0;
+  self.contentView.layer.cornerRadius = 6.0;
+  self.contentView.backgroundColor = [UIColor whiteColor];
+  
+  _priceLabel = [[UILabel alloc] initWithFrame:self.bounds];
+  _priceLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:24.0];
+  [self.contentView addSubview:_priceLabel];
+  
+  _airlineLogoView = [[UIImageView alloc] initWithFrame:self.bounds];
+  _airlineLogoView.contentMode = UIViewContentModeScaleAspectFit;
+  [self.contentView addSubview:_airlineLogoView];
+  
+  _placesLabel = [[UILabel alloc] initWithFrame:self.bounds];
+  _placesLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:15.0];
+  _placesLabel.textColor = [UIColor darkGrayColor];
+  [self.contentView addSubview:_placesLabel];
+  
+  _dateLabel = [[UILabel alloc] initWithFrame:self.bounds];
+  _dateLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:15.0];
+  [self.contentView addSubview:_dateLabel];
 }
 
 - (void)layoutSubviews {
@@ -59,6 +67,10 @@
   _airlineLogoView.frame = CGRectMake(CGRectGetMaxX(_priceLabel.frame) + 10.0, 10.0, 80.0, 80.0);
   _placesLabel.frame = CGRectMake(10.0, CGRectGetMaxY(_priceLabel.frame) + 16.0, 100.0, 20.0);
   _dateLabel.frame = CGRectMake(10.0, CGRectGetMaxY(_placesLabel.frame) + 8.0, self.contentView.frame.size.width - 20.0, 20.0);
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+  [super setSelected:selected animated:animated];
 }
 
 - (void)setTicket:(Ticket *)ticket {
