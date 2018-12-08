@@ -15,6 +15,8 @@
 #define API_URL_CHEAP @"https://api.travelpayouts.com/v1/prices/cheap"
 #define API_URL_CITY_FROM_IP @"https://www.travelpayouts.com/whereami?ip="
 
+#define AirlineLogo(iata) [NSURL URLWithString:[NSString stringWithFormat:@"https://pics.avs.io/200/200/%@.png", iata]];
+
 @implementation APIManager
 
 + (instancetype)sharedInstance {
