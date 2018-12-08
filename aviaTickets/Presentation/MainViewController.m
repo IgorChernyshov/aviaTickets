@@ -188,8 +188,16 @@
 
 - (void)startSearchButtonWasPressed
 {
-  SearchResultsViewController *searchResultsViewController = [[SearchResultsViewController alloc] initWithNibName:nil bundle:nil];
-  [self.navigationController pushViewController:searchResultsViewController animated:YES];
+  [[APIManager sharedInstance] ticketsWithRequest:_searchRequest withCompletion:^(NSArray *tickets) {
+    if (tickets.count > 0) {
+      SearchResultsViewController *searchResultsViewController = [[SearchResultsViewController alloc] initWithTickets:tickets];
+      [self.navigationController pushViewController:searchResultsViewController animated:YES];
+    } else {
+      UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Увы!" message:@"По данному направлению билетов не найдено" preferredStyle: UIAlertControllerStyleAlert];
+      [alertController addAction:[UIAlertAction actionWithTitle:@"Закрыть" style:(UIAlertActionStyleDefault) handler:nil]];
+      [self presentViewController:alertController animated:YES completion:nil];
+    }
+  }];
 }
 
 - (void)dealloc

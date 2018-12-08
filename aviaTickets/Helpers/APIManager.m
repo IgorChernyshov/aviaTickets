@@ -7,7 +7,6 @@
 //
 
 #import "APIManager.h"
-#import "MainViewController.h"
 #import "Ticket.h"
 
 #define API_TOKEN @"c5a5dfb897a7b9bcd0c76b015a4b060e"
