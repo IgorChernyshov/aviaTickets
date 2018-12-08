@@ -18,7 +18,6 @@
 
 - (void)customizeButton {
   
-  self.translatesAutoresizingMaskIntoConstraints = false;
   CGRect currentFrame = self.frame;
   currentFrame.size = CGSizeMake(300.0, 35.0);
   self.frame = currentFrame;

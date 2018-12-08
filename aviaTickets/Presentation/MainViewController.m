@@ -102,7 +102,7 @@
   _locationButtonsView.layer.shadowOpacity = 1.0;
   _locationButtonsView.layer.cornerRadius = 6.0;
   [self.view addSubview:_locationButtonsView];
-
+  
   _departFromButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   [_departFromButton setTitle:@"Depart from" forState:UIControlStateNormal];
   [_departFromButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
@@ -134,7 +134,7 @@
   _departureDateButton.frame = departureDateButtonFrame;
   
   _returnDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-    [_returnDateButton setTitle:@"Return date" forState:UIControlStateNormal];
+  [_returnDateButton setTitle:@"Return date" forState:UIControlStateNormal];
   CGRect returnDateButtonFrame = _returnDateButton.frame;
   returnDateButtonFrame.origin = CGPointMake(10.0, CGRectGetMaxY(departureDateButtonFrame) + 10.0);
   _returnDateButton.frame = returnDateButtonFrame;
@@ -142,11 +142,11 @@
   MainViewButton *numberOfPassengersButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   [numberOfPassengersButton setTitle:@"Number of passengers" forState:UIControlStateNormal];
   numberOfPassengersButton.frame = CGRectMake(40.0,
-                                             CGRectGetMaxY(_datesButtonsView.frame) + 20.0,
-                                             [UIScreen mainScreen].bounds.size.width - 80.0,
-                                             numberOfPassengersButton.frame.size.height + 8.0);
+                                              CGRectGetMaxY(_datesButtonsView.frame) + 20.0,
+                                              [UIScreen mainScreen].bounds.size.width - 80.0,
+                                              numberOfPassengersButton.frame.size.height + 8.0);
   numberOfPassengersButton.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 20);
-
+  
   _startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   _startSearchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
   [_startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
@@ -154,14 +154,14 @@
   _startSearchButton.backgroundColor = [UIColor orangeColor];
   [_startSearchButton setTintColor:[UIColor whiteColor]];
   _startSearchButton.frame = CGRectMake(40.0,
-                                       CGRectGetMaxY(numberOfPassengersButton.frame) + 20.0,
-                                       [UIScreen mainScreen].bounds.size.width - 80.0,
-                                       _startSearchButton.frame.size.height + 8.0);
+                                        CGRectGetMaxY(numberOfPassengersButton.frame) + 20.0,
+                                        [UIScreen mainScreen].bounds.size.width - 80.0,
+                                        _startSearchButton.frame.size.height + 8.0);
   
   // Assign actions to buttons
   [_startSearchButton addTarget:self
-                        action:@selector(startSearchButtonWasPressed)
-              forControlEvents:UIControlEventTouchUpInside];
+                         action:@selector(startSearchButtonWasPressed)
+               forControlEvents:UIControlEventTouchUpInside];
   
   // Place buttons
   [_locationButtonsView addSubview:_departFromButton];
@@ -190,16 +190,18 @@
 
 - (void)startSearchButtonWasPressed
 {
-  [[APIManager sharedInstance] ticketsWithRequest:_searchRequest withCompletion:^(NSArray *tickets) {
-    if (tickets.count > 0) {
-      SearchResultsViewController *searchResultsViewController = [[SearchResultsViewController alloc] initWithTickets:tickets];
-      [self.navigationController pushViewController:searchResultsViewController animated:YES];
-    } else {
-      UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Whoops!" message:@"No tickets found with these parameters" preferredStyle: UIAlertControllerStyleAlert];
-      [alertController addAction:[UIAlertAction actionWithTitle:@"Close" style:(UIAlertActionStyleDefault) handler:nil]];
-      [self presentViewController:alertController animated:YES completion:nil];
-    }
-  }];
+  if (![_departFromButton.titleLabel.text isEqual: @"Depart from"] && ![_arriveToButton.titleLabel.text isEqual: @"Arrive to"]) {
+    [[APIManager sharedInstance] ticketsWithRequest:_searchRequest withCompletion:^(NSArray *tickets) {
+      if (tickets.count > 0) {
+        SearchResultsViewController *searchResultsViewController = [[SearchResultsViewController alloc] initWithTickets:tickets];
+        [self.navigationController pushViewController:searchResultsViewController animated:YES];
+      } else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Whoops!" message:@"No tickets found with these parameters" preferredStyle: UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Close" style:(UIAlertActionStyleDefault) handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+      }
+    }];
+  }
 }
 
 - (void)dealloc
