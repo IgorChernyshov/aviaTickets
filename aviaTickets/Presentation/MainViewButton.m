@@ -24,7 +24,7 @@
   
   self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
   self.contentEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
-  self.titleLabel.font = [UIFont fontWithName:@"AvenirNext" size:17];
+  self.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:17];
   [self setTintColor:[UIColor darkGrayColor]];
   self.backgroundColor = [UIColor whiteColor];
   self.layer.cornerRadius = 5.0;
