@@ -59,11 +59,6 @@
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCurrentLocation:) name:kLocationServiceDidUpdateCurrentLocation object:nil];
 }
 
-- (void)dealloc
-{
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)updateCurrentLocation:(NSNotification *)notification
 {
   CLLocation *currentLocation = notification.object;
@@ -96,6 +91,11 @@
       [self->_mapView addAnnotation:annotation];
     });
   }
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
