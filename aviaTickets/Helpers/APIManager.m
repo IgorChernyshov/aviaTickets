@@ -7,12 +7,12 @@
 //
 
 #import "APIManager.h"
-#import "Ticket.h"
 
 #define API_TOKEN @"c5a5dfb897a7b9bcd0c76b015a4b060e"
 #define API_URL_IP_ADDRESS @"https://api.ipify.org/?format=json"
 #define API_URL_CHEAP @"https://api.travelpayouts.com/v1/prices/cheap"
 #define API_URL_CITY_FROM_IP @"https://www.travelpayouts.com/whereami?ip="
+#define API_URL_PRICE_MAP @"https://map.aviasales.ru/prices.json?origin_iata="
 
 @implementation APIManager
 
@@ -65,6 +65,27 @@
       }
       dispatch_async(dispatch_get_main_queue(), ^{
         completion(array);
+      });
+    }
+  }];
+}
+
+- (void)mapPricesFor:(City *)origin withCompletion:(void(^)(NSArray *prices))completion
+{
+  static BOOL isLoading;
+  if (isLoading) { return; }
+  isLoading = YES;
+  [self load:[NSString stringWithFormat:@"%@%@", API_URL_PRICE_MAP, origin.code] withCompletion:^(id  _Nullable result) {
+    NSArray *array = result;
+    NSMutableArray *prices = [NSMutableArray new];
+    if (array) {
+      for (NSDictionary *priceMapDictionary in array) {
+        PriceMap *priceMap = [[PriceMap alloc] initWithDictionary:priceMapDictionary withOrigin:origin];
+        [prices addObject:priceMap];
+      }
+      isLoading = NO;
+      dispatch_async(dispatch_get_main_queue(), ^{
+        completion(prices);
       });
     }
   }];

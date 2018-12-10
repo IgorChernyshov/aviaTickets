@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "DataManager.h"
 #import "MainViewController.h"
+#import "Ticket.h"
+#import "PriceMap.h"
 
 @interface APIManager : NSObject
 
