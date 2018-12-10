@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C2DA8E121BE91D400CA5AC0 /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2DA8E021BE91D400CA5AC0 /* LocationService.m */; };
 		9C48A40B21BBF8B30077F9EB /* TicketTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C48A40A21BBF8B30077F9EB /* TicketTableViewCell.m */; };
 		9C65B30921BBA58C002C402C /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C65B30821BBA58C002C402C /* APIManager.m */; };
 		9C65B30C21BBEDF5002C402C /* Ticket.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C65B30B21BBEDF5002C402C /* Ticket.m */; };
@@ -32,6 +33,8 @@
 /* Begin PBXFileReference section */
 		1248A82908AC65B9A9324A63 /* Pods-aviaTickets.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aviaTickets.debug.xcconfig"; path = "Pods/Target Support Files/Pods-aviaTickets/Pods-aviaTickets.debug.xcconfig"; sourceTree = "<group>"; };
 		5C01E25FBCA65B7C1456CB3B /* Pods-aviaTickets.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-aviaTickets.release.xcconfig"; path = "Pods/Target Support Files/Pods-aviaTickets/Pods-aviaTickets.release.xcconfig"; sourceTree = "<group>"; };
+		9C2DA8DF21BE91D400CA5AC0 /* LocationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationService.h; sourceTree = "<group>"; };
+		9C2DA8E021BE91D400CA5AC0 /* LocationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationService.m; sourceTree = "<group>"; };
 		9C48A40921BBF8B30077F9EB /* TicketTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TicketTableViewCell.h; sourceTree = "<group>"; };
 		9C48A40A21BBF8B30077F9EB /* TicketTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TicketTableViewCell.m; sourceTree = "<group>"; };
 		9C65B30721BBA58C002C402C /* APIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIManager.h; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 				9C65B30821BBA58C002C402C /* APIManager.m */,
 				9CAA7EBB21B314C7006D9F8B /* DataManager.h */,
 				9CAA7EBC21B314C7006D9F8B /* DataManager.m */,
+				9C2DA8DF21BE91D400CA5AC0 /* LocationService.h */,
+				9C2DA8E021BE91D400CA5AC0 /* LocationService.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CDFBB7221B51FFF001EB427 /* SearchResultsViewController.m in Sources */,
+				9C2DA8E121BE91D400CA5AC0 /* LocationService.m in Sources */,
 				9CAA7EB621B30CD1006D9F8B /* City.m in Sources */,
 				9CAA7EB321B30B75006D9F8B /* Country.m in Sources */,
 				9CAA7EBD21B314C7006D9F8B /* DataManager.m in Sources */,
