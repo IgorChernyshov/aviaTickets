@@ -163,9 +163,10 @@
   
   _priceMapButton = [UIButton buttonWithType:UIButtonTypeSystem];
   [_priceMapButton setTitle:@"🗺" forState:UIControlStateNormal];
+  _priceMapButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:28];
   _priceMapButton.backgroundColor = [UIColor clearColor];
   [_priceMapButton addTarget:self action:@selector(priceMapButtonWasPressed) forControlEvents:UIControlEventTouchUpInside];
-  _priceMapButton.frame = CGRectMake(CGRectGetMaxX(_startSearchButton.frame) - 35.0,
+  _priceMapButton.frame = CGRectMake(CGRectGetMaxX(_startSearchButton.frame) - 40.0,
                                      CGRectGetMidY(_startSearchButton.frame) - 15.0,
                                      30.0,
                                      30.0);
