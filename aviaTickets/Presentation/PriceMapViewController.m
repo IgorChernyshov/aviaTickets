@@ -14,6 +14,8 @@
 @interface PriceMapViewController ()
 
 @property (nonatomic, strong) MKMapView *mapView;
+@property (nonatomic, strong) UIView *loadingView;
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, strong) LocationService *locationService;
 @property (nonatomic, strong) City *origin;
 @property (nonatomic, strong) NSArray *prices;
@@ -33,12 +35,28 @@
   
   _locationService = [LocationService new];
   
+  CGRect loadingViewFrame = CGRectMake(self.view.bounds.size.width / 2.0 - 35.0,
+                                        self.view.bounds.size.height / 2.0 - 35.0,
+                                        70.0,
+                                        70.0);
+  _loadingView = [[UIView alloc] initWithFrame: loadingViewFrame];
+  _loadingView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.8];
+  _loadingView.clipsToBounds = YES;
+  _loadingView.layer.cornerRadius = 6.0;
+  [_mapView addSubview:_loadingView];
+  
+  CGRect activityIndicatorFrame = CGRectMake(12.5, 12.5, 50.0, 50.0);
+  UIColor *lightBlueColor = [UIColor colorWithRed:97.0/255.0
+                                            green:215.0/255.0
+                                             blue:255.0/255.0
+                                            alpha:1];
+  _activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:activityIndicatorFrame];
+  _activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+  [_activityIndicator setColor:lightBlueColor];
+  [_activityIndicator startAnimating];
+  [_loadingView addSubview:_activityIndicator];
+  
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCurrentLocation:) name:kLocationServiceDidUpdateCurrentLocation object:nil];
-}
-
-- (void)dealloc
-{
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)updateCurrentLocation:(NSNotification *)notification
@@ -53,6 +71,7 @@
     if (_origin) {
       [[APIManager sharedInstance] mapPricesFor:_origin withCompletion:^(NSArray *prices) {
         self.prices = prices;
+        [self->_loadingView setHidden:YES];
       }];
     }
   }
@@ -72,6 +91,11 @@
       [self->_mapView addAnnotation:annotation];
     });
   }
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "MainViewController.h"
 #import "SearchResultsViewController.h"
 #import "SelectPlaceViewController.h"
+#import "PriceMapViewController.h"
 
 // Import helpers
 #import "DataManager.h"
@@ -28,6 +29,7 @@
 @property (nonatomic, strong) MainViewButton *departureDateButton;
 @property (nonatomic, strong) MainViewButton *returnDateButton;
 @property (nonatomic, strong) MainViewButton *startSearchButton;
+@property (nonatomic, strong) UIButton *priceMapButton;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
 @end
@@ -69,6 +71,7 @@
   // Indicate that app is ready
   [self.activityIndicator removeFromSuperview];
   
+  // Configure navigation bar
   self.title = @"Search tickets";
   self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
   
@@ -105,14 +108,14 @@
   
   _departFromButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   [_departFromButton setTitle:@"Depart from" forState:UIControlStateNormal];
-  [_departFromButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+  [_departFromButton addTarget:self action:@selector(placeButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
   CGRect departFromButtonFrame = _departFromButton.frame;
   departFromButtonFrame.origin = CGPointMake(10.0, 10.0);
   _departFromButton.frame = departFromButtonFrame;
   
   _arriveToButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   [_arriveToButton setTitle:@"Arrive to" forState:UIControlStateNormal];
-  [_arriveToButton addTarget:self action:@selector(placeButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+  [_arriveToButton addTarget:self action:@selector(placeButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
   CGRect arriveToButtonFrame = _arriveToButton.frame;
   arriveToButtonFrame.origin = CGPointMake(10.0, CGRectGetMaxY(departFromButtonFrame) + 10.0);
   _arriveToButton.frame = arriveToButtonFrame;
@@ -158,6 +161,16 @@
                                         [UIScreen mainScreen].bounds.size.width - 80.0,
                                         _startSearchButton.frame.size.height + 8.0);
   
+  _priceMapButton = [UIButton buttonWithType:UIButtonTypeSystem];
+  [_priceMapButton setTitle:@"🗺" forState:UIControlStateNormal];
+  _priceMapButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:28];
+  _priceMapButton.backgroundColor = [UIColor clearColor];
+  [_priceMapButton addTarget:self action:@selector(priceMapButtonWasPressed) forControlEvents:UIControlEventTouchUpInside];
+  _priceMapButton.frame = CGRectMake(CGRectGetMaxX(_startSearchButton.frame) - 40.0,
+                                     CGRectGetMidY(_startSearchButton.frame) - 15.0,
+                                     30.0,
+                                     30.0);
+  
   // Assign actions to buttons
   [_startSearchButton addTarget:self
                          action:@selector(startSearchButtonWasPressed)
@@ -170,6 +183,7 @@
   [_datesButtonsView addSubview:_returnDateButton];
   [self.view addSubview:numberOfPassengersButton];
   [self.view addSubview:_startSearchButton];
+  [self.view addSubview:_priceMapButton];
   
   // Request current user's location from APIManager
   [[APIManager sharedInstance] cityForCurrentIP:^(City *city) {
@@ -177,7 +191,7 @@
   }];
 }
 
-- (void)placeButtonDidTap:(MainViewButton *)sender {
+- (void)placeButtonWasPressed:(MainViewButton *)sender {
   SelectPlaceViewController *selectPlaceViewController;
   if ([sender isEqual:_departFromButton]) {
     selectPlaceViewController = [[SelectPlaceViewController alloc] initWithType:PlaceTypeDeparture];
@@ -186,6 +200,12 @@
   }
   selectPlaceViewController.delegate = self;
   [self.navigationController pushViewController:selectPlaceViewController animated:YES];
+}
+
+- (void)priceMapButtonWasPressed
+{
+  PriceMapViewController *priceMapViewController = [PriceMapViewController new];
+  [self.navigationController pushViewController:priceMapViewController animated:YES];
 }
 
 - (void)startSearchButtonWasPressed
