@@ -69,6 +69,7 @@
   if (@available(iOS 11.0, *)) {
     self.navigationItem.searchController = _searchController;
     self.navigationItem.hidesSearchBarWhenScrolling = NO;
+    _searchController.hidesNavigationBarDuringPresentation = NO;
   } else {
     _tableView.tableHeaderView = _searchController.searchBar;
   }
