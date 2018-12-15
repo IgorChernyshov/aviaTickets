@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.title = @"Map of prices";
+  self.title = @"Price Map";
   
   _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
   _mapView.showsUserLocation = YES;
