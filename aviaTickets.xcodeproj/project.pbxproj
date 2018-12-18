@@ -10,6 +10,7 @@
 		9C2ACDC321BE983C00C4C164 /* PriceMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2ACDC221BE983C00C4C164 /* PriceMap.m */; };
 		9C2ACDC621BE9D6100C4C164 /* PriceMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2ACDC521BE9D6100C4C164 /* PriceMapViewController.m */; };
 		9C2DA8E121BE91D400CA5AC0 /* LocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2DA8E021BE91D400CA5AC0 /* LocationService.m */; };
+		9C39FCD921C4D8A7003365F1 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C39FCD821C4D8A7003365F1 /* TabBarController.m */; };
 		9C48A40B21BBF8B30077F9EB /* TicketTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C48A40A21BBF8B30077F9EB /* TicketTableViewCell.m */; };
 		9C65B30921BBA58C002C402C /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C65B30821BBA58C002C402C /* APIManager.m */; };
 		9C65B30C21BBEDF5002C402C /* Ticket.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C65B30B21BBEDF5002C402C /* Ticket.m */; };
@@ -41,6 +42,8 @@
 		9C2ACDC521BE9D6100C4C164 /* PriceMapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PriceMapViewController.m; sourceTree = "<group>"; };
 		9C2DA8DF21BE91D400CA5AC0 /* LocationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationService.h; sourceTree = "<group>"; };
 		9C2DA8E021BE91D400CA5AC0 /* LocationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationService.m; sourceTree = "<group>"; };
+		9C39FCD721C4D8A7003365F1 /* TabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
+		9C39FCD821C4D8A7003365F1 /* TabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
 		9C48A40921BBF8B30077F9EB /* TicketTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TicketTableViewCell.h; sourceTree = "<group>"; };
 		9C48A40A21BBF8B30077F9EB /* TicketTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TicketTableViewCell.m; sourceTree = "<group>"; };
 		9C65B30721BBA58C002C402C /* APIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APIManager.h; sourceTree = "<group>"; };
@@ -175,14 +178,16 @@
 				9CAA7E9B21B2A9DC006D9F8B /* MainViewController.m */,
 				9CDFBB8121B78873001EB427 /* PlaceTableViewCell.h */,
 				9CDFBB8221B78873001EB427 /* PlaceTableViewCell.m */,
+				9C2ACDC421BE9D6100C4C164 /* PriceMapViewController.h */,
+				9C2ACDC521BE9D6100C4C164 /* PriceMapViewController.m */,
 				9CDFBB7021B51FFF001EB427 /* SearchResultsViewController.h */,
 				9CDFBB7121B51FFF001EB427 /* SearchResultsViewController.m */,
 				9CDFBB7321B67BA9001EB427 /* SelectPlaceViewController.h */,
 				9CDFBB7421B67BA9001EB427 /* SelectPlaceViewController.m */,
+				9C39FCD721C4D8A7003365F1 /* TabBarController.h */,
+				9C39FCD821C4D8A7003365F1 /* TabBarController.m */,
 				9C48A40921BBF8B30077F9EB /* TicketTableViewCell.h */,
 				9C48A40A21BBF8B30077F9EB /* TicketTableViewCell.m */,
-				9C2ACDC421BE9D6100C4C164 /* PriceMapViewController.h */,
-				9C2ACDC521BE9D6100C4C164 /* PriceMapViewController.m */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 				9CDFBB7221B51FFF001EB427 /* SearchResultsViewController.m in Sources */,
 				9C2DA8E121BE91D400CA5AC0 /* LocationService.m in Sources */,
 				9CAA7EB621B30CD1006D9F8B /* City.m in Sources */,
+				9C39FCD921C4D8A7003365F1 /* TabBarController.m in Sources */,
 				9CAA7EB321B30B75006D9F8B /* Country.m in Sources */,
 				9CAA7EBD21B314C7006D9F8B /* DataManager.m in Sources */,
 				9CDFBB7521B67BA9001EB427 /* SelectPlaceViewController.m in Sources */,

@@ -29,7 +29,6 @@
 @property (nonatomic, strong) MainViewButton *departureDateButton;
 @property (nonatomic, strong) MainViewButton *returnDateButton;
 @property (nonatomic, strong) MainViewButton *startSearchButton;
-@property (nonatomic, strong) UIButton *priceMapButton;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
 @end
@@ -72,7 +71,7 @@
   [self.activityIndicator removeFromSuperview];
   
   // Configure navigation bar
-  self.title = @"Search tickets";
+  self.title = @"Search Tickets";
   self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
   
   // Create a gradient background
@@ -161,16 +160,6 @@
                                         [UIScreen mainScreen].bounds.size.width - 80.0,
                                         _startSearchButton.frame.size.height + 8.0);
   
-  _priceMapButton = [UIButton buttonWithType:UIButtonTypeSystem];
-  [_priceMapButton setTitle:@"🗺" forState:UIControlStateNormal];
-  _priceMapButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:28];
-  _priceMapButton.backgroundColor = [UIColor clearColor];
-  [_priceMapButton addTarget:self action:@selector(priceMapButtonWasPressed) forControlEvents:UIControlEventTouchUpInside];
-  _priceMapButton.frame = CGRectMake(CGRectGetMaxX(_startSearchButton.frame) - 40.0,
-                                     CGRectGetMidY(_startSearchButton.frame) - 15.0,
-                                     30.0,
-                                     30.0);
-  
   // Assign actions to buttons
   [_startSearchButton addTarget:self
                          action:@selector(startSearchButtonWasPressed)
@@ -183,7 +172,6 @@
   [_datesButtonsView addSubview:_returnDateButton];
   [self.view addSubview:numberOfPassengersButton];
   [self.view addSubview:_startSearchButton];
-  [self.view addSubview:_priceMapButton];
   
   // Request current user's location from APIManager
   [[APIManager sharedInstance] cityForCurrentIP:^(City *city) {

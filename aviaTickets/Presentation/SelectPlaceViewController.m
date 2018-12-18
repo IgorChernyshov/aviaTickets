@@ -11,12 +11,14 @@
 
 #define ReuseIdentifier @"PlaceCell"
 
-@interface SelectPlaceViewController ()
+@interface SelectPlaceViewController () <UISearchResultsUpdating>
 
 @property (nonatomic) PlaceType placeType;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
-@property (nonatomic, strong) NSArray *dataSourceArray;
+@property (nonatomic, strong) NSArray *currentDataArray;
+@property (nonatomic, strong) NSArray *searchResultsDataArray;
+@property (nonatomic, strong) UISearchController *searchController;
 
 @end
 
@@ -52,11 +54,25 @@
                       (id)lightBlueColor.CGColor];
   [self.view.layer addSublayer:gradient];
   
+  self.navigationController.navigationBar.tintColor = customBlueColor;
+  
+  _searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+  _searchController.dimsBackgroundDuringPresentation = NO;
+  _searchController.searchResultsUpdater = self;
+  _searchResultsDataArray = [NSArray new];
+  
   _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
   _tableView.backgroundColor = [UIColor clearColor];
   _tableView.separatorColor = [UIColor whiteColor];
   _tableView.delegate = self;
   _tableView.dataSource = self;
+  if (@available(iOS 11.0, *)) {
+    self.navigationItem.searchController = _searchController;
+    self.navigationItem.hidesSearchBarWhenScrolling = NO;
+    _searchController.hidesNavigationBarDuringPresentation = NO;
+  } else {
+    _tableView.tableHeaderView = _searchController.searchBar;
+  }
   [_tableView registerClass:[PlaceTableViewCell class] forCellReuseIdentifier:ReuseIdentifier];
   [self.view addSubview:_tableView];
   
@@ -66,8 +82,6 @@
   self.navigationItem.titleView = _segmentedControl;
   _segmentedControl.selectedSegmentIndex = 0;
   [self changeSource];
-  
-  self.navigationController.navigationBar.tintColor = customBlueColor;
   
   if (_placeType == PlaceTypeDeparture) {
     self.title = @"Depart from";
@@ -80,10 +94,10 @@
 {
   switch (_segmentedControl.selectedSegmentIndex) {
     case 0:
-      _dataSourceArray = [[DataManager sharedInstance] cities];
+      _currentDataArray = [[DataManager sharedInstance] cities];
       break;
     case 1:
-      _dataSourceArray = [[DataManager sharedInstance] airports];
+      _currentDataArray = [[DataManager sharedInstance] airports];
       break;
     default:
       break;
@@ -91,22 +105,37 @@
   [self.tableView reloadData];
 }
 
+#pragma mark - UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+  if (searchController.searchBar.text) {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.name CONTAINS[cd] %@", searchController.searchBar.text];
+    _searchResultsDataArray = [_currentDataArray filteredArrayUsingPredicate:predicate];
+    [_tableView reloadData];
+  }
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [_dataSourceArray count];
+  if (_searchController.isActive && ![_searchController.searchBar.text isEqualToString:@""]) {
+    return _searchResultsDataArray.count;
+  }
+  return [_currentDataArray count];
 }
 
 - (PlaceTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   PlaceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
+  id item = (_searchController.isActive && ![_searchController.searchBar.text isEqualToString:@""]) ? [_searchResultsDataArray objectAtIndex:indexPath.row] : [_currentDataArray objectAtIndex:indexPath.row];
   if (_segmentedControl.selectedSegmentIndex == 0) {
-    City *city = [_dataSourceArray objectAtIndex:indexPath.row];
+    City *city = item;
     cell.nameLabel.text = city.name;
     cell.codeLabel.text = city.code;
   } else if (_segmentedControl.selectedSegmentIndex == 1) {
-    Airport *airport = [_dataSourceArray objectAtIndex:indexPath.row];
+    Airport *airport = item;
     cell.nameLabel.text = airport.name;
     cell.codeLabel.text = airport.code;
   }
@@ -114,10 +143,16 @@
 }
 
 #pragma mark - UITableViewDelegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   DataSourceType dataType = (int)_segmentedControl.selectedSegmentIndex;
-  [self.delegate selectPlace:[_dataSourceArray objectAtIndex:indexPath.row] withType:_placeType andDataType:dataType];
+  if (_searchController.isActive && ![_searchController.searchBar.text isEqualToString:@""]) {
+    [self.delegate selectPlace:[_searchResultsDataArray objectAtIndex:indexPath.row] withType:_placeType andDataType:dataType];
+    _searchController.active = NO;
+  } else {
+    [self.delegate selectPlace:[_currentDataArray objectAtIndex:indexPath.row] withType:_placeType andDataType:dataType];
+  }
   [self.navigationController popViewControllerAnimated:YES];
 }
 
