@@ -96,8 +96,12 @@
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   dateFormatter.dateFormat = @"dd MMMM yyyy hh:mm";
   _dateLabel.text = [dateFormatter stringFromDate:favouriteTicket.departure];
-  NSURL *urlLogo = AirlineLogo(favouriteTicket.airline);
-  [_airlineLogoView yy_setImageWithURL:urlLogo options:YYWebImageOptionSetImageWithFadeAnimation];
+  if (favouriteTicket.airline == nil) {
+    _airlineLogoView.image = [UIImage imageNamed:@"unknownIcon"];
+  } else {
+    NSURL *urlLogo = AirlineLogo(favouriteTicket.airline);
+    [_airlineLogoView yy_setImageWithURL:urlLogo options:YYWebImageOptionSetImageWithFadeAnimation];
+  }
 }
 
 @end

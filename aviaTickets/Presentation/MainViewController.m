@@ -175,7 +175,7 @@
   
   // Request current user's location from APIManager
   [[APIManager sharedInstance] cityForCurrentIP:^(City *city) {
-    [self setPlace:city withDataType:DataSourceTypeCity andPlaceType:PlaceTypeDeparture forButton:self->_departFromButton];
+    [self setPlace:city withDataType:DataSourceTypeCity andPlaceType:PlaceTypeDeparture forButton:self.departFromButton];
   }];
 }
 

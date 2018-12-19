@@ -83,6 +83,21 @@
   [self save];
 }
 
+- (void)addPriceMapToFavorite:(PriceMap *)priceMap
+{
+  FavouriteTicket *favouriteTicket = [NSEntityDescription insertNewObjectForEntityForName:@"FavouriteTicket" inManagedObjectContext:_managedObjectContext];
+  favouriteTicket.price = priceMap.price;
+  favouriteTicket.airline = nil;
+  favouriteTicket.departure = priceMap.departureDate;
+  favouriteTicket.expires = nil;
+  favouriteTicket.flightNumber = 0;
+  favouriteTicket.returnDate = priceMap.returnDate;
+  favouriteTicket.from = priceMap.origin.code;
+  favouriteTicket.to = priceMap.destination.code;
+  favouriteTicket.created = [NSDate date];
+  [self save];
+}
+
 - (void)removeTicketFromFavorites:(Ticket *)ticket
 {
   FavouriteTicket *favouriteTicket = [self favouriteFromTicket:ticket];
