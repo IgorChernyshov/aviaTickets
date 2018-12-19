@@ -111,21 +111,31 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   if (isFavourites) return;
-  UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Selected a ticket" message:@"What would you like to do with it?" preferredStyle:UIAlertControllerStyleActionSheet];
-  UIAlertAction *switchFavouriteMark;
-  if ([[CoreDataHelper sharedInstance] isFavorite:[_tickets objectAtIndex:indexPath.row]]) {
-    switchFavouriteMark = [UIAlertAction actionWithTitle:@"Remove from favourites" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-      [[CoreDataHelper sharedInstance] removeFromFavorite:self.tickets[indexPath.row]];
-    }];
+}
+
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  if (!isFavourites) {
+    if ([[CoreDataHelper sharedInstance] isFavorite:[_tickets objectAtIndex:indexPath.row]]) {
+      UITableViewRowAction *removeFromFavourites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favourites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        [[CoreDataHelper sharedInstance] removeFromFavorite:self.tickets[indexPath.row]];
+      }];
+      return @[removeFromFavourites];
+    } else {
+      UITableViewRowAction *addToFavourites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Add to favourites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        [[CoreDataHelper sharedInstance] addToFavorite:self.tickets[indexPath.row]];
+      }];
+      addToFavourites.backgroundColor = [UIColor blueColor];
+      return @[addToFavourites];
+    }
   } else {
-    switchFavouriteMark = [UIAlertAction actionWithTitle:@"Add to favourites" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-      [[CoreDataHelper sharedInstance] addToFavorite:self.tickets[indexPath.row]];
+    UITableViewRowAction *removeFromFavourites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favourites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+      [[CoreDataHelper sharedInstance] removeFromFavorite:self.tickets[indexPath.row]];
+      [self.tableView reloadData];
     }];
+    return @[removeFromFavourites];
   }
-  UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-  [alertController addAction:switchFavouriteMark];
-  [alertController addAction:cancel];
-  [self presentViewController:alertController animated:YES completion:nil];
+  return @[];
 }
 
 @end
