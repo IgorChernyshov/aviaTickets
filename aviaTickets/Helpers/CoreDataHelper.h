@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedInstance;
 
 - (BOOL)isFavorite:(Ticket *)ticket;
-- (NSArray *)favorites;
+- (NSArray *)favourites;
 - (void)addToFavorite:(Ticket *)ticket;
 - (void)removeFromFavorite:(Ticket *)ticket;
 
