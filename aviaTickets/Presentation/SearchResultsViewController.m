@@ -8,6 +8,7 @@
 
 #import "SearchResultsViewController.h"
 #import "TicketTableViewCell.h"
+#import "CoreDataHelper.h"
 
 #define TicketCellReuseIdentifier @"TicketCellIdentifier"
 
@@ -19,6 +20,20 @@
 @end
 
 @implementation SearchResultsViewController
+{
+  BOOL isFavourites;
+}
+
+- (instancetype)initFavouriteTicketsController
+{
+  self = [super init];
+  if (self) {
+    isFavourites = YES;
+    _tickets = [NSArray new];
+    self.title = @"Favourite Tickets";
+  }
+  return self;
+}
 
 - (instancetype)initWithTickets:(NSArray *)tickets
 {
@@ -26,6 +41,7 @@
   if (self)
   {
     _tickets = tickets;
+    self.title = @"Search results";
   }
   return self;
 }
@@ -33,8 +49,6 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
-  self.title = @"Search results";
   
   // Create a gradient background
   UIColor *lightBlueColor = [UIColor colorWithRed:97.0/255.0
@@ -62,20 +76,56 @@
   [self.view addSubview:_tableView];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  if (isFavourites) {
+    _tickets = [[CoreDataHelper sharedInstance] favourites];
+    [_tableView reloadData];
+  }
+}
+
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
   return [_tickets count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
   TicketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellReuseIdentifier forIndexPath:indexPath];
-  cell.ticket = [_tickets objectAtIndex:indexPath.row];
+  if (isFavourites) {
+    cell.favouriteTicket = [_tickets objectAtIndex:indexPath.row];
+  } else {
+    cell.ticket = [_tickets objectAtIndex:indexPath.row];
+  }
   return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
   return 140.0;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  if (isFavourites) return;
+  UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Selected a ticket" message:@"What would you like to do with it?" preferredStyle:UIAlertControllerStyleAlert];
+  UIAlertAction *switchFavouriteMark;
+  if ([[CoreDataHelper sharedInstance] isFavorite:[_tickets objectAtIndex:indexPath.row]]) {
+    switchFavouriteMark = [UIAlertAction actionWithTitle:@"Remove from favourites" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+      [[CoreDataHelper sharedInstance] removeFromFavorite:self.tickets[indexPath.row]];
+    }];
+  } else {
+    switchFavouriteMark = [UIAlertAction actionWithTitle:@"Add to favourites" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+      [[CoreDataHelper sharedInstance] addToFavorite:self.tickets[indexPath.row]];
+    }];
+  }
+  UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+  [alertController addAction:switchFavouriteMark];
+  [alertController addAction:cancel];
+  [self presentViewController:alertController animated:YES completion:nil];
 }
 
 @end
