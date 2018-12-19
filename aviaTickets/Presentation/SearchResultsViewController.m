@@ -111,7 +111,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   if (isFavourites) return;
-  UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Selected a ticket" message:@"What would you like to do with it?" preferredStyle:UIAlertControllerStyleAlert];
+  UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Selected a ticket" message:@"What would you like to do with it?" preferredStyle:UIAlertControllerStyleActionSheet];
   UIAlertAction *switchFavouriteMark;
   if ([[CoreDataHelper sharedInstance] isFavorite:[_tickets objectAtIndex:indexPath.row]]) {
     switchFavouriteMark = [UIAlertAction actionWithTitle:@"Remove from favourites" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
