@@ -9,6 +9,7 @@
 #import "TabBarController.h"
 #import "MainViewController.h"
 #import "PriceMapViewController.h"
+#import "SearchResultsViewController.h"
 
 @interface TabBarController ()
 
@@ -39,6 +40,10 @@
   priceMapViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Price Map" image:[UIImage imageNamed:@"mapIcon"] tag:1];
   UINavigationController *priceMapNavigationViewController = [[UINavigationController alloc] initWithRootViewController:priceMapViewController];
   [controllers addObject:priceMapNavigationViewController];
+  
+  SearchResultsViewController *favouritesViewController = [SearchResultsViewController new];
+  favouritesViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Favourite Tickets" image:[UIImage imageNamed:@"favouritesIcon"] tag:2];
+  [controllers addObject:favouritesViewController];
   
   return controllers;
 }
