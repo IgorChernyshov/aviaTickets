@@ -83,13 +83,19 @@
   [self save];
 }
 
-- (void)removeFromFavorite:(Ticket *)ticket
+- (void)removeTicketFromFavorites:(Ticket *)ticket
 {
   FavouriteTicket *favouriteTicket = [self favouriteFromTicket:ticket];
   if (favouriteTicket) {
     [_managedObjectContext deleteObject:favouriteTicket];
     [self save];
   }
+}
+
+- (void)removeFavouriteTicketFromFavourites:(FavouriteTicket *)favouriteTicket
+{
+  [_managedObjectContext deleteObject:favouriteTicket];
+  [self save];
 }
 
 - (NSArray *)favourites

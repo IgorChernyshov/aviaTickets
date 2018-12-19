@@ -118,7 +118,7 @@
   if (!isFavourites) {
     if ([[CoreDataHelper sharedInstance] isFavorite:[_tickets objectAtIndex:indexPath.row]]) {
       UITableViewRowAction *removeFromFavourites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favourites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        [[CoreDataHelper sharedInstance] removeFromFavorite:self.tickets[indexPath.row]];
+        [[CoreDataHelper sharedInstance] removeTicketFromFavorites:self.tickets[indexPath.row]];
       }];
       return @[removeFromFavourites];
     } else {
@@ -130,7 +130,8 @@
     }
   } else {
     UITableViewRowAction *removeFromFavourites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favourites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-      [[CoreDataHelper sharedInstance] removeFromFavorite:self.tickets[indexPath.row]];
+      [[CoreDataHelper sharedInstance] removeFavouriteTicketFromFavourites:self.tickets[indexPath.row]];
+      self.tickets = [[CoreDataHelper sharedInstance] favourites];
       [self.tableView reloadData];
     }];
     return @[removeFromFavourites];
