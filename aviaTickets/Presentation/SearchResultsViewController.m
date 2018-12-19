@@ -21,16 +21,16 @@
 
 @implementation SearchResultsViewController
 {
-  BOOL isFavourites;
+  BOOL isFavorites;
 }
 
-- (instancetype)initFavouriteTicketsController
+- (instancetype)initFavoriteTicketsController
 {
   self = [super init];
   if (self) {
-    isFavourites = YES;
+    isFavorites = YES;
     _tickets = [NSArray new];
-    self.title = @"Favourite Tickets";
+    self.title = @"Favorite Tickets";
   }
   return self;
 }
@@ -79,8 +79,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  if (isFavourites) {
-    _tickets = [[CoreDataHelper sharedInstance] favourites];
+  if (isFavorites) {
+    _tickets = [[CoreDataHelper sharedInstance] favorites];
     [_tableView reloadData];
   }
 }
@@ -95,8 +95,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   TicketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellReuseIdentifier forIndexPath:indexPath];
-  if (isFavourites) {
-    cell.favouriteTicket = [_tickets objectAtIndex:indexPath.row];
+  if (isFavorites) {
+    cell.favoriteTicket = [_tickets objectAtIndex:indexPath.row];
   } else {
     cell.ticket = [_tickets objectAtIndex:indexPath.row];
   }
@@ -110,31 +110,31 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  if (isFavourites) return;
+  if (isFavorites) return;
 }
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  if (!isFavourites) {
+  if (!isFavorites) {
     if ([[CoreDataHelper sharedInstance] isFavorite:[_tickets objectAtIndex:indexPath.row]]) {
-      UITableViewRowAction *removeFromFavourites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favourites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+      UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [[CoreDataHelper sharedInstance] removeTicketFromFavorites:self.tickets[indexPath.row]];
       }];
-      return @[removeFromFavourites];
+      return @[removeFromFavorites];
     } else {
-      UITableViewRowAction *addToFavourites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Add to favourites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+      UITableViewRowAction *addToFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Add to favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [[CoreDataHelper sharedInstance] addToFavorite:self.tickets[indexPath.row]];
       }];
-      addToFavourites.backgroundColor = [UIColor blueColor];
-      return @[addToFavourites];
+      addToFavorites.backgroundColor = [UIColor blueColor];
+      return @[addToFavorites];
     }
   } else {
-    UITableViewRowAction *removeFromFavourites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favourites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-      [[CoreDataHelper sharedInstance] removeFavouriteTicketFromFavourites:self.tickets[indexPath.row]];
-      self.tickets = [[CoreDataHelper sharedInstance] favourites];
+    UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+      [[CoreDataHelper sharedInstance] removeFavoriteTicketFromFavorites:self.tickets[indexPath.row]];
+      self.tickets = [[CoreDataHelper sharedInstance] favorites];
       [self.tableView reloadData];
     }];
-    return @[removeFromFavourites];
+    return @[removeFromFavorites];
   }
   return @[];
 }

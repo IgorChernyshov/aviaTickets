@@ -41,10 +41,10 @@
   UINavigationController *priceMapNavigationViewController = [[UINavigationController alloc] initWithRootViewController:priceMapViewController];
   [controllers addObject:priceMapNavigationViewController];
   
-  SearchResultsViewController *favouritesViewController = [[SearchResultsViewController alloc] initFavouriteTicketsController];
-  favouritesViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Favourite Tickets" image:[UIImage imageNamed:@"favouritesIcon"] tag:2];
-  UINavigationController *favouritesNavigationViewController = [[UINavigationController alloc] initWithRootViewController:favouritesViewController];
-  [controllers addObject:favouritesNavigationViewController];
+  SearchResultsViewController *favoritesViewController = [[SearchResultsViewController alloc] initFavoriteTicketsController];
+  favoritesViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Favorite Tickets" image:[UIImage imageNamed:@"favoritesIcon"] tag:2];
+  UINavigationController *favoritesNavigationViewController = [[UINavigationController alloc] initWithRootViewController:favoritesViewController];
+  [controllers addObject:favoritesNavigationViewController];
   
   return controllers;
 }

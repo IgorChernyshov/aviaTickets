@@ -31,7 +31,7 @@
 
 - (void)setup
 {
-  NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"FavouriteTicket" withExtension:@"momd"];
+  NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"FavoriteTicket" withExtension:@"momd"];
   _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
   
   NSURL *docsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
@@ -56,66 +56,66 @@
   }
 }
 
-- (FavouriteTicket *)favouriteFromTicket:(Ticket *)ticket
+- (FavoriteTicket *)favoriteFromTicket:(Ticket *)ticket
 {
-  NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"FavouriteTicket"];
+  NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteTicket"];
   fetchRequest.predicate = [NSPredicate predicateWithFormat:@"price == %ld AND airline == %@ AND from == %@ AND to == %@ AND departure == %@ AND expires == %@ AND flightNumber == %ld", (long)ticket.price.integerValue, ticket.airline, ticket.from, ticket.to, ticket.departure, ticket.expires, (long)ticket.flightNumber.integerValue];
   return [[_managedObjectContext executeFetchRequest:fetchRequest error:nil] firstObject];
 }
 
 - (BOOL)isFavorite:(Ticket *)ticket
 {
-  return [self favouriteFromTicket:ticket] != nil;
+  return [self favoriteFromTicket:ticket] != nil;
 }
 
 - (void)addToFavorite:(Ticket *)ticket
 {
-  FavouriteTicket *favouriteTicket = [NSEntityDescription insertNewObjectForEntityForName:@"FavouriteTicket" inManagedObjectContext:_managedObjectContext];
-  favouriteTicket.price = ticket.price.integerValue;
-  favouriteTicket.airline = ticket.airline;
-  favouriteTicket.departure = ticket.departure;
-  favouriteTicket.expires = ticket.expires;
-  favouriteTicket.flightNumber = ticket.flightNumber.integerValue;
-  favouriteTicket.returnDate = ticket.returnDate;
-  favouriteTicket.from = ticket.from;
-  favouriteTicket.to = ticket.to;
-  favouriteTicket.created = [NSDate date];
+  FavoriteTicket *favoriteTicket = [NSEntityDescription insertNewObjectForEntityForName:@"FavoriteTicket" inManagedObjectContext:_managedObjectContext];
+  favoriteTicket.price = ticket.price.integerValue;
+  favoriteTicket.airline = ticket.airline;
+  favoriteTicket.departure = ticket.departure;
+  favoriteTicket.expires = ticket.expires;
+  favoriteTicket.flightNumber = ticket.flightNumber.integerValue;
+  favoriteTicket.returnDate = ticket.returnDate;
+  favoriteTicket.from = ticket.from;
+  favoriteTicket.to = ticket.to;
+  favoriteTicket.created = [NSDate date];
   [self save];
 }
 
 - (void)addPriceMapToFavorite:(PriceMap *)priceMap
 {
-  FavouriteTicket *favouriteTicket = [NSEntityDescription insertNewObjectForEntityForName:@"FavouriteTicket" inManagedObjectContext:_managedObjectContext];
-  favouriteTicket.price = priceMap.price;
-  favouriteTicket.airline = nil;
-  favouriteTicket.departure = priceMap.departureDate;
-  favouriteTicket.expires = nil;
-  favouriteTicket.flightNumber = 0;
-  favouriteTicket.returnDate = priceMap.returnDate;
-  favouriteTicket.from = priceMap.origin.code;
-  favouriteTicket.to = priceMap.destination.code;
-  favouriteTicket.created = [NSDate date];
+  FavoriteTicket *favoriteTicket = [NSEntityDescription insertNewObjectForEntityForName:@"FavoriteTicket" inManagedObjectContext:_managedObjectContext];
+  favoriteTicket.price = priceMap.price;
+  favoriteTicket.airline = nil;
+  favoriteTicket.departure = priceMap.departureDate;
+  favoriteTicket.expires = nil;
+  favoriteTicket.flightNumber = 0;
+  favoriteTicket.returnDate = priceMap.returnDate;
+  favoriteTicket.from = priceMap.origin.code;
+  favoriteTicket.to = priceMap.destination.code;
+  favoriteTicket.created = [NSDate date];
   [self save];
 }
 
 - (void)removeTicketFromFavorites:(Ticket *)ticket
 {
-  FavouriteTicket *favouriteTicket = [self favouriteFromTicket:ticket];
-  if (favouriteTicket) {
-    [_managedObjectContext deleteObject:favouriteTicket];
+  FavoriteTicket *favoriteTicket = [self favoriteFromTicket:ticket];
+  if (favoriteTicket) {
+    [_managedObjectContext deleteObject:favoriteTicket];
     [self save];
   }
 }
 
-- (void)removeFavouriteTicketFromFavourites:(FavouriteTicket *)favouriteTicket
+- (void)removeFavoriteTicketFromFavorites:(FavoriteTicket *)favoriteTicket
 {
-  [_managedObjectContext deleteObject:favouriteTicket];
+  [_managedObjectContext deleteObject:favoriteTicket];
   [self save];
 }
 
-- (NSArray *)favourites
+- (NSArray *)favorites
 {
-  NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"FavouriteTicket"];
+  NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteTicket"];
   fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO]];
   return [_managedObjectContext executeFetchRequest:fetchRequest error:nil];
 }
