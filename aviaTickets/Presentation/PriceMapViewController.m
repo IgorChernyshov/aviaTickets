@@ -10,8 +10,9 @@
 #import "DataManager.h"
 #import "APIManager.h"
 #import "LocationService.h"
+#import "CoreDataHelper.h"
 
-@interface PriceMapViewController ()
+@interface PriceMapViewController () <MKMapViewDelegate>
 
 @property (nonatomic, strong) MKMapView *mapView;
 @property (nonatomic, strong) UIView *loadingView;
@@ -30,6 +31,7 @@
   self.title = @"Price Map";
   
   _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+  _mapView.delegate = self;
   _mapView.showsUserLocation = YES;
   [self.view addSubview:_mapView];
   
@@ -71,7 +73,7 @@
     if (_origin) {
       [[APIManager sharedInstance] mapPricesFor:_origin withCompletion:^(NSArray *prices) {
         self.prices = prices;
-        [self->_loadingView setHidden:YES];
+        [self.loadingView setHidden:YES];
       }];
     }
   }
@@ -88,7 +90,7 @@
       annotation.title = [NSString stringWithFormat:@"%@ (%@)", price.destination.name, price.destination.code];
       annotation.subtitle = [NSString stringWithFormat:@"%ld ₽", (long)price.price];
       annotation.coordinate = price.destination.coordinate;
-      [self->_mapView addAnnotation:annotation];
+      [self.mapView addAnnotation:annotation];
     });
   }
 }
@@ -96,6 +98,22 @@
 - (void)dealloc
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark MKMapViewDelegate
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+  // Search for selected ticket in prices array
+  NSString *annotationTitle = [NSString stringWithFormat:@"%@", view.annotation.title];
+  PriceMap *selectedMarkData;
+  for (PriceMap *price in _prices) {
+    NSString *stringForSearch = [NSString stringWithFormat:@"%@ (%@)", price.destination.name, price.destination.code];
+    if ([annotationTitle isEqualToString:stringForSearch] && ![[CoreDataHelper sharedInstance] isFavoritePriceMap:price]) {
+      selectedMarkData = price;
+      [[CoreDataHelper sharedInstance] addPriceMapToFavorite:selectedMarkData];
+      return;
+    }
+  }
 }
 
 @end

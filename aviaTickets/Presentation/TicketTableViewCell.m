@@ -86,18 +86,22 @@
   [_airlineLogoView yy_setImageWithURL:urlLogo options:YYWebImageOptionSetImageWithFadeAnimation];
 }
 
-- (void)setFavouriteTicket:(FavouriteTicket *)favouriteTicket
+- (void)setFavoriteTicket:(FavoriteTicket *)favoriteTicket
 {
-  _favouriteTicket = favouriteTicket;
+  _favoriteTicket = favoriteTicket;
   
-  _priceLabel.text = [NSString stringWithFormat:@"%lld ₽", favouriteTicket.price];
-  _placesLabel.text = [NSString stringWithFormat:@"%@ - %@", favouriteTicket.from, favouriteTicket.to];
+  _priceLabel.text = [NSString stringWithFormat:@"%lld ₽", favoriteTicket.price];
+  _placesLabel.text = [NSString stringWithFormat:@"%@ - %@", favoriteTicket.from, favoriteTicket.to];
   
   NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
   dateFormatter.dateFormat = @"dd MMMM yyyy hh:mm";
-  _dateLabel.text = [dateFormatter stringFromDate:favouriteTicket.departure];
-  NSURL *urlLogo = AirlineLogo(favouriteTicket.airline);
-  [_airlineLogoView yy_setImageWithURL:urlLogo options:YYWebImageOptionSetImageWithFadeAnimation];
+  _dateLabel.text = [dateFormatter stringFromDate:favoriteTicket.departure];
+  if (favoriteTicket.airline == nil) {
+    _airlineLogoView.image = [UIImage imageNamed:@"unknownIcon"];
+  } else {
+    NSURL *urlLogo = AirlineLogo(favoriteTicket.airline);
+    [_airlineLogoView yy_setImageWithURL:urlLogo options:YYWebImageOptionSetImageWithFadeAnimation];
+  }
 }
 
 @end

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
-    <entity name="FavouriteTicket" representedClassName="FavouriteTicket" syncable="YES">
+    <entity name="FavoriteTicket" representedClassName="FavoriteTicket" syncable="YES">
         <attribute name="airline" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="departure" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -12,6 +12,6 @@
         <attribute name="to" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="FavouriteTicket" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="FavoriteTicket" positionX="-63" positionY="-18" width="128" height="180"/>
     </elements>
 </model>

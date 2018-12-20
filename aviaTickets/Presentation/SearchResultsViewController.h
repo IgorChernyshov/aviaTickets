@@ -10,6 +10,7 @@
 
 @interface SearchResultsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
+- (instancetype)initFavoriteTicketsController;
 - (instancetype)initWithTickets:(NSArray *)tickets;
 
 @end

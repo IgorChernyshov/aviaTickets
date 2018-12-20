@@ -1,5 +1,5 @@
 //
-//  FavouriteTicket+CoreDataProperties.m
+//  FavoriteTicket+CoreDataProperties.m
 //  aviaTickets
 //
 //  Created by Igor Chernyshov on 18/12/2018.
@@ -7,12 +7,12 @@
 //
 //
 
-#import "FavouriteTicket+CoreDataProperties.h"
+#import "FavoriteTicket+CoreDataProperties.h"
 
-@implementation FavouriteTicket (CoreDataProperties)
+@implementation FavoriteTicket (CoreDataProperties)
 
-+ (NSFetchRequest<FavouriteTicket *> *)fetchRequest {
-	return [NSFetchRequest fetchRequestWithEntityName:@"FavouriteTicket"];
++ (NSFetchRequest<FavoriteTicket *> *)fetchRequest {
+	return [NSFetchRequest fetchRequestWithEntityName:@"FavoriteTicket"];
 }
 
 @dynamic airline;

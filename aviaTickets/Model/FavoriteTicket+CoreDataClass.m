@@ -1,5 +1,5 @@
 //
-//  FavouriteTicket+CoreDataClass.m
+//  FavoriteTicket+CoreDataClass.m
 //  aviaTickets
 //
 //  Created by Igor Chernyshov on 18/12/2018.
@@ -7,8 +7,8 @@
 //
 //
 
-#import "FavouriteTicket+CoreDataClass.h"
+#import "FavoriteTicket+CoreDataClass.h"
 
-@implementation FavouriteTicket
+@implementation FavoriteTicket
 
 @end

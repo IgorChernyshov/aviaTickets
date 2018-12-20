@@ -1,5 +1,5 @@
 //
-//  FavouriteTicket+CoreDataProperties.h
+//  FavoriteTicket+CoreDataProperties.h
 //  aviaTickets
 //
 //  Created by Igor Chernyshov on 18/12/2018.
@@ -7,14 +7,14 @@
 //
 //
 
-#import "FavouriteTicket+CoreDataClass.h"
+#import "FavoriteTicket+CoreDataClass.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FavouriteTicket (CoreDataProperties)
+@interface FavoriteTicket (CoreDataProperties)
 
-+ (NSFetchRequest<FavouriteTicket *> *)fetchRequest;
++ (NSFetchRequest<FavoriteTicket *> *)fetchRequest;
 
 @property (nullable, nonatomic, copy) NSString *airline;
 @property (nullable, nonatomic, copy) NSDate *created;

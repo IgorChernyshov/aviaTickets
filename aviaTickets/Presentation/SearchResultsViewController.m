@@ -15,22 +15,35 @@
 @interface SearchResultsViewController ()
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSArray *tickets;
+@property (nonatomic, strong) UISegmentedControl *segmentedControl;
+@property (nonatomic, strong) NSArray *currentTicketsArray;
+@property (nonatomic, strong) NSMutableArray *filteredTicketsArray;
 
 @end
 
 @implementation SearchResultsViewController
 {
-  BOOL isFavourites;
+  BOOL isFavorites;
 }
 
-- (instancetype)initFavouriteTicketsController
+- (instancetype)initFavoriteTicketsController
 {
   self = [super init];
   if (self) {
-    isFavourites = YES;
-    _tickets = [NSArray new];
-    self.title = @"Favourite Tickets";
+    isFavorites = YES;
+    _currentTicketsArray = [NSArray new];
+    self.title = @"Favorite Tickets";
+    
+    UIColor *customBlueColor = [UIColor colorWithRed:72.0/255.0
+                                               green:150.0/255.0
+                                                blue:236.0/255.0
+                                               alpha:1];
+    
+    _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"All Tickets", @"From Search", @"From Map"]];
+    [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
+    _segmentedControl.tintColor = customBlueColor;
+    self.navigationItem.titleView = _segmentedControl;
+    _segmentedControl.selectedSegmentIndex = 0;
   }
   return self;
 }
@@ -40,7 +53,7 @@
   self = [super init];
   if (self)
   {
-    _tickets = tickets;
+    _currentTicketsArray = tickets;
     self.title = @"Search results";
   }
   return self;
@@ -79,26 +92,54 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  if (isFavourites) {
-    _tickets = [[CoreDataHelper sharedInstance] favourites];
-    [_tableView reloadData];
+  if (isFavorites) {
+    [self changeSource];
   }
+}
+
+- (void)changeSource
+{
+  _currentTicketsArray = [[CoreDataHelper sharedInstance] favorites];
+  switch (_segmentedControl.selectedSegmentIndex) {
+    case 1:
+      _filteredTicketsArray = [NSMutableArray new];
+      for (FavoriteTicket *ticket in _currentTicketsArray) {
+        if (ticket.airline) {
+          [_filteredTicketsArray addObject:ticket];
+        }
+      }
+      _currentTicketsArray = [_filteredTicketsArray copy];
+      break;
+    case 2:
+      _filteredTicketsArray = [NSMutableArray new];
+      for (FavoriteTicket *ticket in _currentTicketsArray) {
+        if (!ticket.airline) {
+          [_filteredTicketsArray addObject:ticket];
+        }
+      }
+      _currentTicketsArray = [_filteredTicketsArray copy];
+      break;
+    default:
+      // All Tickets control selected
+      break;
+  }
+  [_tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [_tickets count];
+  return [_currentTicketsArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   TicketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellReuseIdentifier forIndexPath:indexPath];
-  if (isFavourites) {
-    cell.favouriteTicket = [_tickets objectAtIndex:indexPath.row];
+  if (isFavorites) {
+    cell.favoriteTicket = [_currentTicketsArray objectAtIndex:indexPath.row];
   } else {
-    cell.ticket = [_tickets objectAtIndex:indexPath.row];
+    cell.ticket = [_currentTicketsArray objectAtIndex:indexPath.row];
   }
   return cell;
 }
@@ -110,22 +151,33 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  if (isFavourites) return;
-  UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Selected a ticket" message:@"What would you like to do with it?" preferredStyle:UIAlertControllerStyleAlert];
-  UIAlertAction *switchFavouriteMark;
-  if ([[CoreDataHelper sharedInstance] isFavorite:[_tickets objectAtIndex:indexPath.row]]) {
-    switchFavouriteMark = [UIAlertAction actionWithTitle:@"Remove from favourites" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-      [[CoreDataHelper sharedInstance] removeFromFavorite:self.tickets[indexPath.row]];
-    }];
+  if (isFavorites) return;
+}
+
+- (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  if (!isFavorites) {
+    if ([[CoreDataHelper sharedInstance] isFavoriteTicket:[_currentTicketsArray objectAtIndex:indexPath.row]]) {
+      UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        [[CoreDataHelper sharedInstance] removeTicketFromFavorites:self.currentTicketsArray[indexPath.row]];
+      }];
+      return @[removeFromFavorites];
+    } else {
+      UITableViewRowAction *addToFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Add to favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+        [[CoreDataHelper sharedInstance] addToFavorite:self.currentTicketsArray[indexPath.row]];
+      }];
+      addToFavorites.backgroundColor = [UIColor blueColor];
+      return @[addToFavorites];
+    }
   } else {
-    switchFavouriteMark = [UIAlertAction actionWithTitle:@"Add to favourites" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-      [[CoreDataHelper sharedInstance] addToFavorite:self.tickets[indexPath.row]];
+    UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+      [[CoreDataHelper sharedInstance] removeFavoriteTicketFromFavorites:self.currentTicketsArray[indexPath.row]];
+      self.currentTicketsArray = [[CoreDataHelper sharedInstance] favorites];
+      [self.tableView reloadData];
     }];
+    return @[removeFromFavorites];
   }
-  UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-  [alertController addAction:switchFavouriteMark];
-  [alertController addAction:cancel];
-  [self presentViewController:alertController animated:YES completion:nil];
+  return @[];
 }
 
 @end

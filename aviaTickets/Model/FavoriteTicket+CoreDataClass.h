@@ -1,5 +1,5 @@
 //
-//  FavouriteTicket+CoreDataClass.h
+//  FavoriteTicket+CoreDataClass.h
 //  aviaTickets
 //
 //  Created by Igor Chernyshov on 18/12/2018.
@@ -12,10 +12,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FavouriteTicket : NSManagedObject
+@interface FavoriteTicket : NSManagedObject
 
 @end
 
 NS_ASSUME_NONNULL_END
 
-#import "FavouriteTicket+CoreDataProperties.h"
+#import "FavoriteTicket+CoreDataProperties.h"
