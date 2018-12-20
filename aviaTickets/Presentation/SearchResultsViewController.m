@@ -15,7 +15,9 @@
 @interface SearchResultsViewController ()
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSArray *tickets;
+@property (nonatomic, strong) UISegmentedControl *segmentedControl;
+@property (nonatomic, strong) NSArray *currentTicketsArray;
+@property (nonatomic, strong) NSMutableArray *filteredTicketsArray;
 
 @end
 
@@ -29,8 +31,19 @@
   self = [super init];
   if (self) {
     isFavorites = YES;
-    _tickets = [NSArray new];
+    _currentTicketsArray = [NSArray new];
     self.title = @"Favorite Tickets";
+    
+    UIColor *customBlueColor = [UIColor colorWithRed:72.0/255.0
+                                               green:150.0/255.0
+                                                blue:236.0/255.0
+                                               alpha:1];
+    
+    _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"All Tickets", @"From Search", @"From Map"]];
+    [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
+    _segmentedControl.tintColor = customBlueColor;
+    self.navigationItem.titleView = _segmentedControl;
+    _segmentedControl.selectedSegmentIndex = 0;
   }
   return self;
 }
@@ -40,7 +53,7 @@
   self = [super init];
   if (self)
   {
-    _tickets = tickets;
+    _currentTicketsArray = tickets;
     self.title = @"Search results";
   }
   return self;
@@ -80,25 +93,53 @@
 {
   [super viewWillAppear:animated];
   if (isFavorites) {
-    _tickets = [[CoreDataHelper sharedInstance] favorites];
-    [_tableView reloadData];
+    [self changeSource];
   }
+}
+
+- (void)changeSource
+{
+  _currentTicketsArray = [[CoreDataHelper sharedInstance] favorites];
+  switch (_segmentedControl.selectedSegmentIndex) {
+    case 1:
+      _filteredTicketsArray = [NSMutableArray new];
+      for (FavoriteTicket *ticket in _currentTicketsArray) {
+        if (ticket.airline) {
+          [_filteredTicketsArray addObject:ticket];
+        }
+      }
+      _currentTicketsArray = [_filteredTicketsArray copy];
+      break;
+    case 2:
+      _filteredTicketsArray = [NSMutableArray new];
+      for (FavoriteTicket *ticket in _currentTicketsArray) {
+        if (!ticket.airline) {
+          [_filteredTicketsArray addObject:ticket];
+        }
+      }
+      _currentTicketsArray = [_filteredTicketsArray copy];
+      break;
+    default:
+      // All Tickets control selected
+      break;
+  }
+  [_tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return [_tickets count];
+  return [_currentTicketsArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   TicketTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:TicketCellReuseIdentifier forIndexPath:indexPath];
   if (isFavorites) {
-    cell.favoriteTicket = [_tickets objectAtIndex:indexPath.row];
+    cell.favoriteTicket = [_currentTicketsArray objectAtIndex:indexPath.row];
   } else {
-    cell.ticket = [_tickets objectAtIndex:indexPath.row];
+    cell.ticket = [_currentTicketsArray objectAtIndex:indexPath.row];
   }
   return cell;
 }
@@ -116,22 +157,22 @@
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   if (!isFavorites) {
-    if ([[CoreDataHelper sharedInstance] isFavorite:[_tickets objectAtIndex:indexPath.row]]) {
+    if ([[CoreDataHelper sharedInstance] isFavorite:[_currentTicketsArray objectAtIndex:indexPath.row]]) {
       UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        [[CoreDataHelper sharedInstance] removeTicketFromFavorites:self.tickets[indexPath.row]];
+        [[CoreDataHelper sharedInstance] removeTicketFromFavorites:self.currentTicketsArray[indexPath.row]];
       }];
       return @[removeFromFavorites];
     } else {
       UITableViewRowAction *addToFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Add to favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        [[CoreDataHelper sharedInstance] addToFavorite:self.tickets[indexPath.row]];
+        [[CoreDataHelper sharedInstance] addToFavorite:self.currentTicketsArray[indexPath.row]];
       }];
       addToFavorites.backgroundColor = [UIColor blueColor];
       return @[addToFavorites];
     }
   } else {
     UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-      [[CoreDataHelper sharedInstance] removeFavoriteTicketFromFavorites:self.tickets[indexPath.row]];
-      self.tickets = [[CoreDataHelper sharedInstance] favorites];
+      [[CoreDataHelper sharedInstance] removeFavoriteTicketFromFavorites:self.currentTicketsArray[indexPath.row]];
+      self.currentTicketsArray = [[CoreDataHelper sharedInstance] favorites];
       [self.tableView reloadData];
     }];
     return @[removeFromFavorites];
