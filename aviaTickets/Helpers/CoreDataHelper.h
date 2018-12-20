@@ -19,7 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 
-- (BOOL)isFavorite:(Ticket *)ticket;
+- (BOOL)isFavoriteTicket:(Ticket *)ticket;
+- (BOOL)isFavoritePriceMap:(PriceMap *)priceMap;
 - (NSArray *)favorites;
 - (void)addToFavorite:(Ticket *)ticket;
 - (void)addPriceMapToFavorite:(PriceMap *)priceMap;

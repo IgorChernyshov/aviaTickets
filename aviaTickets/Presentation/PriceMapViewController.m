@@ -108,7 +108,7 @@
   PriceMap *selectedMarkData;
   for (PriceMap *price in _prices) {
     NSString *stringForSearch = [NSString stringWithFormat:@"%@ (%@)", price.destination.name, price.destination.code];
-    if ([annotationTitle isEqualToString:stringForSearch]) {
+    if ([annotationTitle isEqualToString:stringForSearch] && ![[CoreDataHelper sharedInstance] isFavoritePriceMap:price]) {
       selectedMarkData = price;
       [[CoreDataHelper sharedInstance] addPriceMapToFavorite:selectedMarkData];
       return;

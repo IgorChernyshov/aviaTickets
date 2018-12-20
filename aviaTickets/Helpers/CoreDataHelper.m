@@ -63,7 +63,7 @@
   return [[_managedObjectContext executeFetchRequest:fetchRequest error:nil] firstObject];
 }
 
-- (BOOL)isFavorite:(Ticket *)ticket
+- (BOOL)isFavoriteTicket:(Ticket *)ticket
 {
   return [self favoriteFromTicket:ticket] != nil;
 }
@@ -81,6 +81,18 @@
   favoriteTicket.to = ticket.to;
   favoriteTicket.created = [NSDate date];
   [self save];
+}
+
+- (FavoriteTicket *)favoriteFromPriceMap:(PriceMap *)priceMap
+{
+  NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"FavoriteTicket"];
+  fetchRequest.predicate = [NSPredicate predicateWithFormat:@"price == %ld AND from == %@ AND to == %@ AND departure == %@", (long)priceMap.price, priceMap.origin.code, priceMap.destination.code, priceMap.departureDate];
+  return [[_managedObjectContext executeFetchRequest:fetchRequest error:nil] firstObject];
+}
+
+- (BOOL)isFavoritePriceMap:(PriceMap *)priceMap
+{
+  return [self favoriteFromPriceMap:priceMap] != nil;
 }
 
 - (void)addPriceMapToFavorite:(PriceMap *)priceMap

@@ -157,7 +157,7 @@
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   if (!isFavorites) {
-    if ([[CoreDataHelper sharedInstance] isFavorite:[_currentTicketsArray objectAtIndex:indexPath.row]]) {
+    if ([[CoreDataHelper sharedInstance] isFavoriteTicket:[_currentTicketsArray objectAtIndex:indexPath.row]]) {
       UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [[CoreDataHelper sharedInstance] removeTicketFromFavorites:self.currentTicketsArray[indexPath.row]];
       }];
