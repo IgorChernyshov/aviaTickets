@@ -209,6 +209,10 @@
         [self presentViewController:alertController animated:YES completion:nil];
       }
     }];
+  } else {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"You need to set both Departure and Arrival place to search tickets" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
   }
 }
 
