@@ -34,6 +34,7 @@
 		9CDFBB7221B51FFF001EB427 /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFBB7121B51FFF001EB427 /* SearchResultsViewController.m */; };
 		9CDFBB7521B67BA9001EB427 /* SelectPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFBB7421B67BA9001EB427 /* SelectPlaceViewController.m */; };
 		9CDFBB8321B78873001EB427 /* PlaceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFBB8221B78873001EB427 /* PlaceTableViewCell.m */; };
+		9CE6BF5421CE6116000A0EDA /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6BF5321CE6116000A0EDA /* LoadingView.m */; };
 		A04054BFDBE83FE68B285C80 /* libPods-aviaTickets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B69842FEC3FB9089E7DFA107 /* libPods-aviaTickets.a */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +90,8 @@
 		9CDFBB7421B67BA9001EB427 /* SelectPlaceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectPlaceViewController.m; sourceTree = "<group>"; };
 		9CDFBB8121B78873001EB427 /* PlaceTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceTableViewCell.h; sourceTree = "<group>"; };
 		9CDFBB8221B78873001EB427 /* PlaceTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceTableViewCell.m; sourceTree = "<group>"; };
+		9CE6BF5221CE6116000A0EDA /* LoadingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
+		9CE6BF5321CE6116000A0EDA /* LoadingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
 		B69842FEC3FB9089E7DFA107 /* libPods-aviaTickets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-aviaTickets.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -187,6 +190,8 @@
 		9CAA7EAF21B30B0B006D9F8B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				9CE6BF5221CE6116000A0EDA /* LoadingView.h */,
+				9CE6BF5321CE6116000A0EDA /* LoadingView.m */,
 				9CDFBB6D21B405BA001EB427 /* MainViewButton.h */,
 				9CDFBB6E21B405BA001EB427 /* MainViewButton.m */,
 				9CAA7E9A21B2A9DC006D9F8B /* MainViewController.h */,
@@ -349,6 +354,7 @@
 				9C6D143A21C8D5DF00299860 /* CoreDataHelper.m in Sources */,
 				9CAA7E9921B2A9DC006D9F8B /* AppDelegate.m in Sources */,
 				9CDFBB6F21B405BA001EB427 /* MainViewButton.m in Sources */,
+				9CE6BF5421CE6116000A0EDA /* LoadingView.m in Sources */,
 				9C48A40B21BBF8B30077F9EB /* TicketTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
