@@ -12,7 +12,7 @@
   BOOL isActive;
 }
 
-- (instancetype)sharedInstance
++ (instancetype)sharedInstance
 {
   static LoadingView *instance;
   static dispatch_once_t onceToken;
@@ -41,8 +41,8 @@
 
 - (void)createPlanes
 {
-  for (int i = 0; i < 5; i++) {
-    int randomHeight = arc4random_uniform(100) + (self.bounds.size.height / 2 - 50);
+  for (int i = 1; i < 6; i++) {
+    int randomHeight = arc4random_uniform(self.bounds.size.height - 100) + 50;
     UIImageView *plane = [[UIImageView alloc] initWithFrame:CGRectMake(-50.0, randomHeight, 50.0, 50.0)];
     plane.tag = i;
     plane.image = [UIImage imageNamed:@"plane"];
@@ -52,12 +52,12 @@
 
 - (void)startAnimating:(NSInteger)planeID
 {
-  if (isActive) return;
-  if (planeID > 5) planeID = 1;
+  if (!isActive) return;
+  if (planeID >= 6) planeID = 1;
   
   UIImageView *plane = [self viewWithTag:planeID];
   if (plane) {
-    [UIView animateWithDuration:1.0 animations:^{
+    [UIView animateWithDuration:1.5 animations:^{
       plane.frame = CGRectMake(self.bounds.size.width, plane.frame.origin.y, 50.0, 50.0);
     } completion:^(BOOL finished) {
       plane.frame = CGRectMake(-50.0, plane.frame.origin.y, 50.0, 50.0);
