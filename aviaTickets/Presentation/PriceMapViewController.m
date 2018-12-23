@@ -50,7 +50,7 @@
     _origin = [[DataManager sharedInstance] cityForLocation:currentLocation];
     if (_origin) {
       [[LoadingView sharedInstance] show:^{
-        [[APIManager sharedInstance] mapPricesFor:self->_origin withCompletion:^(NSArray *prices) {
+        [[APIManager sharedInstance] mapPricesFor:self.origin withCompletion:^(NSArray *prices) {
           [[LoadingView sharedInstance] dismiss:^{
             self.prices = prices;
           }];

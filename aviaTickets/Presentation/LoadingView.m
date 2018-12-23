@@ -74,7 +74,7 @@
   isActive = YES;
   [self startAnimating:1];
   [[[UIApplication sharedApplication] keyWindow] addSubview:self];
-  [UIView animateWithDuration:0.5 animations:^{
+  [UIView animateWithDuration:1.0 animations:^{
     self.alpha = 1.0;
   } completion:^(BOOL finished) {
     completion();
