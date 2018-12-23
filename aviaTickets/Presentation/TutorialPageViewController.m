@@ -9,7 +9,7 @@
 #import "TutorialPageViewController.h"
 #import "ContentViewController.h"
 
-#define PAGES_COUNT 4
+#define CONTENT_COUNT 4
 
 @interface TutorialPageViewController ()
 
@@ -19,11 +19,11 @@
 @end
 
 @implementation TutorialPageViewController {
-  struct pageContentData {
+  struct firstContentData {
     __unsafe_unretained NSString *title;
     __unsafe_unretained NSString *contentText;
     __unsafe_unretained NSString *imageName;
-  } contentData[PAGES_COUNT];
+  } contentData[CONTENT_COUNT];
 }
 
 - (void)viewDidLoad {
@@ -38,7 +38,7 @@
   [self setViewControllers:@[startViewController] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
   
   _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 50.0, self.view.bounds.size.width, 50.0)];
-  _pageControl.numberOfPages = PAGES_COUNT;
+  _pageControl.numberOfPages = CONTENT_COUNT;
   _pageControl.currentPage = 0;
   _pageControl.pageIndicatorTintColor = [UIColor grayColor];
   _pageControl.currentPageIndicatorTintColor = [UIColor blueColor];
@@ -46,30 +46,30 @@
   
   _nextButton = [UIButton buttonWithType:UIButtonTypeSystem];
   _nextButton.frame = CGRectMake(self.view.bounds.size.width - 100.0, self.view.bounds.size.height - 50.0, 100.0, 50.0);
-  [_nextButton addTarget:self action:@selector(nextButtonWasTapped:) forControlEvents:UIControlEventTouchUpInside];
+  [_nextButton addTarget:self action:@selector(nextButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
   [_nextButton setTintColor:[UIColor blueColor]];
   [self updateButtonWithIndex:0];
   [self.view addSubview:_nextButton];
 }
 
 - (void)createContentDataArray {
-  NSArray *titles = [NSArray arrayWithObjects:@"ABOUT", @"AIRPLANE TICKETS", @"PRICE MAP", @"FAVORITES", nil];
-  NSArray *contents = [NSArray arrayWithObjects:@"This app will help you to find airplane tickets", @"Find the cheapest ticket on a market", @"Check out Price Map to find where to go next", @"Save tickets that you've found to Favorites", nil];
+  NSArray *titles = [NSArray arrayWithObjects:@"ABOUT", @"PLANE TICKETS", @"PRICE MAP", @"FAVORITES", nil];
+  NSArray *contents = [NSArray arrayWithObjects:@"This application will help you to find plane tickets", @"Find the cheapest and the most convenient flights", @"Check out Price Map to find the best option for every city", @"Save tickets to Favorites to compare them later on", nil];
   for (int i = 0; i < 4; ++i) {
     contentData[i].title = [titles objectAtIndex:i];
     contentData[i].contentText = [contents objectAtIndex:i];
-    contentData[i].imageName = [NSString stringWithFormat:@"tutorialPage%d", i+1];
+    contentData[i].imageName = [NSString stringWithFormat:@"page_%d", i+1];
   }
 }
 
 - (ContentViewController *)viewControllerAtIndex:(int)index {
-  if (index < 0 || index >= PAGES_COUNT) {
+  if (index < 0 || index >= CONTENT_COUNT) {
     return nil;
   }
-  ContentViewController *contentViewController = [ContentViewController new];
+  ContentViewController *contentViewController = [[ContentViewController alloc] init];
   contentViewController.title = contentData[index].title;
   contentViewController.contentText = contentData[index].contentText;
-  contentViewController.image =  [UIImage imageNamed: contentData[index].imageName];
+  contentViewController.image = [UIImage imageNamed: contentData[index].imageName];
   contentViewController.index = index;
   return contentViewController;
 }
@@ -100,7 +100,7 @@
   }
 }
 
-- (void)nextButtonWasTapped:(UIButton *)sender
+- (void)nextButtonDidTap:(UIButton *)sender
 {
   int index = ((ContentViewController *)[self.viewControllers firstObject]).index;
   if (sender.tag) {
@@ -108,9 +108,9 @@
     [self dismissViewControllerAnimated:YES completion:nil];
   } else {
     __weak typeof(self) weakSelf = self;
-    [self setViewControllers:@[[self viewControllerAtIndex:index + 1]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished) {
-      weakSelf.pageControl.currentPage = index + 1;
-      [weakSelf updateButtonWithIndex:index + 1];
+    [self setViewControllers:@[[self viewControllerAtIndex:index+1]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:^(BOOL finished) {
+      weakSelf.pageControl.currentPage = index+1;
+      [weakSelf updateButtonWithIndex:index+1];
     }];
   }
 }

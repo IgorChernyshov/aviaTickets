@@ -11,6 +11,7 @@
 #import "SearchResultsViewController.h"
 #import "SelectPlaceViewController.h"
 #import "PriceMapViewController.h"
+#import "TutorialPageViewController.h"
 
 // Import helpers
 #import "DataManager.h"
@@ -177,6 +178,21 @@
   [[APIManager sharedInstance] cityForCurrentIP:^(City *city) {
     [self setPlace:city withDataType:DataSourceTypeCity andPlaceType:PlaceTypeDeparture forButton:self.departFromButton];
   }];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  [self presentFirstViewControllerIfNeeded];
+}
+
+- (void)presentFirstViewControllerIfNeeded
+{
+  BOOL isFirstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialWasShown"];
+  if (!isFirstStart) {
+    TutorialPageViewController *tutorialPageViewController = [[TutorialPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    [self presentViewController:tutorialPageViewController animated:YES completion:nil];
+  }
 }
 
 - (void)placeButtonWasPressed:(MainViewButton *)sender {

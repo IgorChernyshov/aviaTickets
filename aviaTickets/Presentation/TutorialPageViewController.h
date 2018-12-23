@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TutorialPageViewController : UIPageViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
+NS_ASSUME_NONNULL_BEGIN
+
+@interface TutorialPageViewController: UIPageViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 
 @end
+
+NS_ASSUME_NONNULL_END
