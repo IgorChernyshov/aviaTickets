@@ -72,7 +72,8 @@
     [keyboardToolbar sizeToFit];
     UIBarButtonItem *flexBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *doneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonWasTapped:)];
-    keyboardToolbar.items = @[flexBarButton, doneBarButton];
+    UIBarButtonItem *cancelBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(resetNotificationSetter)];
+    keyboardToolbar.items = @[cancelBarButton, flexBarButton, doneBarButton];
     
     _dateTextField.inputAccessoryView = keyboardToolbar;
     [self.view addSubview:_dateTextField];
@@ -147,6 +148,13 @@
   [_tableView reloadData];
 }
 
+- (void)resetNotificationSetter
+{
+  _datePicker.date = [NSDate date];
+  notificationCell = nil;
+  [self.view endEditing:YES];
+}
+
 - (void)doneButtonWasTapped:(UIBarButtonItem *)sender
 {
   if (_datePicker.date && notificationCell) {
@@ -161,6 +169,7 @@
       }
       imageURL = [NSURL fileURLWithPath:path];
     }
+    [self resetNotificationSetter];
     
     Notification notification = NotificationMake(@"Ticket reminder", message, _datePicker.date, imageURL);
     [[NotificationCenter sharedInstance] sendNotification:notification];
@@ -170,10 +179,6 @@
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
   }
-  // Reset things to re-use
-  _datePicker.date = [NSDate date];
-  notificationCell = nil;
-  [self.view endEditing:YES];
 }
 
 #pragma mark - UITableViewDataSource & UITableViewDelegate
