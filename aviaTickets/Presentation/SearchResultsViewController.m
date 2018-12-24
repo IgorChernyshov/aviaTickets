@@ -9,6 +9,7 @@
 #import "SearchResultsViewController.h"
 #import "TicketTableViewCell.h"
 #import "CoreDataHelper.h"
+#import "NotificationCenter.h"
 
 #define TicketCellReuseIdentifier @"TicketCellIdentifier"
 
@@ -18,12 +19,15 @@
 @property (nonatomic, strong) UISegmentedControl *segmentedControl;
 @property (nonatomic, strong) NSArray *currentTicketsArray;
 @property (nonatomic, strong) NSMutableArray *filteredTicketsArray;
+@property (nonatomic, strong) UIDatePicker *datePicker;
+@property (nonatomic, strong) UITextField *dateTextField;
 
 @end
 
 @implementation SearchResultsViewController
 {
   BOOL isFavorites;
+  TicketTableViewCell *notificationCell;
 }
 
 - (instancetype)initFavoriteTicketsController
@@ -55,6 +59,23 @@
   {
     _currentTicketsArray = tickets;
     self.title = @"Search results";
+    
+    _datePicker = [UIDatePicker new];
+    _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    _datePicker.minimumDate = [NSDate date];
+    
+    _dateTextField = [[UITextField alloc] initWithFrame:self.view.bounds];
+    _dateTextField.hidden = YES;
+    _dateTextField.inputView = _datePicker;
+    
+    UIToolbar *keyboardToolbar = [UIToolbar new];
+    [keyboardToolbar sizeToFit];
+    UIBarButtonItem *flexBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *doneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonWasTapped:)];
+    keyboardToolbar.items = @[flexBarButton, doneBarButton];
+    
+    _dateTextField.inputAccessoryView = keyboardToolbar;
+    [self.view addSubview:_dateTextField];
   }
   return self;
 }
@@ -126,6 +147,35 @@
   [_tableView reloadData];
 }
 
+- (void)doneButtonWasTapped:(UIBarButtonItem *)sender
+{
+  if (_datePicker.date && notificationCell) {
+    NSString *message = [NSString stringWithFormat:@"%@ - %@ for %@ ₽", notificationCell.ticket.from, notificationCell.ticket.to, notificationCell.ticket.price];
+    NSURL *imageURL;
+    if (notificationCell.airlineLogoView.image) {
+      NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingString:[NSString stringWithFormat:@"/%@.png", notificationCell.ticket.airline]];
+      if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        UIImage *logo = notificationCell.airlineLogoView.image;
+        NSData *pngData = UIImagePNGRepresentation(logo);
+        [pngData writeToFile:path atomically:YES];
+      }
+      imageURL = [NSURL fileURLWithPath:path];
+    }
+    
+    Notification notification = NotificationMake(@"Ticket reminder", message, _datePicker.date, imageURL);
+    [[NotificationCenter sharedInstance] sendNotification:notification];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Done!" message:[NSString stringWithFormat:@"You will receive a notification at %@", _datePicker.date] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+  }
+  // Reset things to re-use
+  _datePicker.date = [NSDate date];
+  notificationCell = nil;
+  [self.view endEditing:YES];
+}
+
 #pragma mark - UITableViewDataSource & UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -156,18 +206,22 @@
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+  UITableViewRowAction *setReminder = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Set a reminder" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    self->notificationCell = [tableView cellForRowAtIndexPath:indexPath];
+    [self.dateTextField becomeFirstResponder];
+  }];
   if (!isFavorites) {
     if ([[CoreDataHelper sharedInstance] isFavoriteTicket:[_currentTicketsArray objectAtIndex:indexPath.row]]) {
       UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [[CoreDataHelper sharedInstance] removeTicketFromFavorites:self.currentTicketsArray[indexPath.row]];
       }];
-      return @[removeFromFavorites];
+      return @[setReminder, removeFromFavorites];
     } else {
       UITableViewRowAction *addToFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Add to favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [[CoreDataHelper sharedInstance] addToFavorite:self.currentTicketsArray[indexPath.row]];
       }];
       addToFavorites.backgroundColor = [UIColor blueColor];
-      return @[addToFavorites];
+      return @[setReminder, addToFavorites];
     }
   } else {
     UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
@@ -175,7 +229,7 @@
       self.currentTicketsArray = [[CoreDataHelper sharedInstance] favorites];
       [self.tableView reloadData];
     }];
-    return @[removeFromFavorites];
+    return @[setReminder, removeFromFavorites];
   }
   return @[];
 }
