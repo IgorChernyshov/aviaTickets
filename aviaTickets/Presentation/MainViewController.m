@@ -24,11 +24,8 @@
 @interface MainViewController () <SelectPlaceViewControllerDelegate>
 
 @property (nonatomic, strong) UIView *locationButtonsView;
-@property (nonatomic, strong) UIView *datesButtonsView;
 @property (nonatomic, strong) MainViewButton *departFromButton;
 @property (nonatomic, strong) MainViewButton *arriveToButton;
-@property (nonatomic, strong) MainViewButton *departureDateButton;
-@property (nonatomic, strong) MainViewButton *returnDateButton;
 @property (nonatomic, strong) MainViewButton *startSearchButton;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 
@@ -120,36 +117,6 @@
   arriveToButtonFrame.origin = CGPointMake(10.0, CGRectGetMaxY(departFromButtonFrame) + 10.0);
   _arriveToButton.frame = arriveToButtonFrame;
   
-  // Create a view and buttons that control dates
-  _datesButtonsView = [[UIView alloc] initWithFrame:CGRectMake(40.0, CGRectGetMaxY(_locationButtonsView.frame) + 20.0, [UIScreen mainScreen].bounds.size.width - 80.0, 100.0)];
-  _datesButtonsView.backgroundColor = [UIColor whiteColor];
-  _datesButtonsView.layer.shadowColor = [[[UIColor blackColor] colorWithAlphaComponent:0.3] CGColor];
-  _datesButtonsView.layer.shadowOffset = CGSizeZero;
-  _datesButtonsView.layer.shadowRadius = 10.0;
-  _datesButtonsView.layer.shadowOpacity = 1.0;
-  _datesButtonsView.layer.cornerRadius = 6.0;
-  [self.view addSubview:_datesButtonsView];
-  
-  _departureDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  [_departureDateButton setTitle:@"Departure date" forState:UIControlStateNormal];
-  CGRect departureDateButtonFrame = _departureDateButton.frame;
-  departureDateButtonFrame.origin = CGPointMake(10.0, 10.0);
-  _departureDateButton.frame = departureDateButtonFrame;
-  
-  _returnDateButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  [_returnDateButton setTitle:@"Return date" forState:UIControlStateNormal];
-  CGRect returnDateButtonFrame = _returnDateButton.frame;
-  returnDateButtonFrame.origin = CGPointMake(10.0, CGRectGetMaxY(departureDateButtonFrame) + 10.0);
-  _returnDateButton.frame = returnDateButtonFrame;
-  
-  MainViewButton *numberOfPassengersButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  [numberOfPassengersButton setTitle:@"Number of passengers" forState:UIControlStateNormal];
-  numberOfPassengersButton.frame = CGRectMake(40.0,
-                                              CGRectGetMaxY(_datesButtonsView.frame) + 20.0,
-                                              [UIScreen mainScreen].bounds.size.width - 80.0,
-                                              numberOfPassengersButton.frame.size.height + 8.0);
-  numberOfPassengersButton.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 20);
-  
   _startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   _startSearchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
   [_startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
@@ -157,7 +124,7 @@
   _startSearchButton.backgroundColor = [UIColor orangeColor];
   [_startSearchButton setTintColor:[UIColor whiteColor]];
   _startSearchButton.frame = CGRectMake(40.0,
-                                        CGRectGetMaxY(numberOfPassengersButton.frame) + 20.0,
+                                        CGRectGetMaxY(_locationButtonsView.frame) + 20.0,
                                         [UIScreen mainScreen].bounds.size.width - 80.0,
                                         _startSearchButton.frame.size.height + 8.0);
   
@@ -169,9 +136,6 @@
   // Place buttons
   [_locationButtonsView addSubview:_departFromButton];
   [_locationButtonsView addSubview:_arriveToButton];
-  [_datesButtonsView addSubview:_departureDateButton];
-  [_datesButtonsView addSubview:_returnDateButton];
-  [self.view addSubview:numberOfPassengersButton];
   [self.view addSubview:_startSearchButton];
   
   // Request current user's location from APIManager
