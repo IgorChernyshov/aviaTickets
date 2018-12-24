@@ -169,12 +169,19 @@
       }
       imageURL = [NSURL fileURLWithPath:path];
     }
-    [self resetNotificationSetter];
     
     Notification notification = NotificationMake(@"Ticket reminder", message, _datePicker.date, imageURL);
     [[NotificationCenter sharedInstance] sendNotification:notification];
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Done!" message:[NSString stringWithFormat:@"You will receive a notification at %@", _datePicker.date] preferredStyle:UIAlertControllerStyleAlert];
+    // Convert a date from UTC to user's local time
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    [dateFormatter setDateFormat:@"dd-MM-yyyy HH:mm:ss"];
+    NSString *dateString = [dateFormatter stringFromDate:_datePicker.date];
+
+    [self resetNotificationSetter];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Done!" message:[NSString stringWithFormat:@"You will receive a notification %@", dateString] preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
@@ -215,6 +222,7 @@
     self->notificationCell = [tableView cellForRowAtIndexPath:indexPath];
     [self.dateTextField becomeFirstResponder];
   }];
+  setReminder.backgroundColor = [UIColor orangeColor];
   if (!isFavorites) {
     if ([[CoreDataHelper sharedInstance] isFavoriteTicket:[_currentTicketsArray objectAtIndex:indexPath.row]]) {
       UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
