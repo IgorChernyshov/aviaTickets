@@ -34,6 +34,10 @@
 		9CDFBB7221B51FFF001EB427 /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFBB7121B51FFF001EB427 /* SearchResultsViewController.m */; };
 		9CDFBB7521B67BA9001EB427 /* SelectPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFBB7421B67BA9001EB427 /* SelectPlaceViewController.m */; };
 		9CDFBB8321B78873001EB427 /* PlaceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFBB8221B78873001EB427 /* PlaceTableViewCell.m */; };
+		9CE6BF5421CE6116000A0EDA /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6BF5321CE6116000A0EDA /* LoadingView.m */; };
+		9CE6BF5721CFEFDA000A0EDA /* ContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6BF5621CFEFDA000A0EDA /* ContentViewController.m */; };
+		9CE6BF5A21CFF44A000A0EDA /* TutorialPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6BF5921CFF44A000A0EDA /* TutorialPageViewController.m */; };
+		9CE6BF5D21D09D62000A0EDA /* NotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CE6BF5C21D09D62000A0EDA /* NotificationCenter.m */; };
 		A04054BFDBE83FE68B285C80 /* libPods-aviaTickets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B69842FEC3FB9089E7DFA107 /* libPods-aviaTickets.a */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +93,14 @@
 		9CDFBB7421B67BA9001EB427 /* SelectPlaceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectPlaceViewController.m; sourceTree = "<group>"; };
 		9CDFBB8121B78873001EB427 /* PlaceTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlaceTableViewCell.h; sourceTree = "<group>"; };
 		9CDFBB8221B78873001EB427 /* PlaceTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceTableViewCell.m; sourceTree = "<group>"; };
+		9CE6BF5221CE6116000A0EDA /* LoadingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
+		9CE6BF5321CE6116000A0EDA /* LoadingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
+		9CE6BF5521CFEFDA000A0EDA /* ContentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContentViewController.h; sourceTree = "<group>"; };
+		9CE6BF5621CFEFDA000A0EDA /* ContentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContentViewController.m; sourceTree = "<group>"; };
+		9CE6BF5821CFF44A000A0EDA /* TutorialPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TutorialPageViewController.h; sourceTree = "<group>"; };
+		9CE6BF5921CFF44A000A0EDA /* TutorialPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TutorialPageViewController.m; sourceTree = "<group>"; };
+		9CE6BF5B21D09D62000A0EDA /* NotificationCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationCenter.h; sourceTree = "<group>"; };
+		9CE6BF5C21D09D62000A0EDA /* NotificationCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationCenter.m; sourceTree = "<group>"; };
 		B69842FEC3FB9089E7DFA107 /* libPods-aviaTickets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-aviaTickets.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -187,6 +199,8 @@
 		9CAA7EAF21B30B0B006D9F8B /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				9CE6BF5221CE6116000A0EDA /* LoadingView.h */,
+				9CE6BF5321CE6116000A0EDA /* LoadingView.m */,
 				9CDFBB6D21B405BA001EB427 /* MainViewButton.h */,
 				9CDFBB6E21B405BA001EB427 /* MainViewButton.m */,
 				9CAA7E9A21B2A9DC006D9F8B /* MainViewController.h */,
@@ -203,6 +217,10 @@
 				9C39FCD821C4D8A7003365F1 /* TabBarController.m */,
 				9C48A40921BBF8B30077F9EB /* TicketTableViewCell.h */,
 				9C48A40A21BBF8B30077F9EB /* TicketTableViewCell.m */,
+				9CE6BF5521CFEFDA000A0EDA /* ContentViewController.h */,
+				9CE6BF5621CFEFDA000A0EDA /* ContentViewController.m */,
+				9CE6BF5821CFF44A000A0EDA /* TutorialPageViewController.h */,
+				9CE6BF5921CFF44A000A0EDA /* TutorialPageViewController.m */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -230,6 +248,8 @@
 				9CAA7EBC21B314C7006D9F8B /* DataManager.m */,
 				9C2DA8DF21BE91D400CA5AC0 /* LocationService.h */,
 				9C2DA8E021BE91D400CA5AC0 /* LocationService.m */,
+				9CE6BF5B21D09D62000A0EDA /* NotificationCenter.h */,
+				9CE6BF5C21D09D62000A0EDA /* NotificationCenter.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -339,7 +359,9 @@
 				9C2ACDC321BE983C00C4C164 /* PriceMap.m in Sources */,
 				9CDFBB8321B78873001EB427 /* PlaceTableViewCell.m in Sources */,
 				9C2ACDC621BE9D6100C4C164 /* PriceMapViewController.m in Sources */,
+				9CE6BF5A21CFF44A000A0EDA /* TutorialPageViewController.m in Sources */,
 				9C65B30C21BBEDF5002C402C /* Ticket.m in Sources */,
+				9CE6BF5D21D09D62000A0EDA /* NotificationCenter.m in Sources */,
 				9CAA7E9C21B2A9DC006D9F8B /* MainViewController.m in Sources */,
 				9CAA7EB921B30CDA006D9F8B /* Airport.m in Sources */,
 				9C6D143721C8D41100299860 /* FavoriteTicket+CoreDataProperties.m in Sources */,
@@ -348,7 +370,9 @@
 				9C63CF3721C8D23300874A54 /* FavoriteTicket.xcdatamodeld in Sources */,
 				9C6D143A21C8D5DF00299860 /* CoreDataHelper.m in Sources */,
 				9CAA7E9921B2A9DC006D9F8B /* AppDelegate.m in Sources */,
+				9CE6BF5721CFEFDA000A0EDA /* ContentViewController.m in Sources */,
 				9CDFBB6F21B405BA001EB427 /* MainViewButton.m in Sources */,
+				9CE6BF5421CE6116000A0EDA /* LoadingView.m in Sources */,
 				9C48A40B21BBF8B30077F9EB /* TicketTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

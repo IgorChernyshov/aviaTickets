@@ -11,6 +11,7 @@
 #import "SearchResultsViewController.h"
 #import "SelectPlaceViewController.h"
 #import "PriceMapViewController.h"
+#import "TutorialPageViewController.h"
 
 // Import helpers
 #import "DataManager.h"
@@ -179,6 +180,21 @@
   }];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  [self presentFirstViewControllerIfNeeded];
+}
+
+- (void)presentFirstViewControllerIfNeeded
+{
+  BOOL isFirstStart = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorialWasShown"];
+  if (!isFirstStart) {
+    TutorialPageViewController *tutorialPageViewController = [[TutorialPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    [self presentViewController:tutorialPageViewController animated:YES completion:nil];
+  }
+}
+
 - (void)placeButtonWasPressed:(MainViewButton *)sender {
   SelectPlaceViewController *selectPlaceViewController;
   if ([sender isEqual:_departFromButton]) {
@@ -209,6 +225,10 @@
         [self presentViewController:alertController animated:YES completion:nil];
       }
     }];
+  } else {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"You need to set both Departure and Arrival place to search tickets" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
   }
 }
 
