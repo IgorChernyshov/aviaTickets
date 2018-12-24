@@ -59,24 +59,6 @@
   {
     _currentTicketsArray = tickets;
     self.title = @"Search results";
-    
-    _datePicker = [UIDatePicker new];
-    _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-    _datePicker.minimumDate = [NSDate date];
-    
-    _dateTextField = [[UITextField alloc] initWithFrame:self.view.bounds];
-    _dateTextField.hidden = YES;
-    _dateTextField.inputView = _datePicker;
-    
-    UIToolbar *keyboardToolbar = [UIToolbar new];
-    [keyboardToolbar sizeToFit];
-    UIBarButtonItem *flexBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *doneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonWasTapped:)];
-    UIBarButtonItem *cancelBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(resetNotificationSetter)];
-    keyboardToolbar.items = @[cancelBarButton, flexBarButton, doneBarButton];
-    
-    _dateTextField.inputAccessoryView = keyboardToolbar;
-    [self.view addSubview:_dateTextField];
   }
   return self;
 }
@@ -109,6 +91,24 @@
   _tableView.dataSource = self;
   [_tableView registerClass:[TicketTableViewCell class] forCellReuseIdentifier:TicketCellReuseIdentifier];
   [self.view addSubview:_tableView];
+  
+  _datePicker = [UIDatePicker new];
+  _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+  _datePicker.minimumDate = [NSDate date];
+  
+  _dateTextField = [[UITextField alloc] initWithFrame:self.view.bounds];
+  _dateTextField.hidden = YES;
+  _dateTextField.inputView = _datePicker;
+  
+  UIToolbar *keyboardToolbar = [UIToolbar new];
+  [keyboardToolbar sizeToFit];
+  UIBarButtonItem *flexBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+  UIBarButtonItem *doneBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonWasTapped:)];
+  UIBarButtonItem *cancelBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(resetNotificationSetter)];
+  keyboardToolbar.items = @[cancelBarButton, flexBarButton, doneBarButton];
+  
+  _dateTextField.inputAccessoryView = keyboardToolbar;
+  [self.view addSubview:_dateTextField];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -158,10 +158,20 @@
 - (void)doneButtonWasTapped:(UIBarButtonItem *)sender
 {
   if (_datePicker.date && notificationCell) {
-    NSString *message = [NSString stringWithFormat:@"%@ - %@ for %@ ₽", notificationCell.ticket.from, notificationCell.ticket.to, notificationCell.ticket.price];
+    NSString *message;
+    if (isFavorites) {
+      message = [NSString stringWithFormat:@"%@ - %@ for %lld ₽", notificationCell.favoriteTicket.from, notificationCell.favoriteTicket.to, notificationCell.favoriteTicket.price];
+    } else {
+      message = [NSString stringWithFormat:@"%@ - %@ for %@ ₽", notificationCell.ticket.from, notificationCell.ticket.to, notificationCell.ticket.price];
+    }
     NSURL *imageURL;
     if (notificationCell.airlineLogoView.image) {
-      NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingString:[NSString stringWithFormat:@"/%@.png", notificationCell.ticket.airline]];
+      NSString *path;
+      if (isFavorites) {
+        path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingString:[NSString stringWithFormat:@"/%@.png", notificationCell.favoriteTicket.airline]];
+      } else {
+        path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingString:[NSString stringWithFormat:@"/%@.png", notificationCell.ticket.airline]];
+      }
       if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
         UIImage *logo = notificationCell.airlineLogoView.image;
         NSData *pngData = UIImagePNGRepresentation(logo);
