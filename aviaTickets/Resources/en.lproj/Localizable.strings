@@ -1,0 +1,73 @@
+/* 
+  Localizable.strings
+  aviaTickets
+
+  Created by Igor Chernyshov on 26/12/2018.
+  Copyright © 2018 Igor Chernyshov. All rights reserved.
+*/
+
+// MainViewController
+"titleLabel" = "Search Tickets";
+"backButton" = "Back";
+"fromButton" = "Depart from";
+"toButton" = "Arrive to";
+"searchButton" = "Start search";
+
+
+// PriceMapViewController
+"titleLabel" = "Price Map";
+
+
+// SearchResultsViewController
+// For favorites controller
+"favoritesTitleLabel" = "Favorite Tickets";
+"segmentedControlItem1" = "All Tickets";
+"segmentedControlItem2" = "From Search";
+"segmentedControlItem3" = "From Map";
+// For search results controller
+"searchResultsTitleLabel" = "Search results";
+// Reminder
+"reminderTextForFavoriteTicket" = "%@ - %@ for %lld ₽";
+"reminderTextForFoundTicket" = "%@ - %@ for %@ ₽";
+// Row actions
+"addReminderRowAction" = "Set a reminder";
+"addToFavorites" = "Add to favorites";
+"removeFromFavorites" = "Remove from favorites";
+
+
+// SelectPlaceViewController
+"titleLabelDeparture" = "Depart from";
+"titleLabelArrival" = "Arrive to";
+"segmentedControlItem1" = "Cities";
+"segmentedControlItem2" = "Airports";
+
+
+// TabBarController
+"searchTab" = "Search Tickets";
+"mapTab" = "Price Map";
+"favoritesTab" = "Favorite Tickets";
+
+
+// TutorialPageViewController
+"firstPageTitle" = "ABOUT";
+"secondPageTitle" = "PLANE TICKETS";
+"thirdPageTitle" = "PRICE MAP";
+"fourthPageTitle" = "FAVORITES";
+"firstPageMessage" = "This application will help you to find plane tickets";
+"secondPageMessage" = "Find the cheapest and the most convenient flights";
+"thirdPageMessage" = "Check out Price Map to find the best option for every city";
+"fourthPageMessage" = "Save tickets to Favorites to compare them later on";
+"nextButton" = "NEXT";
+"doneButton" = "DONE";
+
+// Alert controllers
+"errorTitle" = "Error";
+
+"errorMessage" = "You need to set both Departure and Arrival place to search tickets";
+"notFoundMessage" = "No tickets found with these parameters";
+"noLocationServicesPermissionsMessage" = "We don't have permissions to detect your location";
+
+"doneTitle" = "Done!";
+"reminderSetMessage" = "You will receive a notification %@";
+
+"closeButton" = "Close";
