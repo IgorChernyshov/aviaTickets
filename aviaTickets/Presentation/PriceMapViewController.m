@@ -12,6 +12,7 @@
 #import "LocationService.h"
 #import "CoreDataHelper.h"
 #import "LoadingView.h"
+#import "NSString+Localize.h"
 
 @interface PriceMapViewController () <MKMapViewDelegate>
 
@@ -27,7 +28,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.title = @"Price Map";
+  self.title = @"titleLabel".localize;
   
   _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
   _mapView.delegate = self;
