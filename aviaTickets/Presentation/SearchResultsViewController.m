@@ -193,7 +193,7 @@
     [self resetNotificationSetter];
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"doneTitle".localize message:[NSString stringWithFormat:@"reminderSetMessage".localize, dateString] preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"closeButton" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"closeButton".localize style:UIAlertActionStyleDefault handler:nil];
     [alertController addAction:closeAction];
     [self presentViewController:alertController animated:YES completion:nil];
   }

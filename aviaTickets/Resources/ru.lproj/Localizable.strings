@@ -6,52 +6,69 @@
   Copyright © 2018 Igor Chernyshov. All rights reserved.
 */
 
-// TabBarController
-
-"search_tab" = "Поиск";
-"map_tab" = "Карта цен";
-"favorites_tab" = "Избранное";
-
-
 // MainViewController
-
-"main_from" = "Откуда";
-"main_to" = "Куда";
-"main_search" = "Найти";
-
-
-// FirstViewController
-
-"about_app_header" = "О ПРИЛОЖЕНИИ";
-"tickets_header" = "АВИАБИЛЕТЫ";
-"map_price_header" = "КАРТА ЦЕН";
-"favorites_header" = "ИЗБРАННОЕ";
-
-"about_app_describe" = "Приложение для поиска авиабилетов";
-"tickets_describe" = "Находите самые дешевые авиабилеты";
-"map_price_describe" = "Просматривайте карту цен";
-"favorites_describe" = "Сохраняйте выбранные билеты в избранное";
-
-"next_button" = "ДАЛЕЕ";
-"done_button" = "ГОТОВО";
+"titleLabelMainVC" = "Поиск билетов";
+"backButton" = "Назад";
+"fromButton" = "Вылет из";
+"toButton" = "Прилёт в";
+"searchButton" = "Найти";
 
 
-// TicketsViewController
+// PriceMapViewController
+"titleLabelPriceMapVC" = "Карта цен";
 
-"tickets_title" = "Билеты";
-"add_to_favorite" = "Добавить в избранное";
-"remove_from_favorite" = "Удалить из избранного";
-"remind_me" = "Напомнить";
-"ticket_reminder" = "Напоминание о билете";
-"notification_will_be_sent" = "Уведомление будет отправлено";
-"success" = "Успешно";
 
-// Alerts
+// SearchResultsViewController
+// For favorites controller
+"titleLabelFavoritesVC" = "Избранные билеты";
+"favoritesSegmentedControlItem1" = "Все билеты";
+"favoritesSegmentedControlItem2" = "Из поиска";
+"favoritesSegmentedControlItem3" = "Из избранных";
+// For search results controller
+"titleLabelSearchResultsVC" = "Результаты поиска";
+// Reminder
+"reminderTextForFavoriteTicket" = "%@ - %@ за %lld ₽";
+"reminderTextForFoundTicket" = "%@ - %@ за %@ ₽";
+// Row actions
+"addReminderRowAction" = "Добавить напоминание";
+"addToFavorites" = "Добавить в избранные";
+"removeFromFavorites" = "Удалить из избранного";
 
-"error" = "Ошибка";
-"tickets_not_found" = "По данному направлению билетов не найдено";
-"close" = "Закрыть";
-"not_set_place_arrival_or_departure" = "Необходимо указать место отправления и место прибытия";
-"actions_with_tickets" = "Действия с билетом";
-"actions_with_tickets_describe" = "Что необходимо сделать с выбранным билетом?";
-"not_determine_current_city" = "Не удалось определить текущий город!";
+
+// SelectPlaceViewController
+"titleLabelDeparture" = "Вылет из";
+"titleLabelArrival" = "Прилёт в";
+"selectPlaceSegmentedControlItem1" = "Города";
+"selectPlaceSegmentedControlItem2" = "Аэропорты";
+
+
+// TabBarController
+"searchTab" = "Поиск билетов";
+"mapTab" = "Карта цен";
+"favoritesTab" = "Избранные билеты";
+
+
+// TutorialPageViewController
+"firstPageTitle" = "О ПРИЛОЖЕНИИ";
+"secondPageTitle" = "БИЛЕТЫ НА САМОЛЁТ";
+"thirdPageTitle" = "КАРТА ЦЕН";
+"fourthPageTitle" = "ИЗБРАННОЕ";
+"firstPageMessage" = "Это приложение поможет найти билеты на самолёт";
+"secondPageMessage" = "Найдите самый дешёвый и удобный перелёт";
+"thirdPageMessage" = "Поищите самые дешёвые биилеты на Карте цен";
+"fourthPageMessage" = "Сохраните билеты в избранном, чтобы сравнить их позже";
+"nextButton" = "ДАЛЕЕ";
+"doneButton" = "ГОТОВО";
+
+// Alert controllers
+// Title
+"errorTitle" = "Ошибка";
+"doneTitle" = "Готово!";
+"whoopsTitle" = "Упс!";
+// Message
+"errorMessage" = "Необходимо указать город вылета и прилёта для поиска билетов";
+"notFoundMessage" = "По данному направлению билетов не найдено";
+"noLocationServicesPermissionsMessage" = "Вы запретили нам отслеживать местоположение";
+"reminderSetMessage" = "Напоминание сработает %@";
+// Close button
+"closeButton" = "Закрыть";
