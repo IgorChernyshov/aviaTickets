@@ -77,7 +77,7 @@
   [_tableView registerClass:[PlaceTableViewCell class] forCellReuseIdentifier:ReuseIdentifier];
   [self.view addSubview:_tableView];
   
-  _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"segmentedControlItem1".localize, @"segmentedControlItem2".localize]];
+  _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"selectPlaceSegmentedControlItem1".localize, @"selectPlaceSegmentedControlItem2".localize]];
   [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
   _segmentedControl.tintColor = customBlueColor;
   self.navigationItem.titleView = _segmentedControl;

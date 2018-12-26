@@ -44,7 +44,7 @@
                                                 blue:236.0/255.0
                                                alpha:1];
     
-    _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"segmentedControlItem1".localize, @"segmentedControlItem2".localize, @"segmentedControlItem1".localize]];
+    _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"favoritesSegmentedControlItem1".localize, @"favoritesSegmentedControlItem2".localize, @"favoritesSegmentedControlItem3".localize]];
     [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
     _segmentedControl.tintColor = customBlueColor;
     self.navigationItem.titleView = _segmentedControl;

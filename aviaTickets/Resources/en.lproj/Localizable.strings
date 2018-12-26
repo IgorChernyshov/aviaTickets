@@ -21,9 +21,9 @@
 // SearchResultsViewController
 // For favorites controller
 "titleLabelFavoritesVC" = "Favorite Tickets";
-"segmentedControlItem1" = "All Tickets";
-"segmentedControlItem2" = "From Search";
-"segmentedControlItem3" = "From Map";
+"favoritesSegmentedControlItem1" = "All Tickets";
+"favoritesSegmentedControlItem2" = "From Search";
+"favoritesSegmentedControlItem3" = "From Map";
 // For search results controller
 "titleLabelSearchResultsVC" = "Search results";
 // Reminder
@@ -38,8 +38,8 @@
 // SelectPlaceViewController
 "titleLabelDeparture" = "Depart from";
 "titleLabelArrival" = "Arrive to";
-"segmentedControlItem1" = "Cities";
-"segmentedControlItem2" = "Airports";
+"selectPlaceSegmentedControlItem1" = "Cities";
+"selectPlaceSegmentedControlItem2" = "Airports";
 
 
 // TabBarController
