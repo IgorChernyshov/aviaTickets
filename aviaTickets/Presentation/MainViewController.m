@@ -70,7 +70,7 @@
   [self.activityIndicator removeFromSuperview];
   
   // Configure navigation bar
-  self.title = @"titleLabel".localize;
+  self.title = @"titleLabelMainVC".localize;
   self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"backButton".localize style:UIBarButtonItemStylePlain target:nil action:nil];
   
   // Create a gradient background

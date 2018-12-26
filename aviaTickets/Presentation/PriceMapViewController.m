@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.title = @"titleLabel".localize;
+  self.title = @"titleLabelPriceMapVC".localize;
   
   _mapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
   _mapView.delegate = self;

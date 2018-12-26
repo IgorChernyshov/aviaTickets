@@ -7,7 +7,7 @@
 */
 
 // MainViewController
-"titleLabel" = "Search Tickets";
+"titleLabelMainVC" = "Search Tickets";
 "backButton" = "Back";
 "fromButton" = "Depart from";
 "toButton" = "Arrive to";
@@ -15,17 +15,17 @@
 
 
 // PriceMapViewController
-"titleLabel" = "Price Map";
+"titleLabelPriceMapVC" = "Price Map";
 
 
 // SearchResultsViewController
 // For favorites controller
-"favoritesTitleLabel" = "Favorite Tickets";
+"titleLabelFavoritesVC" = "Favorite Tickets";
 "segmentedControlItem1" = "All Tickets";
 "segmentedControlItem2" = "From Search";
 "segmentedControlItem3" = "From Map";
 // For search results controller
-"searchResultsTitleLabel" = "Search results";
+"titleLabelSearchResultsVC" = "Search results";
 // Reminder
 "reminderTextForFavoriteTicket" = "%@ - %@ for %lld ₽";
 "reminderTextForFoundTicket" = "%@ - %@ for %@ ₽";
