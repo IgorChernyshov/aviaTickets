@@ -54,10 +54,10 @@
     }
     
     NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *dateComponents = [calendar componentsInTimeZone:[NSTimeZone systemTimeZone] fromDate:notification.date];
+    NSDateComponents *dateComponents = [calendar componentsInTimeZone:[NSTimeZone localTimeZone] fromDate:notification.date];
     NSDateComponents *notificationTriggerDate = [NSDateComponents new];
     notificationTriggerDate.calendar = calendar;
-    notificationTriggerDate.timeZone = [NSTimeZone systemTimeZone];
+    notificationTriggerDate.timeZone = [NSTimeZone localTimeZone];
     notificationTriggerDate.month = dateComponents.month;
     notificationTriggerDate.day = dateComponents.day;
     notificationTriggerDate.hour = dateComponents.hour;
