@@ -61,13 +61,14 @@
 "doneButton" = "DONE";
 
 // Alert controllers
+// Title
 "errorTitle" = "Error";
-
+"doneTitle" = "Done!";
+"whoopsTitle" = "Whoops!";
+// Message
 "errorMessage" = "You need to set both Departure and Arrival place to search tickets";
 "notFoundMessage" = "No tickets found with these parameters";
 "noLocationServicesPermissionsMessage" = "We don't have permissions to detect your location";
-
-"doneTitle" = "Done!";
 "reminderSetMessage" = "You will receive a notification %@";
-
+// Close button
 "closeButton" = "Close";

@@ -185,7 +185,7 @@
         SearchResultsViewController *searchResultsViewController = [[SearchResultsViewController alloc] initWithTickets:tickets];
         [self.navigationController pushViewController:searchResultsViewController animated:YES];
       } else {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"errorTitle".localize message:@"notFoundMessage".localize preferredStyle: UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"whoopsTitle".localize message:@"notFoundMessage".localize preferredStyle: UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"closeButton".localize style:(UIAlertActionStyleDefault) handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
       }
