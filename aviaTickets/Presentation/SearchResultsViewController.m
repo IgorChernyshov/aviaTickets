@@ -251,7 +251,7 @@
     UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"removeFromFavorites".localize handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
       [[CoreDataHelper sharedInstance] removeFavoriteTicketFromFavorites:self.currentTicketsArray[indexPath.row]];
       self.currentTicketsArray = [[CoreDataHelper sharedInstance] favorites];
-      [self.tableView reloadData];
+      [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationLeft];
     }];
     return @[removeFromFavorites, setReminder];
   }
