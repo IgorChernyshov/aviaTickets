@@ -239,13 +239,13 @@
       UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"removeFromFavorites".localize handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [[CoreDataHelper sharedInstance] removeTicketFromFavorites:self.currentTicketsArray[indexPath.row]];
       }];
-      return @[setReminder, removeFromFavorites];
+      return @[removeFromFavorites, setReminder];
     } else {
       UITableViewRowAction *addToFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"addToFavorites".localize handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [[CoreDataHelper sharedInstance] addToFavorite:self.currentTicketsArray[indexPath.row]];
       }];
       addToFavorites.backgroundColor = [UIColor blueColor];
-      return @[setReminder, addToFavorites];
+      return @[addToFavorites, setReminder];
     }
   } else {
     UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"removeFromFavorites".localize handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
@@ -253,7 +253,7 @@
       self.currentTicketsArray = [[CoreDataHelper sharedInstance] favorites];
       [self.tableView reloadData];
     }];
-    return @[setReminder, removeFromFavorites];
+    return @[removeFromFavorites, setReminder];
   }
   return @[];
 }
