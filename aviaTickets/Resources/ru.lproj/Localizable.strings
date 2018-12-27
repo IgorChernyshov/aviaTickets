@@ -23,7 +23,7 @@
 "titleLabelFavoritesVC" = "Избранные билеты";
 "favoritesSegmentedControlItem1" = "Все билеты";
 "favoritesSegmentedControlItem2" = "Из поиска";
-"favoritesSegmentedControlItem3" = "Из избранных";
+"favoritesSegmentedControlItem3" = "С карты цен";
 // For search results controller
 "titleLabelSearchResultsVC" = "Результаты поиска";
 // Reminder
