@@ -8,14 +8,12 @@
 
 #import "Airport.h"
 #import "City.h"
-#import "Country.h"
 
 #define kDataManagerLoadDataDidComplete @"DataManagerLoadDataDidComplete"
 
 typedef enum DataSourceType {
   DataSourceTypeCity,
-  DataSourceTypeAirport,
-  DataSourceTypeCountry
+  DataSourceTypeAirport
 } DataSourceType;
 
 @interface DataManager : NSObject

@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong) NSMutableArray *airportsArray;
 @property (nonatomic, strong) NSMutableArray *citiesArray;
-@property (nonatomic, strong) NSMutableArray *countriesArray;
 
 @end
 
@@ -33,8 +32,6 @@
     self.airportsArray = [self createObjectsFromArray:airportsJSONArray withType:DataSourceTypeAirport];
     NSArray *citiesJSONArray = [self arrayFromFileName:@"cities" ofType:@"json"];
     self.citiesArray = [self createObjectsFromArray:citiesJSONArray withType:DataSourceTypeCity];
-    NSArray *countriesJSONArray = [self arrayFromFileName:@"countries" ofType:@"json"];
-    self.countriesArray = [self createObjectsFromArray:countriesJSONArray withType:DataSourceTypeCountry];
     dispatch_async(dispatch_get_main_queue(), ^{
       [[NSNotificationCenter defaultCenter] postNotificationName:kDataManagerLoadDataDidComplete
                                                           object:nil];
@@ -51,9 +48,6 @@
     } else if (type == DataSourceTypeCity) {
       City *city = [[City alloc] initWithDictionary:jsonObject];
       [results addObject:city];
-    } else if (type == DataSourceTypeCountry) {
-      Country *country = [[Country alloc] initWithDictionary:jsonObject];
-      [results addObject:country];
     }
   }
   return results;
@@ -73,10 +67,6 @@
 
 - (NSArray *) cities {
   return _citiesArray;
-}
-
-- (NSArray *) countries {
-  return _countriesArray;
 }
 
 - (City *)cityForIATA:(NSString *)iata {

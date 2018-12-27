@@ -23,13 +23,11 @@
 		9CAA7EA121B2A9DD006D9F8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CAA7EA021B2A9DD006D9F8B /* Assets.xcassets */; };
 		9CAA7EA421B2A9DD006D9F8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CAA7EA221B2A9DD006D9F8B /* LaunchScreen.storyboard */; };
 		9CAA7EA721B2A9DD006D9F8B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EA621B2A9DD006D9F8B /* main.m */; };
-		9CAA7EB321B30B75006D9F8B /* Country.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EB221B30B75006D9F8B /* Country.m */; };
 		9CAA7EB621B30CD1006D9F8B /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EB521B30CD1006D9F8B /* City.m */; };
 		9CAA7EB921B30CDA006D9F8B /* Airport.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EB821B30CDA006D9F8B /* Airport.m */; };
 		9CAA7EBD21B314C7006D9F8B /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CAA7EBC21B314C7006D9F8B /* DataManager.m */; };
 		9CAA7EBF21B31E83006D9F8B /* airports.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CAA7EBE21B31E83006D9F8B /* airports.json */; };
 		9CAA7EC221B31E94006D9F8B /* cities.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CAA7EC021B31E94006D9F8B /* cities.json */; };
-		9CAA7EC321B31E94006D9F8B /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CAA7EC121B31E94006D9F8B /* countries.json */; };
 		9CB7148721D35F6C00EB2104 /* NSString+Localize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB7148621D35F6C00EB2104 /* NSString+Localize.m */; };
 		9CB7148D21D3617200EB2104 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CB7148F21D3617200EB2104 /* Localizable.strings */; };
 		9CB7149321D499A200EB2104 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CB7149521D499A200EB2104 /* InfoPlist.strings */; };
@@ -77,8 +75,6 @@
 		9CAA7EA321B2A9DD006D9F8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9CAA7EA521B2A9DD006D9F8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CAA7EA621B2A9DD006D9F8B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9CAA7EB121B30B75006D9F8B /* Country.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Country.h; sourceTree = "<group>"; };
-		9CAA7EB221B30B75006D9F8B /* Country.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Country.m; sourceTree = "<group>"; };
 		9CAA7EB421B30CD1006D9F8B /* City.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
 		9CAA7EB521B30CD1006D9F8B /* City.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
 		9CAA7EB721B30CD9006D9F8B /* Airport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Airport.h; sourceTree = "<group>"; };
@@ -87,7 +83,6 @@
 		9CAA7EBC21B314C7006D9F8B /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		9CAA7EBE21B31E83006D9F8B /* airports.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airports.json; sourceTree = "<group>"; };
 		9CAA7EC021B31E94006D9F8B /* cities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cities.json; sourceTree = "<group>"; };
-		9CAA7EC121B31E94006D9F8B /* countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		9CB7148521D35F6C00EB2104 /* NSString+Localize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Localize.h"; sourceTree = "<group>"; };
 		9CB7148621D35F6C00EB2104 /* NSString+Localize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Localize.m"; sourceTree = "<group>"; };
 		9CB7148821D3605900EB2104 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -193,8 +188,6 @@
 				9CAA7EB821B30CDA006D9F8B /* Airport.m */,
 				9CAA7EB421B30CD1006D9F8B /* City.h */,
 				9CAA7EB521B30CD1006D9F8B /* City.m */,
-				9CAA7EB121B30B75006D9F8B /* Country.h */,
-				9CAA7EB221B30B75006D9F8B /* Country.m */,
 				9C6D143321C8D41100299860 /* FavoriteTicket+CoreDataClass.h */,
 				9C6D143421C8D41100299860 /* FavoriteTicket+CoreDataClass.m */,
 				9C6D143221C8D41100299860 /* FavoriteTicket+CoreDataProperties.h */,
@@ -242,7 +235,6 @@
 				9CAA7EBE21B31E83006D9F8B /* airports.json */,
 				9CAA7EA021B2A9DD006D9F8B /* Assets.xcassets */,
 				9CAA7EC021B31E94006D9F8B /* cities.json */,
-				9CAA7EC121B31E94006D9F8B /* countries.json */,
 				9C63CF3521C8D23300874A54 /* FavoriteTicket.xcdatamodeld */,
 				9CB7148F21D3617200EB2104 /* Localizable.strings */,
 			);
@@ -332,7 +324,6 @@
 				9CB7148D21D3617200EB2104 /* Localizable.strings in Resources */,
 				9CAA7EA421B2A9DD006D9F8B /* LaunchScreen.storyboard in Resources */,
 				9CAA7EA121B2A9DD006D9F8B /* Assets.xcassets in Resources */,
-				9CAA7EC321B31E94006D9F8B /* countries.json in Resources */,
 				9CAA7EBF21B31E83006D9F8B /* airports.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,7 +362,6 @@
 				9C6D143621C8D41100299860 /* FavoriteTicket+CoreDataClass.m in Sources */,
 				9C39FCD921C4D8A7003365F1 /* TabBarController.m in Sources */,
 				9CB7148721D35F6C00EB2104 /* NSString+Localize.m in Sources */,
-				9CAA7EB321B30B75006D9F8B /* Country.m in Sources */,
 				9CAA7EBD21B314C7006D9F8B /* DataManager.m in Sources */,
 				9CDFBB7521B67BA9001EB427 /* SelectPlaceViewController.m in Sources */,
 				9C2ACDC321BE983C00C4C164 /* PriceMap.m in Sources */,
