@@ -10,6 +10,7 @@
 #import "TicketTableViewCell.h"
 #import "CoreDataHelper.h"
 #import "NotificationCenter.h"
+#import "NSString+Localize.h"
 
 #define TicketCellReuseIdentifier @"TicketCellIdentifier"
 
@@ -36,14 +37,14 @@
   if (self) {
     isFavorites = YES;
     _currentTicketsArray = [NSArray new];
-    self.title = @"Favorite Tickets";
+    self.title = @"titleLabelFavoritesVC".localize;
     
     UIColor *customBlueColor = [UIColor colorWithRed:72.0/255.0
                                                green:150.0/255.0
                                                 blue:236.0/255.0
                                                alpha:1];
     
-    _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"All Tickets", @"From Search", @"From Map"]];
+    _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"favoritesSegmentedControlItem1".localize, @"favoritesSegmentedControlItem2".localize, @"favoritesSegmentedControlItem3".localize]];
     [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
     _segmentedControl.tintColor = customBlueColor;
     self.navigationItem.titleView = _segmentedControl;
@@ -58,7 +59,7 @@
   if (self)
   {
     _currentTicketsArray = tickets;
-    self.title = @"Search results";
+    self.title = @"titleLabelSearchResultsVC".localize;
   }
   return self;
 }
@@ -160,9 +161,9 @@
   if (_datePicker.date && notificationCell) {
     NSString *message;
     if (isFavorites) {
-      message = [NSString stringWithFormat:@"%@ - %@ for %lld ₽", notificationCell.favoriteTicket.from, notificationCell.favoriteTicket.to, notificationCell.favoriteTicket.price];
+      message = [NSString stringWithFormat:@"reminderTextForFavoriteTicket".localize, notificationCell.favoriteTicket.from, notificationCell.favoriteTicket.to, notificationCell.favoriteTicket.price];
     } else {
-      message = [NSString stringWithFormat:@"%@ - %@ for %@ ₽", notificationCell.ticket.from, notificationCell.ticket.to, notificationCell.ticket.price];
+      message = [NSString stringWithFormat:@"reminderTextForFoundTicket".localize, notificationCell.ticket.from, notificationCell.ticket.to, notificationCell.ticket.price];
     }
     NSURL *imageURL;
     if (notificationCell.airlineLogoView.image) {
@@ -191,9 +192,9 @@
 
     [self resetNotificationSetter];
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Done!" message:[NSString stringWithFormat:@"You will receive a notification %@", dateString] preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-    [alertController addAction:okAction];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"doneTitle".localize message:[NSString stringWithFormat:@"reminderSetMessage".localize, dateString] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"closeButton".localize style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:closeAction];
     [self presentViewController:alertController animated:YES completion:nil];
   }
 }
@@ -228,26 +229,26 @@
 
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  UITableViewRowAction *setReminder = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Set a reminder" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+  UITableViewRowAction *setReminder = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"addReminderRowAction".localize handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
     self->notificationCell = [tableView cellForRowAtIndexPath:indexPath];
     [self.dateTextField becomeFirstResponder];
   }];
   setReminder.backgroundColor = [UIColor orangeColor];
   if (!isFavorites) {
     if ([[CoreDataHelper sharedInstance] isFavoriteTicket:[_currentTicketsArray objectAtIndex:indexPath.row]]) {
-      UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+      UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"removeFromFavorites".localize handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [[CoreDataHelper sharedInstance] removeTicketFromFavorites:self.currentTicketsArray[indexPath.row]];
       }];
       return @[setReminder, removeFromFavorites];
     } else {
-      UITableViewRowAction *addToFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Add to favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+      UITableViewRowAction *addToFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"addToFavorites".localize handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         [[CoreDataHelper sharedInstance] addToFavorite:self.currentTicketsArray[indexPath.row]];
       }];
       addToFavorites.backgroundColor = [UIColor blueColor];
       return @[setReminder, addToFavorites];
     }
   } else {
-    UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Remove from favorites" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"removeFromFavorites".localize handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
       [[CoreDataHelper sharedInstance] removeFavoriteTicketFromFavorites:self.currentTicketsArray[indexPath.row]];
       self.currentTicketsArray = [[CoreDataHelper sharedInstance] favorites];
       [self.tableView reloadData];

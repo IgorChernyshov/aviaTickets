@@ -1,0 +1,74 @@
+/* 
+  Localizable.strings
+  aviaTickets
+
+  Created by Igor Chernyshov on 26/12/2018.
+  Copyright © 2018 Igor Chernyshov. All rights reserved.
+*/
+
+// MainViewController
+"titleLabelMainVC" = "Поиск билетов";
+"backButton" = "Назад";
+"fromButton" = "Вылет из";
+"toButton" = "Прилёт в";
+"searchButton" = "Найти";
+
+
+// PriceMapViewController
+"titleLabelPriceMapVC" = "Карта цен";
+
+
+// SearchResultsViewController
+// For favorites controller
+"titleLabelFavoritesVC" = "Избранные билеты";
+"favoritesSegmentedControlItem1" = "Все билеты";
+"favoritesSegmentedControlItem2" = "Из поиска";
+"favoritesSegmentedControlItem3" = "Из избранных";
+// For search results controller
+"titleLabelSearchResultsVC" = "Результаты поиска";
+// Reminder
+"reminderTextForFavoriteTicket" = "%@ - %@ за %lld ₽";
+"reminderTextForFoundTicket" = "%@ - %@ за %@ ₽";
+// Row actions
+"addReminderRowAction" = "Добавить напоминание";
+"addToFavorites" = "Добавить в избранные";
+"removeFromFavorites" = "Удалить из избранного";
+
+
+// SelectPlaceViewController
+"titleLabelDeparture" = "Вылет из";
+"titleLabelArrival" = "Прилёт в";
+"selectPlaceSegmentedControlItem1" = "Города";
+"selectPlaceSegmentedControlItem2" = "Аэропорты";
+
+
+// TabBarController
+"searchTab" = "Поиск билетов";
+"mapTab" = "Карта цен";
+"favoritesTab" = "Избранные билеты";
+
+
+// TutorialPageViewController
+"firstPageTitle" = "О ПРИЛОЖЕНИИ";
+"secondPageTitle" = "БИЛЕТЫ НА САМОЛЁТ";
+"thirdPageTitle" = "КАРТА ЦЕН";
+"fourthPageTitle" = "ИЗБРАННОЕ";
+"firstPageMessage" = "Это приложение поможет найти билеты на самолёт";
+"secondPageMessage" = "Найдите самый дешёвый и удобный перелёт";
+"thirdPageMessage" = "На Карте цен отображаются все возможные варианты перелёта из вашего города";
+"fourthPageMessage" = "Сохраните билеты в избранном, чтобы сравнить их позже";
+"nextButton" = "ДАЛЕЕ";
+"doneButton" = "ГОТОВО";
+
+// Alert controllers
+// Title
+"errorTitle" = "Ошибка";
+"doneTitle" = "Готово!";
+"whoopsTitle" = "Упс!";
+// Message
+"errorMessage" = "Необходимо указать город вылета и прилёта для поиска билетов";
+"notFoundMessage" = "По данному направлению билетов не найдено";
+"noLocationServicesPermissionsMessage" = "Вы запретили нам отслеживать местоположение";
+"reminderSetMessage" = "Напоминание сработает %@";
+// Close button
+"closeButton" = "Закрыть";

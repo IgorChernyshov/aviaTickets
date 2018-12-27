@@ -16,6 +16,7 @@
 // Import helpers
 #import "DataManager.h"
 #import "APIManager.h"
+#import "NSString+Localize.h"
 
 // Import custom view elements
 #import "MainViewButton.h"
@@ -69,8 +70,8 @@
   [self.activityIndicator removeFromSuperview];
   
   // Configure navigation bar
-  self.title = @"Search Tickets";
-  self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
+  self.title = @"titleLabelMainVC".localize;
+  self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"backButton".localize style:UIBarButtonItemStylePlain target:nil action:nil];
   
   // Create a gradient background
   UIColor *lightBlueColor = [UIColor colorWithRed:97.0/255.0
@@ -104,14 +105,14 @@
   [self.view addSubview:_locationButtonsView];
   
   _departFromButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  [_departFromButton setTitle:@"Depart from" forState:UIControlStateNormal];
+  [_departFromButton setTitle:@"fromButton".localize forState:UIControlStateNormal];
   [_departFromButton addTarget:self action:@selector(placeButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
   CGRect departFromButtonFrame = _departFromButton.frame;
   departFromButtonFrame.origin = CGPointMake(10.0, 10.0);
   _departFromButton.frame = departFromButtonFrame;
   
   _arriveToButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
-  [_arriveToButton setTitle:@"Arrive to" forState:UIControlStateNormal];
+  [_arriveToButton setTitle:@"toButton".localize forState:UIControlStateNormal];
   [_arriveToButton addTarget:self action:@selector(placeButtonWasPressed:) forControlEvents:UIControlEventTouchUpInside];
   CGRect arriveToButtonFrame = _arriveToButton.frame;
   arriveToButtonFrame.origin = CGPointMake(10.0, CGRectGetMaxY(departFromButtonFrame) + 10.0);
@@ -119,7 +120,7 @@
   
   _startSearchButton = [MainViewButton buttonWithType:UIButtonTypeSystem];
   _startSearchButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-  [_startSearchButton setTitle:@"Start search" forState:UIControlStateNormal];
+  [_startSearchButton setTitle:@"searchButton".localize forState:UIControlStateNormal];
   _startSearchButton.titleLabel.font = [UIFont fontWithName:@"AvenirNext-Bold" size:17];
   _startSearchButton.backgroundColor = [UIColor orangeColor];
   [_startSearchButton setTintColor:[UIColor whiteColor]];
@@ -178,20 +179,20 @@
 
 - (void)startSearchButtonWasPressed
 {
-  if (![_departFromButton.titleLabel.text isEqual: @"Depart from"] && ![_arriveToButton.titleLabel.text isEqual: @"Arrive to"]) {
+  if (![_departFromButton.titleLabel.text isEqual: @"fromButton".localize] && ![_arriveToButton.titleLabel.text isEqual: @"toButton".localize]) {
     [[APIManager sharedInstance] ticketsWithRequest:_searchRequest withCompletion:^(NSArray *tickets) {
       if (tickets.count > 0) {
         SearchResultsViewController *searchResultsViewController = [[SearchResultsViewController alloc] initWithTickets:tickets];
         [self.navigationController pushViewController:searchResultsViewController animated:YES];
       } else {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Whoops!" message:@"No tickets found with these parameters" preferredStyle: UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Close" style:(UIAlertActionStyleDefault) handler:nil]];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"whoopsTitle".localize message:@"notFoundMessage".localize preferredStyle: UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"closeButton".localize style:(UIAlertActionStyleDefault) handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
       }
     }];
   } else {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"You need to set both Departure and Arrival place to search tickets" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"errorTitle".localize message:@"errorMessage".localize preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"closeButton".localize style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
   }
 }

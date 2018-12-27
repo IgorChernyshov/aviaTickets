@@ -1,0 +1,74 @@
+/* 
+  Localizable.strings
+  aviaTickets
+
+  Created by Igor Chernyshov on 26/12/2018.
+  Copyright © 2018 Igor Chernyshov. All rights reserved.
+*/
+
+// MainViewController
+"titleLabelMainVC" = "Search Tickets";
+"backButton" = "Back";
+"fromButton" = "Depart from";
+"toButton" = "Arrive to";
+"searchButton" = "Start search";
+
+
+// PriceMapViewController
+"titleLabelPriceMapVC" = "Price Map";
+
+
+// SearchResultsViewController
+// For favorites controller
+"titleLabelFavoritesVC" = "Favorite Tickets";
+"favoritesSegmentedControlItem1" = "All Tickets";
+"favoritesSegmentedControlItem2" = "From Search";
+"favoritesSegmentedControlItem3" = "From Map";
+// For search results controller
+"titleLabelSearchResultsVC" = "Search results";
+// Reminder
+"reminderTextForFavoriteTicket" = "%@ - %@ for %lld ₽";
+"reminderTextForFoundTicket" = "%@ - %@ for %@ ₽";
+// Row actions
+"addReminderRowAction" = "Set a reminder";
+"addToFavorites" = "Add to favorites";
+"removeFromFavorites" = "Remove from favorites";
+
+
+// SelectPlaceViewController
+"titleLabelDeparture" = "Depart from";
+"titleLabelArrival" = "Arrive to";
+"selectPlaceSegmentedControlItem1" = "Cities";
+"selectPlaceSegmentedControlItem2" = "Airports";
+
+
+// TabBarController
+"searchTab" = "Search Tickets";
+"mapTab" = "Price Map";
+"favoritesTab" = "Favorite Tickets";
+
+
+// TutorialPageViewController
+"firstPageTitle" = "ABOUT";
+"secondPageTitle" = "PLANE TICKETS";
+"thirdPageTitle" = "PRICE MAP";
+"fourthPageTitle" = "FAVORITES";
+"firstPageMessage" = "This application will help you to find plane tickets";
+"secondPageMessage" = "Find the cheapest and the most convenient flights";
+"thirdPageMessage" = "Check out Price Map to find the best option for every city";
+"fourthPageMessage" = "Save tickets to Favorites to compare them later on";
+"nextButton" = "NEXT";
+"doneButton" = "DONE";
+
+// Alert controllers
+// Title
+"errorTitle" = "Error";
+"doneTitle" = "Done!";
+"whoopsTitle" = "Whoops!";
+// Message
+"errorMessage" = "You need to set both Departure and Arrival place to search tickets";
+"notFoundMessage" = "No tickets found with these parameters";
+"noLocationServicesPermissionsMessage" = "We don't have permissions to detect your location";
+"reminderSetMessage" = "You will receive a notification %@";
+// Close button
+"closeButton" = "Close";

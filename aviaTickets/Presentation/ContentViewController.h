@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface ContentViewController : UIViewController
 
 @property (nonatomic, strong) NSString *contentText;
@@ -17,5 +15,3 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) int index;
 
 @end
-
-NS_ASSUME_NONNULL_END
