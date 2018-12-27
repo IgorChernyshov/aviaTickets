@@ -32,6 +32,7 @@
 		9CAA7EC321B31E94006D9F8B /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 9CAA7EC121B31E94006D9F8B /* countries.json */; };
 		9CB7148721D35F6C00EB2104 /* NSString+Localize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CB7148621D35F6C00EB2104 /* NSString+Localize.m */; };
 		9CB7148D21D3617200EB2104 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CB7148F21D3617200EB2104 /* Localizable.strings */; };
+		9CB7149321D499A200EB2104 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CB7149521D499A200EB2104 /* InfoPlist.strings */; };
 		9CDFBB6F21B405BA001EB427 /* MainViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFBB6E21B405BA001EB427 /* MainViewButton.m */; };
 		9CDFBB7221B51FFF001EB427 /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFBB7121B51FFF001EB427 /* SearchResultsViewController.m */; };
 		9CDFBB7521B67BA9001EB427 /* SelectPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFBB7421B67BA9001EB427 /* SelectPlaceViewController.m */; };
@@ -92,6 +93,8 @@
 		9CB7148821D3605900EB2104 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		9CB7148E21D3617200EB2104 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9CB7149021D3617800EB2104 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9CB7149421D499A200EB2104 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9CB7149621D499A300EB2104 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9CDFBB6D21B405BA001EB427 /* MainViewButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewButton.h; sourceTree = "<group>"; };
 		9CDFBB6E21B405BA001EB427 /* MainViewButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewButton.m; sourceTree = "<group>"; };
 		9CDFBB7021B51FFF001EB427 /* SearchResultsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchResultsViewController.h; sourceTree = "<group>"; };
@@ -178,6 +181,7 @@
 				9CAA7EA521B2A9DD006D9F8B /* Info.plist */,
 				9CAA7EA221B2A9DD006D9F8B /* LaunchScreen.storyboard */,
 				9CAA7EA621B2A9DD006D9F8B /* main.m */,
+				9CB7149521D499A200EB2104 /* InfoPlist.strings */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -324,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CAA7EC221B31E94006D9F8B /* cities.json in Resources */,
+				9CB7149321D499A200EB2104 /* InfoPlist.strings in Resources */,
 				9CB7148D21D3617200EB2104 /* Localizable.strings in Resources */,
 				9CAA7EA421B2A9DD006D9F8B /* LaunchScreen.storyboard in Resources */,
 				9CAA7EA121B2A9DD006D9F8B /* Assets.xcassets in Resources */,
@@ -409,6 +414,15 @@
 				9CB7149021D3617800EB2104 /* ru */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		9CB7149521D499A200EB2104 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9CB7149421D499A200EB2104 /* en */,
+				9CB7149621D499A300EB2104 /* ru */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
