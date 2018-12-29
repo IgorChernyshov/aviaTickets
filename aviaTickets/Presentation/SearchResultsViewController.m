@@ -45,7 +45,7 @@
                                                alpha:1];
     
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"favoritesSegmentedControlItem1".localize, @"favoritesSegmentedControlItem2".localize, @"favoritesSegmentedControlItem3".localize]];
-    [_segmentedControl addTarget:self action:@selector(changeSource) forControlEvents:UIControlEventValueChanged];
+    [_segmentedControl addTarget:self action:@selector(changeSource:) forControlEvents:UIControlEventValueChanged];
     _segmentedControl.tintColor = customBlueColor;
     self.navigationItem.titleView = _segmentedControl;
     _segmentedControl.selectedSegmentIndex = 0;
@@ -116,11 +116,12 @@
 {
   [super viewWillAppear:animated];
   if (isFavorites) {
-    [self changeSource];
+    [self changeSource:nil];
+    [self.tableView reloadData];
   }
 }
 
-- (void)changeSource
+- (void)changeSource:(UISegmentedControl *)sender
 {
   _currentTicketsArray = [[CoreDataHelper sharedInstance] favorites];
   switch (_segmentedControl.selectedSegmentIndex) {
@@ -146,7 +147,9 @@
       // All Tickets control selected
       break;
   }
-  [_tableView reloadData];
+  if (sender) {
+    [_tableView reloadData];
+  };
 }
 
 - (void)resetNotificationSetter
@@ -251,6 +254,7 @@
     UITableViewRowAction *removeFromFavorites = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"removeFromFavorites".localize handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
       [[CoreDataHelper sharedInstance] removeFavoriteTicketFromFavorites:self.currentTicketsArray[indexPath.row]];
       self.currentTicketsArray = [[CoreDataHelper sharedInstance] favorites];
+      [self changeSource:nil];
       [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationLeft];
     }];
     return @[removeFromFavorites, setReminder];
